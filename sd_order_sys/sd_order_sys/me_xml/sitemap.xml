@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<config>
+  <global value="01">
+    <child value="用户管理">
+      <child_code info="welcome" text="用户管理" path="../xx/xx.aspx">
+      </child_code>
+    </child>
+    <child value="全景设置">
+      <child_code info="s02" text="路线设置" path="../xx/xx.aspx">
+      </child_code>
+      <child_code info="s03" text="信息设置" path="../xx/xx.aspx">
+      </child_code>
+    </child>
+  </global>
+  <global value="02">
+    <child value="用户管理">
+      <child_code>
+        <child_info>s01</child_info>
+        <child_text>用户管理</child_text>
+        <child_path>../xx/xx.aspx</child_path>
+      </child_code>
+    </child>
+    <child id="p2" text="全景设置">
+      <child_code>
+        <child_info>s02</child_info>
+        <child_text>路线设置</child_text>
+        <child_path>../xx/xx.aspx</child_path>
+      </child_code>
+      <child_code>
+        <child_info>s03</child_info>
+        <child_text>信息设置</child_text>
+        <child_path>../xx/xx.aspx</child_path>
+      </child_code>
+    </child>
+  </global>
+</config>
