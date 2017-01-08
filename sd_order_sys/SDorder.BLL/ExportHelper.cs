@@ -34,5 +34,14 @@ namespace SDorder.BLL
                 File.Copy(templatePath + name, projectPath + name, true);
             }
         }
+        /// <summary>
+        /// 文件写入模板文件
+        /// </summary>
+        /// <returns></returns>
+        public static bool SwapValue()
+        {
+            bool w = true;
+            return w;
+        }
     }
 }
