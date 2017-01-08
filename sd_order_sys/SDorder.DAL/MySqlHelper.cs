@@ -13,7 +13,7 @@ using System.IO;
 namespace SDorder.DAL
 {
 
-    public abstract class MySqlHelper
+    public  static abstract class MySqlHelper
     {
         //Get the database connectionstring, which are static variables and readonly, all project documents can be used directly, but can not modify it 
         //the database connectionString 
