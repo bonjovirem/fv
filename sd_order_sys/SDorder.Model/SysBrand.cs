@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SDorder.Model
 {
-    public class Class1
+    public class SysBrand
     {
     }
 }

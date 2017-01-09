@@ -38,7 +38,7 @@ namespace SDorder.BLL
                         foreach (XmlNode cnode in childnode.ChildNodes)
                         {
                            temp+="{ id: '" +cnode.Attributes["info"].Value + "', text: '" +cnode.Attributes["text"].Value 
-                                + "', href: '" + cnode.Attributes["path"].Value + "', closeable: false },";
+                                + "', href: '" + cnode.Attributes["path"].Value + "', closeable: true },";
 
                         }
                         builder.Append(temp.TrimEnd(','));
