@@ -11,6 +11,12 @@
       <child_code info="s03" text="信息设置" path="../xx/xx.aspx">
       </child_code>
     </child>
+    <child value="系统设置">
+      <child_code info="s05" text="系统品类设置" path="/files/sbrand_query.aspx">
+      </child_code>
+      <child_code info="s06" text="信息设置" path="../xx/xx.aspx">
+      </child_code>
+    </child>
   </global>
   <global value="02">
     <child value="用户管理">

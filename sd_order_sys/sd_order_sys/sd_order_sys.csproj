@@ -170,6 +170,7 @@
     <Content Include="assets\js\prettify.js" />
     <Content Include="assets\js\slider-min.js" />
     <Content Include="css\demo.css" />
+    <Content Include="css\demo_control.css" />
     <Content Include="css\H-ui.admin.css" />
     <Content Include="css\H-ui.css" />
     <Content Include="css\H-ui.login.css" />
@@ -179,6 +180,7 @@
     <Content Include="css\login.css" />
     <Content Include="css\style.css" />
     <Content Include="favicon.ico" />
+    <Content Include="files\sbrand_query.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\11.jpg" />
     <Content Include="images\acrossTab-2.png" />
@@ -555,6 +557,7 @@
     <Content Include="images\Thumbs.db" />
     <Content Include="themes\Thumbs.db" />
     <Content Include="struts\login.ashx" />
+    <Content Include="struts\sbrand.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -565,6 +568,13 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="files\sbrand_query.aspx.cs">
+      <DependentUpon>sbrand_query.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\sbrand_query.aspx.designer.cs">
+      <DependentUpon>sbrand_query.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -578,6 +588,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="struts\login.ashx.cs">
       <DependentUpon>login.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\sbrand.ashx.cs">
+      <DependentUpon>sbrand.ashx</DependentUpon>
     </Compile>
     <Compile Include="sys\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
