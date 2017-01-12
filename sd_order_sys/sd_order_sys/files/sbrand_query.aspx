@@ -8,7 +8,7 @@
     <title></title>
     <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
     <!-- 加载jquery-easyui -->
-    <link rel="stylesheet" type="text/css" href="../plugins/themes/metro/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../plugins/themes/default/easyui.css" />
     <link rel="stylesheet" type="text/css" href="../plugins/themes/icon.css" />
     <script type="text/javascript" src="../plugins/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../plugins/locale/easyui-lang-zh_CN.js"></script>
@@ -23,19 +23,18 @@
             padding: 2px;
             margin: 5px;
         }
-
-        input {
-            border: 1px solid #D3D3D3;
-            border-radius: 5px;
-            min-height: 18px;
-            max-height: 22px;
-            cursor: text;
-            background-color: White;
-            padding: 1px 5px;
-            font-size: 12px;
-            vertical-align: middle;
-            width: 200px;
-        }
+        input  
+         {  
+            border:1px solid #D3D3D3;  
+            border-radius:5px;   
+            min-height:18px;   
+            max-height:22px;   
+            cursor:text;   
+            background-color:White;   
+            padding:1px 5px;  
+            font-size:12px;  
+            vertical-align:middle;  
+          }  
     </style>
 </head>
 <script>
@@ -51,7 +50,7 @@
             //fit:true,
             width: 'auto',
             height: 'auto',
-            striped: false,
+            striped: true,
             singleSelect: false,
             url: '../struts/sbrand.ashx?action=query',
             //queryParams:{},  
@@ -60,13 +59,11 @@
             rownumbers: true,
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
-                { field: 'brandName', title: '品类名称', align: 'center' },
-                { field: 'brandImg', title: '品类图片', align: 'center', formatter: formatUploadFile },
-                { field: 'brandDesc', title: '品类描述', align: 'center' },
-                { field: 'brandVideo', title: '品类视频', align: 'center' },
-                { field: 'brandLogo', title: '品类图标', align: 'center' },
-                { field: 'createTime', title: '创建时间', align: 'center' },
-                { field: 'lastChangeTime', title: '最后修改时间', align: 'center' }
+                { field: 'brandName', title: '品类名称', align: 'center', width: '250' },
+                { field: 'brandImg', title: '品类图片', align: 'center', width: '150', formatter: formatUploadFile },
+                { field: 'brandDesc', title: '品类描述', align: 'center', width: '150' },
+                { field: 'createTime', title: '创建时间', align: 'center', width: '200' },
+                { field: 'lastChangeTime', title: '最后修改时间', align: 'center', width: '200' }
             ]], toolbar: [{
                 text: '添加',
                 iconCls: 'icon-add',
@@ -80,13 +77,13 @@
                 text: '编辑',
                 iconCls: 'icon-edit',
                 handler: function () {
-                    rowMark();
+                    getFirstPwd();
                 }
             }, {
                 text: '删除',
                 iconCls: 'icon-remove',
                 handler: function () {
-                    DelRecord();
+                    crowdel();
                 }
 
             }]
@@ -100,41 +97,33 @@
         else
             return "";
     }
-    //function formateTime(val, row, index) {
-    //    if (val) {
-    //        var dateTimeJsonStr = val;
-    //        var msecStr = dateTimeJsonStr.toString().replace(/\/Date\(([-]?\d+)\)\//gi, "$1");
-    //        var msesInt = Number(msecStr);
-    //        var dt = new Date(msesInt);
-    //        return dt.toLocaleString();
-    //    }
-    //    else {
-    //        return "";
-    //    }
+    function formateTime(val, row, index) {
+        if (val) {
+            var dateTimeJsonStr = val;
+            var msecStr = dateTimeJsonStr.toString().replace(/\/Date\(([-]?\d+)\)\//gi, "$1");
+            var msesInt = Number(msecStr);
+            var dt = new Date(msesInt);
+            return dt.toLocaleString();
+        }
+        else {
+            return "";
+        }
 
-    //}
-    //function formatOper(val, row, index) {
-    //    return '<a href="javascript:void(0);", onclick="rowMark(' + index + ')">查看</a>';
-    //};
+    }
+    function formatOper(val, row, index) {
+        return '<a href="javascript:void(0);", onclick="rowMark(' + index + ')">查看</a>';
+    };
     function rowMark(index) {
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
-            $("#dlg").dialog().parent().appendTo("#personform");
-            $("#txtName").attr("value", selectedRow["brandName"]);
-            $("#txtImg").attr("value", selectedRow["brandImg"]);
-            $("#txtdsc").attr("value", selectedRow["brandDesc"]);
-            $("#txtvideo").attr("value", selectedRow["txtvideo"]);
-            $("#txtlogo").attr("value", selectedRow["txtlogo"]);
-            $("#hid").attr("value", selectedRow["id"]);
-            $('#dlg').dialog('open');
-            //window.location = "replylist.aspx?id=" + selectedRow["id"];
+            window.location = "replylist.aspx?id=" + selectedRow["id"];
         } else {
             $.messager.alert('提示', '请选中一条记录');
         }
     }
-    function DelRecord() {
-        $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
+    function getFirstPwd() {
+        $.messager.confirm('确认', '是否确认重置密码为123123?', function (row) {
             if (row) {
                 var selectedRow = $('#persontable').datagrid('getSelections');  //获取选中行
                 if (selectedRow.length == 0) {
@@ -143,24 +132,24 @@
                     var num = "";
                     for (var i = 0; i < selectedRow.length; i++) {
                         if (i == selectedRow.length - 1) {
-                            num = num + selectedRow[i].id + "";
+                            num = num + "'" + selectedRow[i].uloginid + "'";
                         } else {
-                            num = num + selectedRow[i].id + ",";
+                            num = num + "'" + selectedRow[i].uloginid + "',";
                         }
                     }
                     $.ajax({
-                        url: '/struts/sbrand.ashx?action=rRecord&id=' + num,
+                        url: '../struts/users.ashx?action=repwd&id=' + num,
                         success: function (data) {
                             var comment = $.parseJSON(data);
                             if (comment != "suc") {
-                                $.messager.alert("提示","操作失败，请联系管理员");
+                                alert("操作失败，请联系管理员");
                             } else {
-                                $.messager.alert("提示","您删除成功");
+                                alert("您重置用户密码成功");
                                 $('#persontable').datagrid('reload');
                             }
                         },
                         error: function () {
-                            $.messager.alert("提示", "网络错误，请联系管理员");
+                            alert("网络错误，请联系管理员");
                         }
                     });
                 }
@@ -183,7 +172,7 @@
                             </select>
                         </li>
                         <li>
-                            <input id="txtwhere" type="text" />
+                            <input id="txtwhere" type="text"/>
                         </li>
                         <%--                        <li>
                             <select id="lywhere" style="display: none;" runat="server" name="lywhere">
@@ -207,28 +196,25 @@
             <div class="ftitle">
             </div>
             <div class="fitem">
-                品类名称：<input id="txtName" type="text" name="txtName" /><p></p>
+                品类名称：<input id="txtName" type="text" /><p></p>
             </div>
             <div class="fitem">
-                品类图片：<input id="txtImg" type="text" name="txtImg" /><p></p>
+                品类图片：<input id="txtImg" type="text"/><p></p>
             </div>
             <div class="fitem">
-                品类描述：<input id="txtdsc" type="text" name="txtdsc" /><p></p>
+                品类描述：<textarea id="txtdesc" cols="20" rows="2" class="input"></textarea><p></p>
             </div>
             <div class="fitem">
-                品类视频：<input id="txtvideo" type="text" name="txtvideo" /><p></p>
+                品类视频：<input id="txtvideo" type="text" /><p></p>
             </div>
             <div class="fitem">
-                品类logo：<input id="txtlogo" type="text" name="txtlogo" /><p></p>
-            </div>
-            <div class="fitem">
-                <input id="hid" type="hidden" name="hid"/> <p></p>
+                品类logo：<input id="txtlogo" type="text"/><p></p>
             </div>
             <input type="hidden" name="hidnum" id="hidnum" />
             <input type="hidden" name="hidaccount" id="hidaccount" />
         </div>
         <div id="dlg-buttons">
-            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="ValidateForm()" iconcls="icon-save">保存</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="SubComment()" iconcls="icon-save">保存</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')" iconcls="icon-cancel">取消</a>
         </div>
     </form>
@@ -243,33 +229,6 @@
             $("#txtwhere").attr("value", "");
             $('#persontable').datagrid('options').url = "/struts/sbrand.ashx?action=query";
             $('#persontable').datagrid('load');
-        }
-        function ValidateForm() {
-            if ($("#txtName").val() == "") {
-                $.messager.alert("提示", "品类名称不能为空");
-                return;
-            }
-            else {
-                $.ajax({
-                    type: "POST",
-                    url: "/struts/sbrand.ashx?action=opt",
-                    data: $('#personform').serialize(),
-                    datatype: "json",
-                    success: function (data) {
-                        var comment = $.parseJSON(data);
-                        if (comment != "suc") {
-                            $.messager.alert(comment.msg);
-                        } else {
-                            $('#dlg').dialog('close');
-                            $('#persontable').datagrid('load');
-                        }
-                    },
-                    //调用出错执行的函数
-                    error: function () {
-                        $.messager.alert("提示", "网络错误，请联系管理员");
-                    }
-                });
-            }
         }
     </script>
 </body>
