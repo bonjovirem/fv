@@ -31,17 +31,12 @@ namespace sd_order_sys.struts
                         LoadMsg(context);
                         break;
 
-                    //case "LoadMyRecivedNotice":
-                    //    LoadMyRecivedNotice(context, opt);
-                    //    break;
-                    //case "LoadAllNotice":
-                    //    LoadAllNotice(context, opt);
-                    //    break;
-
-
-                    //case "del":
-                    //    DelRecord(context);
-                    //    break;
+                    case "opt":
+                        RecordAdd(context);
+                        break;
+                    case "rRecord":
+                        DelRecord(context);
+                        break;
                 }
             }
         }
@@ -54,9 +49,8 @@ namespace sd_order_sys.struts
             int page = context.Request["page"] != "" ? Convert.ToInt32(context.Request.Form["page"]) : 1;
             int size = context.Request["rows"] != "" ? Convert.ToInt32(context.Request.Form["rows"]) : 1;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            int total = 0;
             builder.Append(@"SELECT * FROM fv_sysbrand");
-            
+
             if (context.Request["cul"] == null && context.Request["where"] == null)
             {
                 //return;
@@ -87,6 +81,66 @@ namespace sd_order_sys.struts
             dt.Dispose();
             JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
             context.Response.Write(javascriptSerializer.Serialize(dictionary));
+        }
+        /// <summary>
+        /// 增更数据库
+        /// </summary>
+        /// <param name="context"></param>
+        private void RecordAdd(HttpContext context)
+        {
+            string bName = context.Request.Form["txtName"].ToString();
+            string bImg = context.Request.Form["txtImg"].ToString();
+            string bDesc = context.Request.Form["txtdsc"].ToString();
+            string bLogo = context.Request.Form["txtlogo"].ToString();
+            string bVideo = context.Request.Form["txtvideo"].ToString();
+            int id = context.Request.Form["hid"] == null ? 0 : int.Parse(context.Request.Form["hid"].ToString());
+            Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+            sqlparams.Add("@brandName", bName);
+            sqlparams.Add("@brandImg", bImg);
+            sqlparams.Add("@brandDesc", bDesc);
+            sqlparams.Add("@brandLogo", bLogo);
+            sqlparams.Add("@brandVideo", bVideo);
+            string sql = "";
+            if (id == 0)
+                sql = "insert into fv_sysbrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,createTime,lastChangeTime) values(@brandName,@brandImg,@brandDesc,@brandLogo,@brandVideo,now(),now())";
+            else
+                sql = "update fv_sysbrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandLogo=@brandLogo,brandVideo=@brandVideo,lastChangeTime=NOW() where id=" + id;
+            bool w = SqlManage.OpRecord(sql, sqlparams);
+            string msg = "";
+            if (w)
+
+                msg = "suc";
+            else
+                msg = "数据库连接超时或出现未知错误";
+            JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
+            context.Response.Write(javascriptSerializer.Serialize(msg));
+
+        }
+        /// <summary>
+        /// 删除数据库记录
+        /// </summary>
+        /// <param name="context"></param>
+        private void DelRecord(HttpContext context)
+        {
+            string where = context.Request["id"] == null ? "" : context.Request["id"].ToString();
+            Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+            string sql = "";
+            string msg = "";
+            bool w = false;
+            if (where == "")
+                msg = "数据库网络延迟";
+            else
+            {
+                sql = "delete from fv_sysbrand where id in (" + where + ")";
+                w = SqlManage.OpRecord(sql, sqlparams);
+            }
+            if (w)
+                msg = "suc";
+            else
+                msg = "数据库连接超时或出现未知错误";
+            JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
+            context.Response.Write(javascriptSerializer.Serialize(msg));
+
         }
         public bool IsReusable
         {
