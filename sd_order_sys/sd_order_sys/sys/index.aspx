@@ -16,7 +16,7 @@
             <div class="dl-title">
                 山东全景导览后台管理系统
             </div>
-            <div class="dl-log">欢迎您，<span class="dl-log-user"><asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></span><a href="/quit.aspx" title="退出系统" class="dl-log-quit">[退出]</a></div>
+            <div class="dl-log">欢迎您，<span class="dl-log-user"><asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></span><a href="quit.aspx" title="退出系统" class="dl-log-quit">[退出]</a></div>
 
         </div>
         <div class="content">
