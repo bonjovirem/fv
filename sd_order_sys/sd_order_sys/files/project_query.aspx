@@ -36,6 +36,10 @@
             vertical-align: middle;
             width: 200px;
         }
+        .select {
+        }
+        .select1 {
+        }
     </style>
 </head>
 <script>
@@ -140,10 +144,16 @@
         if (selectedRow) {
             $("#dlg").dialog().parent().appendTo("#personform");
             $("#txtName").attr("value", selectedRow["brandName"]);
-            $("#txtImg").attr("value", selectedRow["brandImg"]);
+            // $("#txtImg").attr("value", selectedRow["brandImg"]);
             $("#txtdsc").attr("value", selectedRow["brandDesc"]);
-            $("#txtvideo").attr("value", selectedRow["txtvideo"]);
-            $("#txtlogo").attr("value", selectedRow["txtlogo"]);
+            $("#txtvideo").attr("value", selectedRow["brandVideo"]);
+            $("#txtlogo").attr("value", selectedRow["brandLogo"]);
+            $("#brandOrder").attr("value", selectedRow["brandOrder"]);
+            alert(selectedRow["brandTypeName"]);
+            $("#brandTypeName").find("option[text='" + selectedRow["brandTypeName"] + "']").attr("selected", true);
+            $("#isShow").find("option[value='" + selectedRow["isShow"] + "']").attr("selected", true);
+            $("#isStar").find("option[value='" + selectedRow["isStar"] + "']").attr("selected", true);
+            $("#isShowWay").find("option[value='" + selectedRow["isShowWay"] + "']").attr("selected", true);
             $("#hid").attr("value", selectedRow["id"]);
             $('#dlg').dialog('open');
             //window.location = "replylist.aspx?id=" + selectedRow["id"];
@@ -228,7 +238,7 @@
                 品牌名称：<input id="txtName" type="text" name="txtName" /><p></p>
             </div>
             <div class="fitem">
-                品牌图片：<input id="txtImg" type="file" name="txtImg" onchange="document.getElementById('hidimg').value=this.value"/><input id="hidimg" type="text" name="hidimg"/><p></p>
+                品牌图片：<input id="txtImg" type="text" name="txtImg" onchange="document.getElementById('hidimg').value=this.value" /><input id="hidimg" type="text" name="hidimg" /><p></p>
             </div>
             <div class="fitem">
                 品牌描述：<input id="txtdsc" type="text" name="txtdsc" /><p></p>
