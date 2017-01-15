@@ -117,8 +117,8 @@
             $("#txtName").attr("value", selectedRow["brandName"]);
             $("#txtImg").attr("value", selectedRow["brandImg"]);
             $("#txtdsc").attr("value", selectedRow["brandDesc"]);
-            $("#txtvideo").attr("value", selectedRow["txtvideo"]);
-            $("#txtlogo").attr("value", selectedRow["txtlogo"]);
+            $("#txtvideo").attr("value", selectedRow["brandVideo"]);
+            $("#txtlogo").attr("value", selectedRow["brandLogo"]);
             $("#hid").attr("value", selectedRow["id"]);
             $('#dlg').dialog('open');
             //window.location = "replylist.aspx?id=" + selectedRow["id"];
