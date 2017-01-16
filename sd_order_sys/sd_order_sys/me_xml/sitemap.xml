@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <config>
   <global value="01">
-    <child value="用户管理">
-      <child_code info="welcome" text="用户管理" path="../xx/xx.aspx">
+    <child value="项目管理">
+      <child_code info="welcome" text="项目管理" path="/files/cityProject_query.aspx">
+      </child_code>
+      <child_code info="s01" text="模板管理" path="../xx/xx.aspx">
       </child_code>
     </child>
     <child value="全景设置">
@@ -12,6 +14,8 @@
       </child_code>
     </child>
     <child value="系统设置">
+      <child_code info="s06" text="用户管理" path="/files/project_query.aspx">
+      </child_code>
       <child_code info="s05" text="系统品类设置" path="/files/sbrand_query.aspx">
       </child_code>
       <child_code info="s07" text="项目品牌设置" path="/files/project_query.aspx">
