@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="cityProject_query.aspx.cs" Inherits="sd_order_sys.files.cityProject_query" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="setFloor.aspx.cs" Inherits="sd_order_sys.files.setFloor" %>
 
 <!DOCTYPE html>
 
@@ -52,20 +52,15 @@
             height: 'auto',
             striped: false,
             singleSelect: false,
-            url: '../struts/city.ashx?action=query',
+            url: '../struts/SetFloor.ashx?action=query',
             //queryParams:{},  
             loadMsg: '数据加载中请稍后……',
             pagination: true,
             rownumbers: true,
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
-                { field: 'projectName', title: '项目名称', align: 'center' },
-                { field: 'projectLogo', title: '项目logo', align: 'center', formatter: formatUploadFile },
-                { field: 'projectDesc', title: '项目描述', align: 'center' },
-                { field: 'projectImg', title: '项目图片', align: 'center' },
-                { field: 'projectVideo', title: '项目video', align: 'center' },
-                { field: 'projectCity', title: '项目城市', align: 'center' },
-                { field: 'projectFirstShow', title: '项目video', align: 'center' },
+                { field: 'floorLevel', title: '楼层编号', align: 'center' },
+                { field: 'floorImg', title: '楼层图片', align: 'center' },
                 { field: 'createTime', title: '创建时间', align: 'center' },
                 { field: 'lastChangeTime', title: '最后修改时间', align: 'center' }
             ]], toolbar: [{
@@ -125,9 +120,9 @@
         }
     }
     function DelRecord() {
-        $.messager.confirm('确认', '是否确认删除所选记录', function(row) {
+        $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
             if (row) {
-                var selectedRow = $('#persontable').datagrid('getSelections'); //获取选中行
+                var selectedRow = $('#persontable').datagrid('getSelections');  //获取选中行
                 if (selectedRow.length == 0) {
                     $.messager.alert('提示', '请选中一条记录');
                 } else {
@@ -141,7 +136,7 @@
                     }
                     $.ajax({
                         url: '/struts/city.ashx?action=rRecord&id=' + num,
-                        success: function(data) {
+                        success: function (data) {
                             var comment = $.parseJSON(data);
                             if (comment != "suc") {
                                 $.messager.alert("提示", "操作失败，请联系管理员");
@@ -150,26 +145,25 @@
                                 $('#persontable').datagrid('reload');
                             }
                         },
-                        error: function() {
+                        error: function () {
                             $.messager.alert("提示", "网络错误，请联系管理员");
                         }
                     });
                 }
             }
-        });
+        })
     }
 
-    function SetFloor(index) {
+    function SetFloor() {
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
             //$("#hid").attr("value", selectedRow["id"]);
-            $.messager.alert('提示', '1');
-            self.location = 'setFloor.aspx?projectid=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"];
-            $.messager.alert('提示', '2');
+            self.location = 'setFloor.aspx?projectid=' + selectedRow["id"];
         } else {
             $.messager.alert('提示', '请选中一条记录');
         }
+       
     }
 </script>
 <body>
@@ -181,6 +175,7 @@
                         <li>
                             <img src="../images/ico07.gif" /></li>
                         <li>
+                            <%=proId %>  <%=proName %>
                             <select id="selectwhere" class="combo">
 
                                 <option value="projectName">品类名称</option>
@@ -232,7 +227,9 @@
                 项目首页：<input id="txtfirst" type="text" name="txtfirst" /><p></p>
             </div>
             <div class="fitem">
-                <input id="hid" type="hidden" name="hid" />
+                <input id="hid" type="hidden" name="hid"/>
+                <input id="hidProId" type="hidden" name="hidName" value="<%=proId %>"/>
+                <input id="hidProName" type="hidden" name="hidName"  value="<%=proName %>"/>
                 <p></p>
             </div>
             <input type="hidden" name="hidnum" id="hidnum" />

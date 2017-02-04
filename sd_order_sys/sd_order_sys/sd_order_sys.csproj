@@ -181,8 +181,10 @@
     <Content Include="css\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="files\cityProject_query.aspx" />
+    <Content Include="files\DrawPoint.aspx" />
     <Content Include="files\project_query.aspx" />
     <Content Include="files\sbrand_query.aspx" />
+    <Content Include="files\setFloor.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\11.jpg" />
     <Content Include="images\acrossTab-2.png" />
@@ -562,6 +564,8 @@
     <Content Include="struts\sbrand.ashx" />
     <Content Include="struts\project.ashx" />
     <Content Include="struts\city.ashx" />
+    <Content Include="struts\SetFloor.ashx" />
+    <Content Include="struts\DrawPoint.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -579,6 +583,16 @@
     <Compile Include="files\cityProject_query.aspx.designer.cs">
       <DependentUpon>cityProject_query.aspx</DependentUpon>
     </Compile>
+    <Compile Include="struts\DrawPoint.ashx.cs">
+      <DependentUpon>DrawPoint.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="files\DrawPoint.aspx.cs">
+      <DependentUpon>DrawPoint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\DrawPoint.aspx.designer.cs">
+      <DependentUpon>DrawPoint.aspx</DependentUpon>
+    </Compile>
     <Compile Include="files\project_query.aspx.cs">
       <DependentUpon>project_query.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -592,6 +606,13 @@
     </Compile>
     <Compile Include="files\sbrand_query.aspx.designer.cs">
       <DependentUpon>sbrand_query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\setFloor.aspx.cs">
+      <DependentUpon>setFloor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\setFloor.aspx.designer.cs">
+      <DependentUpon>setFloor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -616,6 +637,9 @@
     <Compile Include="struts\sbrand.ashx.cs">
       <DependentUpon>sbrand.ashx</DependentUpon>
     </Compile>
+    <Compile Include="struts\SetFloor.ashx.cs">
+      <DependentUpon>SetFloor.ashx</DependentUpon>
+    </Compile>
     <Compile Include="sys\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -633,6 +657,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="projectImg\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SDorder.BLL\SDorder.BLL.csproj">
