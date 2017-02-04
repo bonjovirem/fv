@@ -100,6 +100,12 @@
                 handler: function () {
                     DelRecord();
                 }
+            }, {
+                text: '设置区域',
+                iconCls: 'icon-edit',
+                handler: function () {
+                    setArea();
+                }
             }]
         });
     }
@@ -194,6 +200,13 @@
                 }
             }
         })
+    }
+
+    function setArea(index) {
+        $('#persontable').datagrid('selectRow', index);
+        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+        window.open( 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2');
+        //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
     }
 </script>
 <body>

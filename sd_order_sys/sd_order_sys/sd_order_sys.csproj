@@ -565,6 +565,7 @@
     <Content Include="struts\project.ashx" />
     <Content Include="struts\city.ashx" />
     <Content Include="struts\SetFloor.ashx" />
+    <Content Include="struts\DrawPoint.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -581,6 +582,9 @@
     </Compile>
     <Compile Include="files\cityProject_query.aspx.designer.cs">
       <DependentUpon>cityProject_query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawPoint.ashx.cs">
+      <DependentUpon>DrawPoint.ashx</DependentUpon>
     </Compile>
     <Compile Include="files\DrawPoint.aspx.cs">
       <DependentUpon>DrawPoint.aspx</DependentUpon>

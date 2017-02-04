@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DrawPoint.aspx.cs" Inherits="sd_order_sys.files.DrawPoint" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DrawPoint2.aspx.cs" Inherits="sd_order_sys.files.DrawPoint2" %>
 
 <!DOCTYPE html>
 <html>
@@ -39,7 +39,15 @@
         function drawPt2() {
             var x = event.offsetX;
             var y = event.offsetY;
-            var div = drawDot(x, y, "red", 30, 1);
+            var sb = "";
+            if (l == 0) {
+                sb = "机";
+            } else if (l == 1) {
+                sb = "梯";
+            } else {
+                return;
+            }
+            var div = drawDot(x, y, "red", 30, 1,sb);
             //document.body.div.innerHTML += div;
             document.getElementById('div').innerHTML += div;
             var txtArea = $("#txtArea").val();
@@ -50,13 +58,13 @@
             }
 
         }
-        function drawDot(x, y, color, size, index) {
+        function drawDot(x, y, color, size, index,sb) {
             var p = new Point(x, y);
             arrPoints.push(p);
             l = arrPoints.length;
             //新建一个div
             var div = "<div id='dlist" + l + "' style='position:absolute; border:0;left:" + (x - 15) + "px; top:" + (y - 15) +
-            "px; background-size: cover;cursor:pointer;background-image:url(../images/1234.png)" + ";width:" + size + "px;height:" + size + "px;line-height:30px;text-align:center;'" + "onclick='alert();'" + "><b>" + l + "</b></div>";
+            "px; background-size: cover;cursor:pointer;background-image:url(../images/1234.png)" + ";width:" + size + "px;height:" + size + "px;line-height:30px;text-align:center;'" + "onclick='alert();'" + "><b>" + sb + "</b></div>";
             return div;
         }
         function reset() {
@@ -99,14 +107,18 @@
             <canvas id="ldsun" width="800" height="600" onmousedown="drawPt2();"></canvas>
         </div>
         <div id='div' onmousedown="drawPt2();"></div>
-        <p>
-            <input onclick="reset();" value="重新绘制" type="button" />
-            <input id="txtArea" name="txtArea" value="" type="hidden" />
-            <input onclick="AddArea();" value="确认绘制" type="button" />
+       <label id="typeShow" name="typeShow"></label>
             <input type="hidden" name="hidFloorId" id="hidFloorId" value="<%=hidFloorId %>" />
-            <input type="hidden" name="projectId" id="projectId" value="<%=projectId %>" />
+        <p>
+            <input onclick="reset();" value="绘制client和最近电梯点" type="button" />
+            <input id="txtClient" name="txtArea" value="" type="hidden" />
+            <input onclick="AddClient();" value="确认绘制" type="button" />
         </p>
-       
+         <p>
+            <input onclick="reset();" value="绘制client" type="button" />
+            <input id="txtClient" name="txtArea" value="" type="hidden" />
+            <input onclick="AddClient();" value="确认绘制" type="button" />
+        </p>
     
     </form>
 </body>

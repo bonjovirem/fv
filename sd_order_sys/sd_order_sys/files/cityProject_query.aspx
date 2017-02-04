@@ -125,9 +125,9 @@
         }
     }
     function DelRecord() {
-        $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
+        $.messager.confirm('确认', '是否确认删除所选记录', function(row) {
             if (row) {
-                var selectedRow = $('#persontable').datagrid('getSelections');  //获取选中行
+                var selectedRow = $('#persontable').datagrid('getSelections'); //获取选中行
                 if (selectedRow.length == 0) {
                     $.messager.alert('提示', '请选中一条记录');
                 } else {
@@ -141,7 +141,7 @@
                     }
                     $.ajax({
                         url: '/struts/city.ashx?action=rRecord&id=' + num,
-                        success: function (data) {
+                        success: function(data) {
                             var comment = $.parseJSON(data);
                             if (comment != "suc") {
                                 $.messager.alert("提示", "操作失败，请联系管理员");
@@ -150,13 +150,13 @@
                                 $('#persontable').datagrid('reload');
                             }
                         },
-                        error: function () {
+                        error: function() {
                             $.messager.alert("提示", "网络错误，请联系管理员");
                         }
                     });
                 }
             }
-        })
+        });
     }
 
     function SetFloor(index) {
