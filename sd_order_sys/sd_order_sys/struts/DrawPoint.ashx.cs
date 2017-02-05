@@ -40,7 +40,7 @@ namespace sd_order_sys.files
               sqlparams.Add("@floorId", hidFloorId);
               sqlparams.Add("@areaPoints", areaPoints);
             string sql = "";
-            sql = "update fv_projectbrand set floorId=@floorId,areaPoints=@areaPoints where id=" + projectId;
+            sql = "update fv_projectbrand set floorId=@floorId,areaPoints=@areaPoints,lastchangetime=now() where id=" + projectId;
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)

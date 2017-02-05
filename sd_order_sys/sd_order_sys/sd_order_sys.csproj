@@ -182,6 +182,8 @@
     <Content Include="favicon.ico" />
     <Content Include="files\cityProject_query.aspx" />
     <Content Include="files\DrawPoint.aspx" />
+    <Content Include="files\DrawPoint2.aspx" />
+    <Content Include="files\DrawPointClient.aspx" />
     <Content Include="files\project_query.aspx" />
     <Content Include="files\sbrand_query.aspx" />
     <Content Include="files\setFloor.aspx" />
@@ -566,6 +568,7 @@
     <Content Include="struts\city.ashx" />
     <Content Include="struts\SetFloor.ashx" />
     <Content Include="struts\DrawPoint.ashx" />
+    <Content Include="struts\DrawPointClient.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -582,6 +585,20 @@
     </Compile>
     <Compile Include="files\cityProject_query.aspx.designer.cs">
       <DependentUpon>cityProject_query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\DrawPoint2.aspx.cs">
+      <DependentUpon>DrawPoint2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\DrawPoint2.aspx.designer.cs">
+      <DependentUpon>DrawPoint2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\DrawPointClient.aspx.cs">
+      <DependentUpon>DrawPointClient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\DrawPointClient.aspx.designer.cs">
+      <DependentUpon>DrawPointClient.aspx</DependentUpon>
     </Compile>
     <Compile Include="struts\DrawPoint.ashx.cs">
       <DependentUpon>DrawPoint.ashx</DependentUpon>
@@ -627,6 +644,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="struts\city.ashx.cs">
       <DependentUpon>city.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawPointClient.ashx.cs">
+      <DependentUpon>DrawPointClient.ashx</DependentUpon>
     </Compile>
     <Compile Include="struts\login.ashx.cs">
       <DependentUpon>login.ashx</DependentUpon>
