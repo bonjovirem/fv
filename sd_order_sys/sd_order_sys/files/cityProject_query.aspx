@@ -159,14 +159,19 @@
         });
     }
 
-    function SetFloor(index) {
-        $('#persontable').datagrid('selectRow', index);
+    function SetFloor() {
+       // $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
             //$("#hid").attr("value", selectedRow["id"]);
-            $.messager.alert('提示', '1');
-            self.location = 'setFloor.aspx?projectid=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"];
-            $.messager.alert('提示', '2');
+            //$.messager.alert('提示', '1');
+            top.topManager.openPage({
+                id: 'sbs',
+                href:  '/files/setFloor.aspx?projectid=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
+                title: '楼层设置'
+            });
+            //window.location = 'setFloor.aspx?projectid=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"];
+            //$.messager.alert('提示', '2');
         } else {
             $.messager.alert('提示', '请选中一条记录');
         }
