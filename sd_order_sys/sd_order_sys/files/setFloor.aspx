@@ -84,10 +84,10 @@
                     DelRecord();
                 }
             }, {
-                text: '编辑楼层',
+                text: '编辑客户机',
                 iconCls: 'icon-add',
                 handler: function () {
-                    SetFloor();
+                    SetClient();
                 }
             }]
         });
@@ -149,12 +149,23 @@
         })
     }
 
-    function SetFloor() {
+    function SetClient() {
+        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+        if (selectedRow) {
+            top.topManager.openPage({
+                id: 'szclient',
+                href: '/files/DrawPointClient.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"]+"&projectId="+<%=proId %>,
+                title: 'client设置'
+            });
+        } else {
+            $.messager.alert('提示', '请选中一条记录');
+        }
+
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
             //$("#hid").attr("value", selectedRow["id"]);
-            self.location = 'setFloor.aspx?projectid=' + selectedRow["id"];
+            self.location = 'DrawPointClient.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"];
         } else {
             $.messager.alert('提示', '请选中一条记录');
         }
@@ -166,11 +177,12 @@
         <table width="100%" border="0">
             <tr>
                 <td align="left">
-                    <ul>
+                     项目名称：  <%=proName %>  <%=proId %>
+                    <ul style="display:none;">
+
                         <li>
                             <img src="../images/ico07.gif" /></li>
                         <li>
-                            <%=proId %>  <%=proName %>
                             <select id="selectwhere" class="combo">
 
                                 <option value="floorLevel">品类名称</option>
@@ -208,8 +220,8 @@
             </div>
             <div class="fitem">
                 <input id="hid" type="hidden" name="hid"/>
-                <input id="hidProId" type="hidden" name="hidName" value="<%=proId %>"/>
-                <input id="hidProName" type="hidden" name="hidName"  value="<%=proName %>"/>
+                <input id="hidProId" type="hidden" name="hidProId" value="<%=proId %>"/>
+                <input id="hidProName" type="hidden" name="hidProName"  value="<%=proName %>"/>
                 <p></p>
             </div>
             <input type="hidden" name="hidnum" id="hidnum" />

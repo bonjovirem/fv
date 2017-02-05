@@ -5,7 +5,7 @@
 <head>
     <title>关键点设置</title>
     <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
-      <link rel="stylesheet" type="text/css" href="../plugins/themes/metro/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="../plugins/themes/metro/easyui.css" />
     <link rel="stylesheet" type="text/css" href="../plugins/themes/icon.css" />
     <script type="text/javascript" src="../plugins/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="../plugins/locale/easyui-lang-zh_CN.js"></script>
@@ -33,64 +33,7 @@
             this.y = y;
         };
     </script>
-    <script language="javascript" type="text/javascript">
-        var arrPoints = new Array();
-        var l = arrPoints.length;
-        function drawPt2() {
-            var x = event.offsetX;
-            var y = event.offsetY;
-            var div = drawDot(x, y, "red", 30, 1);
-            //document.body.div.innerHTML += div;
-            document.getElementById('div').innerHTML += div;
-            var txtArea = $("#txtArea").val();
-            if (txtArea == '') {
-                $("#txtArea").val(txtArea + '(' + x + ',' + y + ')');
-            } else {
-                $("#txtArea").val(txtArea + ';(' + x + ',' + y + ')');
-            }
 
-        }
-        function drawDot(x, y, color, size, index) {
-            var p = new Point(x, y);
-            arrPoints.push(p);
-            l = arrPoints.length;
-            //新建一个div
-            var div = "<div id='dlist" + l + "' style='position:absolute; border:0;left:" + (x - 15) + "px; top:" + (y - 15) +
-            "px; background-size: cover;cursor:pointer;background-image:url(../images/1234.png)" + ";width:" + size + "px;height:" + size + "px;line-height:30px;text-align:center;'" + "onclick='alert();'" + "><b>" + l + "</b></div>";
-            return div;
-        }
-        function reset() {
-            document.getElementById('div').innerHTML = '';
-            arrPoints = new Array();
-            l = arrPoints.length;
-        }
-
-        function AddArea() {
-            $.ajax({
-                type: "POST",
-                url: "/struts/Drawpoint.ashx?action=add",
-                data: $('#personform').serialize(),
-                datatype: "json",
-                success: function (data) {
-                    var comment = $.parseJSON(data);
-                    if (comment != "suc") {
-                        $.messager.alert(comment.msg);
-                    } else {
-                        $.messager.confirm('确认', '操作成功，是否关闭当前页？', function (row) {
-                            if (row) {
-                                window.close();
-                            }
-                        });
-                        //window.close();
-                    }
-                },
-                //调用出错执行的函数
-                error: function () {
-                    $.messager.alert("提示", "网络错误，请联系管理员");
-                }
-            });
-        }
-    </script>
 
 </head>
 <body border='0' style="margin: 0px; padding: 0px;">
@@ -100,14 +43,84 @@
         </div>
         <div id='div' onmousedown="drawPt2();"></div>
         <p>
+            <select id="floorLevel" runat="server" onchange="getText()" name="floorLevel">
+                    <option></option>
+                </select>
             <input onclick="reset();" value="重新绘制" type="button" />
             <input id="txtArea" name="txtArea" value="" type="hidden" />
             <input onclick="AddArea();" value="确认绘制" type="button" />
-            <input type="hidden" name="hidFloorId" id="hidFloorId" value="<%=hidFloorId %>" />
+            <input type="hidden" name="hidFloorId" id="hidFloorId" runat="server" />
             <input type="hidden" name="projectId" id="projectId" value="<%=projectId %>" />
         </p>
-       
-    
+
+
     </form>
 </body>
 </html>
+<script language="javascript" type="text/javascript">
+    var arrPoints = new Array();
+    var l = arrPoints.length;
+
+    function drawPt3(x, y) {
+        var div = drawDot(x, y, "red", 30, 1);
+        //document.body.div.innerHTML += div;
+        document.getElementById('div').innerHTML += div;
+        var txtArea = $("#txtArea").val();
+        if (txtArea == '') {
+            $("#txtArea").val(txtArea + '(' + x + ',' + y + ')');
+        } else {
+            $("#txtArea").val(txtArea + ';(' + x + ',' + y + ')');
+        }
+    }
+    function drawPt2() {
+        var x = event.offsetX;
+        var y = event.offsetY;
+        drawPt3(x, y);
+    }
+    function drawDot(x, y, color, size, index) {
+        var p = new Point(x, y);
+        arrPoints.push(p);
+        l = arrPoints.length;
+        //新建一个div
+        var div = "<div id='dlist" + l + "' style='position:absolute; border:0;left:" + (x - 15) + "px; top:" + (y - 15) +
+        "px; background-size: cover;cursor:pointer;background-image:url(../images/1234.png)" + ";width:" + size + "px;height:" + size + "px;line-height:30px;text-align:center;'" + "onclick='alert();'" + "><b>" + l + "</b></div>";
+        return div;
+    }
+    function reset() {
+        document.getElementById('div').innerHTML = '';
+        $("#txtArea").val('');
+        arrPoints = new Array();
+        l = arrPoints.length;
+    }
+
+    function AddArea() {
+        $.ajax({
+            type: "POST",
+            url: "/struts/Drawpoint.ashx?action=add",
+            data: $('#personform').serialize(),
+            datatype: "json",
+            success: function (data) {
+                var comment = $.parseJSON(data);
+                if (comment != "suc") {
+                    $.messager.alert(comment.msg);
+                } else {
+                    $.messager.confirm('确认', '操作成功，是否关闭当前页？', function (row) {
+                        if (row) {
+                            window.close();
+                        }
+                    });
+                    //window.close();
+                }
+            },
+            //调用出错执行的函数
+            error: function () {
+                $.messager.alert("提示", "网络错误，请联系管理员");
+            }
+        });
+    }
+    function getText() {
+        var val = $("#floorLevel").find("option:selected").val();
+        $("#hidFloorId").attr("value", val);
+    }
+    <% =strForShow %>
+</script>

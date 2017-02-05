@@ -88,27 +88,18 @@ namespace sd_order_sys.struts
         /// <param name="context"></param>
         private void RecordAdd(HttpContext context)
         {
-            string bName = context.Request.Form["txtName"].ToString();
-            string bImg = context.Request.Form["txtImg"].ToString();
-            string bDesc = context.Request.Form["txtdsc"].ToString();
-            string bLogo = context.Request.Form["txtlogo"].ToString();
-            string bVideo = context.Request.Form["txtvideo"].ToString();
-            string bCity = context.Request.Form["txtcity"].ToString();
-            string bFirst = context.Request.Form["txtfirst"].ToString();
+            string floorLevel = context.Request.Form["floorLevel"].ToString();
+            string hidProId = context.Request.Form["hidProId"].ToString();
             int id = context.Request.Form["hid"].ToString() == "" ? 0 : int.Parse(context.Request.Form["hid"].ToString());
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-            sqlparams.Add("@projectName", bName);
-            sqlparams.Add("@projectLogo", bLogo);
-            sqlparams.Add("@projectDesc", bDesc);
-            sqlparams.Add("@projectImg", bImg);
-            sqlparams.Add("@projectVideo", bVideo);
-            sqlparams.Add("@projectCity", bCity);
-            sqlparams.Add("@projectFirstShow", bFirst);
+            sqlparams.Add("@floorLevel", floorLevel);
+            sqlparams.Add("@hidProId", hidProId);
+            sqlparams.Add("@floorImg", "f" + floorLevel);
             string sql = "";
             if (id == 0)
-                sql = "insert into fv_project (projectName,projectLogo,projectDesc,projectImg,projectVideo,projectCity,projectFirstShow,createTime,lastChangeTime) values(@projectName,@projectLogo,@projectDesc,@projectImg,@projectVideo,@projectCity,@projectFirstShow,now(),now())";
+                sql = "insert into fv_floor (projectId,floorLevel,floorImg,createTime,lastChangeTime) values(@hidProId,@floorLevel,@floorImg,now(),now())";
             else
-                sql = "update fv_project set projectName=@projectName,projectLogo=@projectLogo,projectDesc=@projectDesc,projectImg=@projectImg,projectVideo=@projectVideo,projectCity=@projectCity,projectFirstShow=@projectFirstShow,lastChangeTime=NOW() where id=" + id;
+                sql = "update fv_floor set projectId=@hidProId,floorLevel=@floorLevel,floorImg=@floorImg,lastChangeTime=now() where id=" + id;
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)
