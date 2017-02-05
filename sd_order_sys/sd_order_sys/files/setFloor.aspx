@@ -105,13 +105,8 @@
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
             $("#dlg").dialog().parent().appendTo("#personform");
-            $("#txtName").attr("value", selectedRow["projectName"]);
-            $("#txtImg").attr("value", selectedRow["projectImg"]);
-            $("#txtdsc").attr("value", selectedRow["projectDesc"]);
-            $("#txtvideo").attr("value", selectedRow["projectVideo"]);
-            $("#txtlogo").attr("value", selectedRow["projectLogo"]);
-            $("#txtcity").attr("value", selectedRow["projectCity"]);
-            $("#txtfirst").attr("value", selectedRow["projectFirstShow"]);
+            $("#floorLevel").attr("value", selectedRow["floorLevel"]);
+            $("#floorImg").attr("value", selectedRow["floorImg"]);
             $("#hid").attr("value", selectedRow["id"]);
             $('#dlg').dialog('open');
             //window.location = "replylist.aspx?id=" + selectedRow["id"];
@@ -135,7 +130,7 @@
                         }
                     }
                     $.ajax({
-                        url: '/struts/city.ashx?action=rRecord&id=' + num,
+                        url: '/struts/SetFloor.ashx?action=rRecord&id=' + num,
                         success: function (data) {
                             var comment = $.parseJSON(data);
                             if (comment != "suc") {
@@ -178,7 +173,7 @@
                             <%=proId %>  <%=proName %>
                             <select id="selectwhere" class="combo">
 
-                                <option value="projectName">品类名称</option>
+                                <option value="floorLevel">品类名称</option>
                             </select>
                         </li>
                         <li>
@@ -206,25 +201,10 @@
             <div class="ftitle">
             </div>
             <div class="fitem">
-                项目名称：<input id="txtName" type="text" name="txtName" /><p></p>
+                楼层：<input id="floorLevel" type="text" name="floorLevel" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/><p></p>
             </div>
             <div class="fitem">
-                项目图片：<input id="txtImg" type="text" name="txtImg" /><p></p>
-            </div>
-            <div class="fitem">
-                项目描述：<input id="txtdsc" type="text" name="txtdsc" /><p></p>
-            </div>
-            <div class="fitem">
-                项目视频：<input id="txtvideo" type="text" name="txtvideo" /><p></p>
-            </div>
-            <div class="fitem">
-                项目logo：<input id="txtlogo" type="text" name="txtlogo" /><p></p>
-            </div>
-            <div class="fitem">
-                项目城市：<input id="txtcity" type="text" name="txtcity" /><p></p>
-            </div>
-            <div class="fitem">
-                项目首页：<input id="txtfirst" type="text" name="txtfirst" /><p></p>
+                项目图片：<input id="floorImg" type="text" name="floorImg" /><p></p>
             </div>
             <div class="fitem">
                 <input id="hid" type="hidden" name="hid"/>
@@ -244,12 +224,12 @@
         function searchbtn() {
             var where = $("#txtwhere").val();
             var cul = $('#selectwhere').val();
-            $('#persontable').datagrid('options').url = "/struts/city.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where);
+            $('#persontable').datagrid('options').url = "/struts/SetFloor.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where);
             $('#persontable').datagrid('load');
         }
         function reloaddate() {
             $("#txtwhere").attr("value", "");
-            $('#persontable').datagrid('options').url = "/struts/city.ashx?action=query";
+            $('#persontable').datagrid('options').url = "/struts/SetFloor.ashx?action=query";
             $('#persontable').datagrid('load');
         }
         function ValidateForm() {
@@ -260,7 +240,7 @@
             else {
                 $.ajax({
                     type: "POST",
-                    url: "/struts/city.ashx?action=opt",
+                    url: "/struts/SetFloor.ashx?action=opt",
                     data: $('#personform').serialize(),
                     datatype: "json",
                     success: function (data) {
