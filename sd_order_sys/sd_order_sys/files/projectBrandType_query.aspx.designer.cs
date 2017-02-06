@@ -10,7 +10,7 @@
 namespace sd_order_sys.files {
     
     
-    public partial class project_query {
+    public partial class projectBrandType_query {
         
         /// <summary>
         /// personform 控件。

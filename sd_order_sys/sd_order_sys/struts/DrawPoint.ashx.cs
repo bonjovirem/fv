@@ -34,13 +34,13 @@ namespace sd_order_sys.files
         private void RecordAdd(HttpContext context)
         {
             string areaPoints = context.Request.Form["txtArea"].ToString();
-            string hidFloorId = context.Request.Form["hidFloorId"].ToString();
-            string projectId = context.Request.Form["projectId"].ToString();
+            string floorLevel = context.Request.Form["hidFloorId"].ToString();
+            string projectBrandId = context.Request.Form["projectBrandId"].ToString();
               Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-              sqlparams.Add("@floorId", hidFloorId);
+              sqlparams.Add("@floorLevel", floorLevel);
               sqlparams.Add("@areaPoints", areaPoints);
             string sql = "";
-            sql = "update fv_projectbrand set floorId=@floorId,areaPoints=@areaPoints,lastchangetime=now() where id=" + projectId;
+            sql = "update fv_projectbrand set floorLevel=@floorLevel,areaPoints=@areaPoints,lastchangetime=now() where id=" + projectBrandId;
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)

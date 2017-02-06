@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="project_query.aspx.cs" Inherits="sd_order_sys.files.project_query" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="projectBrandType_query.aspx.cs" Inherits="sd_order_sys.files.projectBrandType_query" %>
+
 
 <!DOCTYPE html>
 
@@ -36,12 +37,6 @@
             vertical-align: middle;
             width: 200px;
         }
-
-        .select {
-        }
-
-        .select1 {
-        }
     </style>
 </head>
 <script>
@@ -58,46 +53,31 @@
             height: 'auto',
             striped: false,
             singleSelect: false,
-            url: '../struts/project.ashx?action=query&projectBtId=<%=projectBtId %>',
+            url: '../struts/projectBrandType_query.ashx?action=query&projectId=<%=projectId %>',
             //queryParams:{},  
             loadMsg: '数据加载中请稍后……',
             pagination: true,
             rownumbers: true,
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
-                { field: 'brandName', title: '品牌名称', align: 'center' },
-                { field: 'brandImg', title: '品牌图片', align: 'center', formatter: formatUploadFile },
-                { field: 'brandDesc', title: '品牌描述', align: 'center' },
-                { field: 'brandVideo', title: '品牌视频', align: 'center' },
-                { field: 'brandLogo', title: '品牌图标', align: 'center' },
-                { field: 'brandOrder', title: '品类顺序', align: 'center' },
-                { field: 'brandTypeName', title: '所属品类名称', align: 'center' },
-                { field: 'isShow', title: '是否展示', align: 'center', formatter: formatString },
-                { field: 'isStar', title: '是否标星', align: 'center', formatter: formatString },
-                { field: 'isShowWay', title: '是否显示路线', align: 'center', formatter: formatString },
-                { field: 'fvUrl', title: '全景地址', align: 'center' },
+                { field: 'projectId', title: '项目ID', align: 'center' },
+                { field: 'brandTypeName', title: '品类名称', align: 'center' },
+                { field: 'brandTypeOrder', title: '品类顺序', align: 'center'},
+                { field: 'brandTypeImg', title: '品类图片', align: 'center' },
+                { field: 'brandTypeBackColor', title: '品类背景色', align: 'center' },
+                { field: 'isShow', title: '是否显示', align: 'center' , formatter: formatString },
                 { field: 'createTime', title: '创建时间', align: 'center' },
                 { field: 'lastChangeTime', title: '最后修改时间', align: 'center' }
             ]], toolbar: [{
                 text: '添加',
                 iconCls: 'icon-add',
                 handler: function () {
-                    if ($("#hidname").val() == "") {
-                        $.messager.alert('提示', '无任何品类信息，请先编辑品类');
-                        return;
-                    }
                     $("#dlg").dialog().parent().appendTo("#personform");
-                    $("#txtName").attr("value", '');
-                    $("#txtImg").attr("value", '');
-                    $("#txtdsc").attr("value", '');
-                    $("#txtvideo").attr("value", '');
-                    $("#txtlogo").attr("value", '');
-                    $("#brandOrder").attr("value", '');
-                    //alert(selectedRow["brandTypeName"]);
-                    $("#isShow").find("option[value='1']").attr("selected", true);
-                    $("#isStar").find("option[value='1']").attr("selected", true);
-                    $("#isShowWay").find("option[value='1']").attr("selected", true);
-                    $("#fvUrl").attr("value", '');
+                    $("#btName").attr("value", '');
+                    $("#btOrder").attr("value", '');
+                    $("#btImg").attr("value", '');
+                    $("#btBgcolor").attr("value", '');
+                    $("#btIsshow").attr("value", '1');
                     $("#hid").attr("value", '');
                     $('#dlg').dialog('open');
                 }
@@ -115,10 +95,10 @@
                     DelRecord();
                 }
             }, {
-                text: '设置区域',
-                iconCls: 'icon-edit',
+                text: '编辑项目品类',
+                iconCls: 'icon-add',
                 handler: function () {
-                    setArea();
+                    SetBrand();
                 }
             }]
         });
@@ -130,50 +110,17 @@
         else
             return "";
     }
-    function formatString(val, row, index) {
-        if (val == 0)
-            return "否";
-        else
-            return "是";
-    }
-    function formatUrl(val, row, index) {
-        if (val) {
-            return '<a href="' + val + '" title="查看全景" target="_blank">查看全景</a>';
-        }
-        else
-            return "";
-    }
-    //function formateTime(val, row, index) {
-    //    if (val) {
-    //        var dateTimeJsonStr = val;
-    //        var msecStr = dateTimeJsonStr.toString().replace(/\/Date\(([-]?\d+)\)\//gi, "$1");
-    //        var msesInt = Number(msecStr);
-    //        var dt = new Date(msesInt);
-    //        return dt.toLocaleString();
-    //    }
-    //    else {
-    //        return "";
-    //    }
-    //}
-    //function formatOper(val, row, index) {
-    //    return '<a href="javascript:void(0);", onclick="rowMark(' + index + ')">查看</a>';
-    //};
+
     function rowMark(index) {
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
             $("#dlg").dialog().parent().appendTo("#personform");
-            $("#txtName").attr("value", selectedRow["brandName"]);
-            $("#txtImg").attr("value", selectedRow["brandImg"]);
-            $("#txtdsc").attr("value", selectedRow["brandDesc"]);
-            $("#txtvideo").attr("value", selectedRow["brandVideo"]);
-            $("#txtlogo").attr("value", selectedRow["brandLogo"]);
-            $("#brandOrder").attr("value", selectedRow["brandOrder"]);
-            //alert(selectedRow["brandTypeName"]);
-            $("#isShow").find("option[value='" + selectedRow["isShow"] + "']").attr("selected", true);
-            $("#isStar").find("option[value='" + selectedRow["isStar"] + "']").attr("selected", true);
-            $("#isShowWay").find("option[value='" + selectedRow["isShowWay"] + "']").attr("selected", true);
-            $("#fvUrl").attr("value", selectedRow["fvUrl"]);
+            $("#btName").attr("value", selectedRow["brandTypeName"]);
+            $("#btOrder").attr("value", selectedRow["brandTypeOrder"]);
+            $("#btImg").attr("value", selectedRow["brandTypeImg"]);
+            $("#btBgcolor").attr("value", selectedRow["brandTypeBackColor"]);
+            $("#btIsshow").attr("value", selectedRow["isShow"]);
             $("#hid").attr("value", selectedRow["id"]);
             $('#dlg').dialog('open');
             //window.location = "replylist.aspx?id=" + selectedRow["id"];
@@ -182,9 +129,9 @@
         }
     }
     function DelRecord() {
-        $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
+        $.messager.confirm('确认', '是否确认删除所选记录', function(row) {
             if (row) {
-                var selectedRow = $('#persontable').datagrid('getSelections');  //获取选中行
+                var selectedRow = $('#persontable').datagrid('getSelections'); //获取选中行
                 if (selectedRow.length == 0) {
                     $.messager.alert('提示', '请选中一条记录');
                 } else {
@@ -197,8 +144,8 @@
                         }
                     }
                     $.ajax({
-                        url: '/struts/project.ashx?action=rRecord&id=' + num,
-                        success: function (data) {
+                        url: '/struts/projectBrandType_query.ashx?action=del&id=' + num,
+                        success: function(data) {
                             var comment = $.parseJSON(data);
                             if (comment != "suc") {
                                 $.messager.alert("提示", "操作失败，请联系管理员");
@@ -207,34 +154,45 @@
                                 $('#persontable').datagrid('reload');
                             }
                         },
-                        error: function () {
+                        error: function() {
                             $.messager.alert("提示", "网络错误，请联系管理员");
                         }
                     });
                 }
             }
-        })
+        });
     }
 
-    function setArea(index) {
-        $('#persontable').datagrid('selectRow', index);
+    function SetBrand() {
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
-        window.open('drawpoint.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>');
-        //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
+        if (selectedRow) {
+            top.topManager.openPage({
+                id: 'xmppsz',
+                href: '/files/project_query.aspx?projectid=<% =projectId %>&projectName=<% =projectName %>' + '&projectBtId=' + selectedRow["id"] + '&projectBtName=' + selectedRow["brandTypeName"],
+                title: '项目品牌设置'
+            });
+        } else {
+            $.messager.alert('提示', '请选中一条记录');
+        }
+    }
+    function formatString(val, row, index) {
+        if (val == 0)
+            return "否";
+        else
+            return "是";
     }
 </script>
 <body>
     <form id="personform" runat="server">
         <table width="100%" border="0">
             <tr>
-                <td align="left">
+                <td align="left"><%=projectId %> <%=projectName %>
                     <ul>
                         <li>
                             <img src="../images/ico07.gif" /></li>
                         <li>
                             <select id="selectwhere" class="combo">
-
-                                <option value="brandName">品类名称</option>
+                                <option value="projectName">品类名称</option>
                             </select>
                         </li>
                         <li>
@@ -258,50 +216,26 @@
                 <th field="id" width="100" hidden="true">序号</th>
             </tr>
         </table>
-        <div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="系统品类信息">
+        <div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="项目品类信息">
             <div class="ftitle">
             </div>
             <div class="fitem">
-                品牌名称：<input id="txtName" type="text" name="txtName" /><p></p>
+                品类名称：<input id="btName" type="text" name="btName" /><p></p>
             </div>
             <div class="fitem">
-                品牌图片：<input id="txtImg" type="text" name="txtImg" /><p></p>
+                品类序号：<input id="btOrder" type="text" name="btOrder" /><p></p>
             </div>
             <div class="fitem">
-                品牌描述：<input id="txtdsc" type="text" name="txtdsc" /><p></p>
+                品类图片：<input id="btImg" type="text" name="btImg" /><p></p>
             </div>
             <div class="fitem">
-                品牌视频：<input id="txtvideo" type="text" name="txtvideo" /><p></p>
+                品类背色：<input id="btBgcolor" type="text" name="btBgcolor" /><p></p>
             </div>
             <div class="fitem">
-                品牌logo：<input id="txtlogo" type="text" name="txtlogo" /><p></p>
-            </div>
-            <div class="fitem">
-                品牌顺序：<input id="brandOrder" type="text" name="brandOrder" /><p></p>
-            </div>
-            <input id="projectId" type="hidden" name="projectId" value="<%= projectId %>" />
-            <input id="projectBtId" type="hidden" name="projectBtId" value="<%= projectBtId %>" />
-            <input id="projectBtName" type="hidden" name="projectBtName" value="<%= projectBtName %>" />
-            <div class="fitem">
-                是否展示：<select id="isShow" name="isShow">
-                    <option value="1">是</option>
-                    <option value="0">否</option>
-                </select><p></p>
-            </div>
-            <div class="fitem">
-                是否标星：<select id="isStar" name="isStar">
-                    <option value="1">是</option>
-                    <option value="0">否</option>
-                </select><p></p>
-            </div>
-            <div class="fitem">
-                是否展示：<select id="isShowWay" name="isShowWay">
-                    <option value="1">是</option>
-                    <option value="0">否</option>
-                </select><p></p>
-            </div>
-            <div class="fitem">
-                全景地址：<input id="fvUrl" type="text" name="fvUrl" /><p></p>
+                是否显示：  <select id="btIsShow" name="btIsShow" class="combo">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select><p></p>
             </div>
             <div class="fitem">
                 <input id="hid" type="hidden" name="hid" />
@@ -309,6 +243,7 @@
             </div>
             <input type="hidden" name="hidnum" id="hidnum" />
             <input type="hidden" name="hidaccount" id="hidaccount" />
+            <input type="hidden" name="projectId" id="projectId" value="<%=projectId %>" />
         </div>
         <div id="dlg-buttons">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="ValidateForm()" iconcls="icon-save">保存</a>
@@ -319,12 +254,12 @@
         function searchbtn() {
             var where = $("#txtwhere").val();
             var cul = $('#selectwhere').val();
-            $('#persontable').datagrid('options').url = "/struts/project.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where);
+            $('#persontable').datagrid('options').url = "/struts/city.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where);
             $('#persontable').datagrid('load');
         }
         function reloaddate() {
             $("#txtwhere").attr("value", "");
-            $('#persontable').datagrid('options').url = "/struts/project.ashx?action=query";
+            $('#persontable').datagrid('options').url = "/struts/projectBrandType_query.ashx?action=query";
             $('#persontable').datagrid('load');
         }
         function ValidateForm() {
@@ -335,7 +270,7 @@
             else {
                 $.ajax({
                     type: "POST",
-                    url: "/struts/project.ashx?action=opt",
+                    url: "/struts/projectBrandType_query.ashx?action=add",
                     data: $('#personform').serialize(),
                     datatype: "json",
                     success: function (data) {
@@ -353,10 +288,6 @@
                     }
                 });
             }
-        }
-        function getText() {
-            var text = $("#brandTypeName").find("option:selected").text();
-            $("#hidname").attr("value", text);
         }
     </script>
 </body>

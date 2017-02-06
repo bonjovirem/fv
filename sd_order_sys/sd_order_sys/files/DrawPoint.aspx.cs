@@ -11,20 +11,22 @@ namespace sd_order_sys.files
 {
     public partial class DrawPoint : System.Web.UI.Page
     {
-        //public string hidFloorId = "";
         public string projectId = "";
         public string strForShow = "";
+        public string projectBrandId = "";
+        public string floorLevelId = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
-        //hidFloorId = Request.QueryString["hidFloorId"];
             projectId = Request.QueryString["projectId"];
+            projectBrandId = Request.QueryString["projectBrandId"];
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-            string sql = string.Format("select areapoints from fv_projectbrand where id={0}  limit 1 ", projectId);
+            string sql = string.Format("select areapoints,floorlevel from fv_projectbrand where id={0}  limit 1 ", projectBrandId);
             DataTable dt = SqlManage.Query(sql, sqlparams).Tables[0];
             if (dt != null && dt.Rows.Count > 0)
             {
                 string spoints = dt.Rows[0][0].ToString();
+                floorLevelId = dt.Rows[0][1].ToString();
                 string[] arrayPoints = spoints.Split(';');
                 foreach (string item in arrayPoints)
                 {
@@ -47,7 +49,8 @@ namespace sd_order_sys.files
             floorLevel.DataBind();
             if (dt.Rows.Count > 0)
             {
-                hidFloorId.Value = dt.Rows[0]["floorlevel"].ToString();
+                floorLevel.Value = floorLevelId;
+                hidFloorId.Value = floorLevelId;
             }
 
         }

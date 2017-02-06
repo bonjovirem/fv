@@ -9,36 +9,29 @@ using System.Data;
 namespace sd_order_sys.struts
 {
     /// <summary>
-    /// project 的摘要说明
+    /// projectBrandType_query 的摘要说明
     /// </summary>
-    public class project : IHttpHandler, System.Web.SessionState.IRequiresSessionState
+    public class projectBrandType_query : IHttpHandler
     {
-
         public void ProcessRequest(HttpContext context)
         {
-            string user = context.Session["person"] == null ? "nouser" : context.Session["person"].ToString();
-            context.Response.ContentType = "text/plain";
-            if ("nouser".Equals(user))
 
-                context.Response.Redirect("/login.aspx");
-            else
+            string key = context.Request["action"] == null ? "" : context.Request["action"].ToString();
+            switch (key)
             {
-                string key = context.Request["action"] == null ? "" : context.Request["action"].ToString();
-                switch (key)
-                {
 
-                    case "query":
-                        LoadMsg(context);
-                        break;
+                case "query":
+                    LoadMsg(context);
+                    break;
 
-                    case "opt":
-                        RecordAdd(context);
-                        break;
-                    case "rRecord":
-                        DelRecord(context);
-                        break;
-                }
+                case "add":
+                    RecordAdd(context);
+                    break;
+                case "del":
+                    DelRecord(context);
+                    break;
             }
+
         }
         /// <summary>
         /// 获得列表数据
@@ -49,8 +42,7 @@ namespace sd_order_sys.struts
             int page = context.Request["page"] != "" ? Convert.ToInt32(context.Request.Form["page"]) : 1;
             int size = context.Request["rows"] != "" ? Convert.ToInt32(context.Request.Form["rows"]) : 1;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Append(@"SELECT * FROM fv_projectBrand where brandTypeId=" + context.Request["projectBtId"].ToString());
-
+            builder.Append(@"SELECT * FROM fv_projectbrandtype where projectId=" + context.Request["projectId"].ToString());
             builder.Append(" LIMIT " + (page - 1) + "," + size);
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
@@ -80,38 +72,25 @@ namespace sd_order_sys.struts
         private void RecordAdd(HttpContext context)
         {
             string projectId = context.Request.Form["projectId"].ToString();
-            string bName = context.Request.Form["txtName"].ToString();
-            string bImg = context.Request.Form["txtImg"].ToString();
-            string bDesc = context.Request.Form["txtdsc"].ToString();
-            string bLogo = context.Request.Form["txtlogo"].ToString();
-            string bVideo = context.Request.Form["txtvideo"].ToString();
-            string bOrder = context.Request.Form["brandOrder"].ToString();
-            int brandTypeID = int.Parse(context.Request.Form["projectBtId"].ToString());
-            string bTypeName = context.Request.Form["projectBtName"].ToString();
-            int isShow = int.Parse(context.Request.Form["isShow"].ToString());
-            int isStar = int.Parse(context.Request.Form["isStar"].ToString());
-            int isShowWay = int.Parse(context.Request.Form["isShowWay"].ToString());
-            string fvUrl = context.Request.Form["fvUrl"].ToString();
+            string btName = context.Request.Form["btName"].ToString();
+            string btOrder = context.Request.Form["btOrder"].ToString();
+            string btImg = context.Request.Form["btImg"].ToString();
+            string btBgcolor = context.Request.Form["btBgcolor"].ToString();
+            string btIsShow = context.Request.Form["btIsShow"].ToString();
             int id = context.Request.Form["hid"].ToString() == "" ? 0 : int.Parse(context.Request.Form["hid"].ToString());
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             sqlparams.Add("@projectId", projectId);
-            sqlparams.Add("@brandName", bName);
-            sqlparams.Add("@brandImg", bImg);
-            sqlparams.Add("@brandDesc", bDesc);
-            sqlparams.Add("@brandLogo", bLogo);
-            sqlparams.Add("@brandVideo", bVideo);
-            sqlparams.Add("@brandOrder", bOrder);
-            sqlparams.Add("@brandTypeId", brandTypeID);
-            sqlparams.Add("@brandTypeName", bTypeName);
-            sqlparams.Add("@isShow", isShow);
-            sqlparams.Add("@isStar", isStar);
-            sqlparams.Add("@isShowWay", isShowWay);
-            sqlparams.Add("@fvUrl", fvUrl);
+            sqlparams.Add("@brandTypeName", btName);
+            sqlparams.Add("@brandTypeOrder", btOrder);
+            sqlparams.Add("@brandTypeImg", btImg);
+            sqlparams.Add("@brandTypeBackColor", btBgcolor);
+            sqlparams.Add("@btIsShow", btIsShow);
             string sql = "";
             if (id == 0)
-                sql = "insert into fv_projectBrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,brandOrder,brandTypeId,brandTypeName,projectId,isShow,isStar,isShowWay,fvUrl,createTime,lastChangeTime) values(@brandName,@brandImg,@brandDesc,@brandLogo,@brandVideo,@brandOrder,@brandTypeId,@brandTypeName,@projectId,@isShow,@isStar,@isShowWay,@fvUrl,now(),now())";
+                sql = "insert into fv_projectbrandtype (projectId,brandTypeName,brandTypeOrder,brandTypeImg,isShow,brandTypeBackColor,createTime,lastChangeTime)" +
+                     "values(@projectId,@brandTypeName,@brandTypeOrder,@brandTypeImg,@btIsShow,@brandTypeBackColor,now(),now())";
             else
-                sql = "update fv_projectBrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandLogo=@brandLogo,brandVideo=@brandVideo,brandOrder=@brandOrder,brandTypeId=@brandTypeId,brandTypeName=@brandTypeName,isShow=@isShow,isStar=@isStar,isShowWay=@isShowWay,fvUrl=@fvUrl,lastChangeTime=NOW() where id=" + id;
+                sql = "update fv_projectbrandtype set brandTypeName=@brandTypeName,brandTypeOrder=@brandTypeOrder,brandTypeImg=@brandTypeImg,isShow=@btIsShow,brandTypeBackColor=@brandTypeBackColor,lastChangeTime=NOW() where id=" + id;
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)
@@ -138,7 +117,7 @@ namespace sd_order_sys.struts
                 msg = "数据库网络延迟";
             else
             {
-                sql = "delete from fv_projectBrand where id in (" + where + ")";
+                sql = "delete from fv_projectbrandtype where id in (" + where + ")";
                 w = SqlManage.OpRecord(sql, sqlparams);
             }
             if (w)

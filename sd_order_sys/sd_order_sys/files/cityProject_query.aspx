@@ -73,6 +73,14 @@
                 iconCls: 'icon-add',
                 handler: function () {
                     $("#dlg").dialog().parent().appendTo("#personform");
+                    $("#txtName").attr("value", '');
+                    $("#txtImg").attr("value", '');
+                    $("#txtdsc").attr("value", '');
+                    $("#txtvideo").attr("value", '');
+                    $("#txtlogo").attr("value", '');
+                    $("#txtcity").attr("value", '');
+                    $("#txtfirst").attr("value", '');
+                    $("#hid").attr("value", '');
                     $('#dlg').dialog('open');
                 }
             },
@@ -93,6 +101,12 @@
                 iconCls: 'icon-add',
                 handler: function () {
                     SetFloor();
+                }
+            }, {
+                text: '编辑项目品类',
+                iconCls: 'icon-add',
+                handler: function () {
+                    SetBrandType();
                 }
             }]
         });
@@ -172,6 +186,19 @@
             });
             //window.location = 'setFloor.aspx?projectid=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"];
             //$.messager.alert('提示', '2');
+        } else {
+            $.messager.alert('提示', '请选中一条记录');
+        }
+    }
+
+    function SetBrandType() {
+        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+        if (selectedRow) {
+            top.topManager.openPage({
+                id: 'xmplsz',
+                href: '/files/projectBrandType_query.aspx?projectId=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
+                title: '项目品类设置'
+            });
         } else {
             $.messager.alert('提示', '请选中一条记录');
         }
