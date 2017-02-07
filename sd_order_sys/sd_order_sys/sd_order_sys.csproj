@@ -184,6 +184,7 @@
     <Content Include="files\DrawPoint.aspx" />
     <Content Include="files\DrawPoint2.aspx" />
     <Content Include="files\DrawPointClient.aspx" />
+    <Content Include="files\projectBrandType_query.aspx" />
     <Content Include="files\project_query.aspx" />
     <Content Include="files\sbrand_query.aspx" />
     <Content Include="files\setFloor.aspx" />
@@ -569,6 +570,7 @@
     <Content Include="struts\SetFloor.ashx" />
     <Content Include="struts\DrawPoint.ashx" />
     <Content Include="struts\DrawPointClient.ashx" />
+    <Content Include="struts\projectBrandType_query.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -599,6 +601,13 @@
     </Compile>
     <Compile Include="files\DrawPointClient.aspx.designer.cs">
       <DependentUpon>DrawPointClient.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\projectBrandType_query.aspx.cs">
+      <DependentUpon>projectBrandType_query.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\projectBrandType_query.aspx.designer.cs">
+      <DependentUpon>projectBrandType_query.aspx</DependentUpon>
     </Compile>
     <Compile Include="struts\DrawPoint.ashx.cs">
       <DependentUpon>DrawPoint.ashx</DependentUpon>
@@ -653,6 +662,9 @@
     </Compile>
     <Compile Include="struts\project.ashx.cs">
       <DependentUpon>project.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\projectBrandType_query.ashx.cs">
+      <DependentUpon>projectBrandType_query.ashx</DependentUpon>
     </Compile>
     <Compile Include="struts\sbrand.ashx.cs">
       <DependentUpon>sbrand.ashx</DependentUpon>

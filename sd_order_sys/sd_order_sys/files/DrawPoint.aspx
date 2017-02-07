@@ -38,7 +38,7 @@
 </head>
 <body border='0' style="margin: 0px; padding: 0px;">
     <form id="personform">
-        <div id="ds" style="background-image: url('../projectImg/2/f1.jpg'); background-size: cover; width: 800px; height: 600px;">
+        <div id="ds" style="background-image: url('../projectImg/<% =projectId  %>/f<% =floorLevelId  %>.jpg'); background-size: cover; width: 800px; height: 600px;">
             <canvas id="ldsun" width="800" height="600" onmousedown="drawPt2();"></canvas>
         </div>
         <div id='div' onmousedown="drawPt2();"></div>
@@ -46,11 +46,12 @@
             <select id="floorLevel" runat="server" onchange="getText()" name="floorLevel">
                     <option></option>
                 </select>
-            <input onclick="reset();" value="重新绘制" type="button" />
+            <input onclick="reClear();" value="重新绘制" type="button" />
             <input id="txtArea" name="txtArea" value="" type="hidden" />
             <input onclick="AddArea();" value="确认绘制" type="button" />
             <input type="hidden" name="hidFloorId" id="hidFloorId" runat="server" />
             <input type="hidden" name="projectId" id="projectId" value="<%=projectId %>" />
+            <input type="hidden" name="projectBrandId" id="projectBrandId" value="<%=projectBrandId %>" />
         </p>
 
 
@@ -86,7 +87,7 @@
         "px; background-size: cover;cursor:pointer;background-image:url(../images/1234.png)" + ";width:" + size + "px;height:" + size + "px;line-height:30px;text-align:center;'" + "onclick='alert();'" + "><b>" + l + "</b></div>";
         return div;
     }
-    function reset() {
+    function reClear() {
         document.getElementById('div').innerHTML = '';
         $("#txtArea").val('');
         arrPoints = new Array();
@@ -121,6 +122,8 @@
     function getText() {
         var val = $("#floorLevel").find("option:selected").val();
         $("#hidFloorId").attr("value", val);
+        reClear();
+        $('#ds').css('background-image', 'url(../projectImg/<% =projectId  %>/f' + val + '.jpg)');
     }
     <% =strForShow %>
 </script>
