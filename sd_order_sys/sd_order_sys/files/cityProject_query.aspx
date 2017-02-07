@@ -108,6 +108,12 @@
                 handler: function () {
                     SetBrandType();
                 }
+            }, {
+                text: '导入项目品牌',
+                iconCls: 'icon-redo',
+                handler: function () {
+                    SetBrand();
+                }
             }]
         });
     }
@@ -198,6 +204,18 @@
                 id: 'xmplsz',
                 href: '/files/projectBrandType_query.aspx?projectId=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
                 title: '项目品类设置'
+            });
+        } else {
+            $.messager.alert('提示', '请选中一条记录');
+        }
+    }
+    function SetBrand() {
+        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+        if (selectedRow) {
+            top.topManager.openPage({
+                id: 'xmppsz',
+                href: '/files/projectExport.aspx?projectId=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
+                title: '项目品牌设置'
             });
         } else {
             $.messager.alert('提示', '请选中一条记录');
