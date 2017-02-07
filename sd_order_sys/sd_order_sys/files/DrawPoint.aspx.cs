@@ -28,10 +28,19 @@ namespace sd_order_sys.files
                 string spoints = dt.Rows[0][0].ToString();
                 floorLevelId = dt.Rows[0][1].ToString();
                 string[] arrayPoints = spoints.Split(';');
-                foreach (string item in arrayPoints)
+
+                if (spoints != "")
                 {
-                    strForShow += string.Format("drawPt3{0};", item);
+                    foreach (string item in arrayPoints)
+                    {
+                        strForShow += string.Format("drawPt3{0};", item);
+                    }
                 }
+                if (floorLevelId == "")
+                {
+                    floorLevelId = "1";
+                }
+
             }
             if (!IsPostBack)
             {
@@ -51,6 +60,9 @@ namespace sd_order_sys.files
             {
                 floorLevel.Value = floorLevelId;
                 hidFloorId.Value = floorLevelId;
+            }
+            else {
+                Response.Write("<script>alert('请先设置该楼层信息！');window.close();</script>");
             }
 
         }
