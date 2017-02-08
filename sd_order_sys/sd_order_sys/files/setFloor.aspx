@@ -62,7 +62,8 @@
                 { field: 'floorLevel', title: '楼层编号', align: 'center' },
                 { field: 'floorImg', title: '楼层图片', align: 'center' },
                 { field: 'createTime', title: '创建时间', align: 'center' },
-                { field: 'lastChangeTime', title: '最后修改时间', align: 'center' }
+                { field: 'lastChangeTime', title: '最后修改时间', align: 'center' },
+                { field: 'hasClient', title: '是否设置client', align: 'center', formatter: formatString  }
             ]], toolbar: [{
                 text: '添加',
                 iconCls: 'icon-add',
@@ -91,6 +92,12 @@
                 }
             }]
         });
+    }
+    function formatString(val, row, index) {
+        if (val == 0)
+            return "是";
+        else
+            return "否";
     }
     function formatUploadFile(val, row, index) {
         if (val) {
@@ -216,7 +223,7 @@
                 楼层：<input id="floorLevel" type="text" name="floorLevel" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/><p></p>
             </div>
             <div class="fitem">
-                项目图片：<input id="floorImg" type="text" name="floorImg" /><p></p>
+                图片：<input id="floorImg" type="text" name="floorImg" /><p></p>
             </div>
             <div class="fitem">
                 <input id="hid" type="hidden" name="hid"/>

@@ -76,8 +76,10 @@
                 { field: 'isStar', title: '是否标星', align: 'center', formatter: formatString },
                 { field: 'isShowWay', title: '是否显示路线', align: 'center', formatter: formatString },
                 { field: 'fvUrl', title: '全景地址', align: 'center' },
-                { field: 'createTime', title: '创建时间', align: 'center' },
-                { field: 'lastChangeTime', title: '最后修改时间', align: 'center' }
+                //{ field: 'createTime', title: '创建时间', align: 'center' },
+                //{ field: 'lastChangeTime', title: '最后修改时间', align: 'center' },
+                { field: 'hasArea', title: '是否设置区域', align: 'center', formatter: formatStringHas },
+                { field: 'haspath', title: '是否设置路径', align: 'center', formatter: formatStringHas }
             ]], toolbar: [{
                 text: '添加',
                 iconCls: 'icon-add',
@@ -120,6 +122,12 @@
                 handler: function () {
                     setArea();
                 }
+            }, {
+                text: '设置路径',
+                iconCls: 'icon-edit',
+                handler: function () {
+                    setPath();
+                }
             }]
         });
     }
@@ -135,6 +143,12 @@
             return "否";
         else
             return "是";
+    }
+    function formatStringHas(val, row, index) {
+        if (val == 0)
+            return "是";
+        else
+            return "否";
     }
     function formatUrl(val, row, index) {
         if (val) {
@@ -219,7 +233,22 @@
     function setArea(index) {
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
-        window.open('drawpoint.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>');
+        if (selectedRow) {
+            window.open('drawpoint.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>');
+        } else {
+            $.messager.alert('提示', '请选中一条记录');
+        }
+        //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
+    }
+
+    function setPath(index) {
+        $('#persontable').datagrid('selectRow', index);
+        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+        if (selectedRow) {
+            window.open('drawpointPath.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>' + '&floorLevel=' + selectedRow["floorLevel"]);
+        } else {
+            $.messager.alert('提示', '请选中一条记录');
+        }
         //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
     }
 </script>
@@ -277,7 +306,7 @@
                 品牌logo：<input id="txtlogo" type="text" name="txtlogo" /><p></p>
             </div>
             <div class="fitem">
-                品牌顺序：<input id="brandOrder" type="text" name="brandOrder" /><p></p>
+                品牌顺序：<input id="brandOrder" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/><p></p>
             </div>
             <input id="projectId" type="hidden" name="projectId" value="<%= projectId %>" />
             <input id="projectBtId" type="hidden" name="projectBtId" value="<%= projectBtId %>" />
