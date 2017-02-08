@@ -53,7 +53,7 @@ namespace SDorder.BLL
         /// <param name="sql"></param>
         /// <param name="sqlparams"></param>
         /// <returns></returns>
-        public static int Exists(string sql, Dictionary<string, object> sqlparams)
+        public static object Exists(string sql, Dictionary<string, object> sqlparams)
         {
             MySqlCommand sqlcom = new MySqlCommand();
             sqlcom.CommandText = sql;
@@ -64,8 +64,9 @@ namespace SDorder.BLL
                 param[num] = new MySqlParameter(key, sqlparams[key]);
                 num++;
             }
-            return Convert.ToInt32(SDorder.DAL.MySqlHelper.ExecuteScalar(SDorder.DAL.MySqlHelper.connectionStringManager, CommandType.Text,
-                sql, param));
+
+            return SDorder.DAL.MySqlHelper.ExecuteScalar(SDorder.DAL.MySqlHelper.connectionStringManager, CommandType.Text,
+                sql, param);
         }
     }
 }

@@ -186,6 +186,7 @@
     <Content Include="files\DrawPointClient.aspx" />
     <Content Include="files\DrawPointPath.aspx" />
     <Content Include="files\projectBrandType_query.aspx" />
+    <Content Include="files\projectExport.aspx" />
     <Content Include="files\project_query.aspx" />
     <Content Include="files\sbrand_query.aspx" />
     <Content Include="files\setFloor.aspx" />
@@ -225,6 +226,11 @@
     <Content Include="js\jquery-1.8.2.min.js" />
     <Content Include="login.aspx" />
     <Content Include="me_xml\sitemap.xml" />
+    <Content Include="npoi\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="npoi\NPOI.dll" />
+    <Content Include="npoi\NPOI.OOXML.dll" />
+    <Content Include="npoi\NPOI.OpenXml4Net.dll" />
+    <Content Include="npoi\NPOI.OpenXmlFormats.dll" />
     <Content Include="packages.config" />
     <Content Include="assets\img\未标题-2.psd" />
     <Content Include="plugins\themes\black\images\Thumbs.db" />
@@ -617,6 +623,13 @@
     </Compile>
     <Compile Include="files\projectBrandType_query.aspx.designer.cs">
       <DependentUpon>projectBrandType_query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\projectExport.aspx.cs">
+      <DependentUpon>projectExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\projectExport.aspx.designer.cs">
+      <DependentUpon>projectExport.aspx</DependentUpon>
     </Compile>
     <Compile Include="struts\DrawPoint.ashx.cs">
       <DependentUpon>DrawPoint.ashx</DependentUpon>
