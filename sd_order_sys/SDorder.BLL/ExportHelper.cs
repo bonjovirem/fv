@@ -197,13 +197,13 @@ namespace SDorder.BLL
                         }
                         else //只加入存在于已导入的品类
                         {
-                            var row = (from p in typeTable.AsEnumerable()
-                                      where p.Field<string>("brandTypeName") == typeName
-                                      select p).ToList();
-                            if (row.Count != 0)
+                            var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<string>("brandTypeName") == typeName; }) 
+                                      select p).FirstOrDefault();
+
+                            if (row != null)
                             {
                                 param.Add("@brandOrder", order);
-                                param.Add("@brandTypeId", row[0]);
+                                param.Add("@brandTypeId", row[0].ToString());
                                 param.Add("@brandTypeName", typeName);
                                 param.Add("@projectId", projectId);
                                 string sql = "insert into fv_projectbrand (brandName,brandTypeId,brandTypeName,projectId) values(@brandName,@brandTypeId,@brandTypeName,@projectId) ";
@@ -226,7 +226,10 @@ namespace SDorder.BLL
             catch (SystemException e)
             {
                 msg += e.Message + ",";
+            
             }
+            if (msg == "")
+                msg = "品牌导入成功,";
             return msg.TrimEnd(',');
         }
     }
