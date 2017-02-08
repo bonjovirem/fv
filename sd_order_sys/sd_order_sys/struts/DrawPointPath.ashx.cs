@@ -43,7 +43,7 @@ namespace sd_order_sys.struts
             sqlparams.Add("@walkWay", areaPoints);
             string sql = "";
             sql = string.Format("select count(*) from fv_walkway where projectBrandId={0} and fromClientId={1}", projectBrandId, clientId);
-            int rtn = SqlManage.Exists(sql, sqlparams);
+            int rtn = Convert.ToInt32(SqlManage.Exists(sql, sqlparams));
             if (rtn > 0)
             {
                 sql = string.Format("update fv_walkway set walkWay=@walkWay where projectBrandId={0} and fromClientId={1}", projectBrandId, clientId);

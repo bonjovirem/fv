@@ -165,6 +165,12 @@ namespace SDorder.BLL
             }
             return dataTable;
         }
+        /// <summary>
+        /// 项目品牌导入
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
         public static string BullToDB(string path, int projectId)
         {
             string msg = "";
@@ -197,16 +203,23 @@ namespace SDorder.BLL
                         }
                         else //只加入存在于已导入的品类
                         {
-                            var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<string>("brandTypeName") == typeName; }) 
-                                      select p).FirstOrDefault();
+                            var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<string>("brandTypeName") == typeName; })
+                                       select p).FirstOrDefault();
 
                             if (row != null)
                             {
-                                param.Add("@brandOrder", order);
+                                DataTable dt = SqlManage.Query("select max(brandOrder) from fv_projectbrand where projectId=" + projectId + " and brandTypeId=" + int.Parse(row[0].ToString()),sqlparams).Tables[0];
+                                int maxOrder = 0;
+                                if (dt.Rows.Count == 0)
+                                    maxOrder = 0;
+                                else
+                                    maxOrder = int.Parse(dt.Rows[0][0].ToString());
+                                dt.Dispose();
+                                param.Add("@brandOrder", order+maxOrder);
                                 param.Add("@brandTypeId", row[0].ToString());
                                 param.Add("@brandTypeName", typeName);
                                 param.Add("@projectId", projectId);
-                                string sql = "insert into fv_projectbrand (brandName,brandTypeId,brandTypeName,projectId) values(@brandName,@brandTypeId,@brandTypeName,@projectId) ";
+                                string sql = "insert into fv_projectbrand (brandName,brandOrder,brandTypeId,brandTypeName,projectId) values(@brandName,@brandOrder,@brandTypeId,@brandTypeName,@projectId) ";
                                 bool w = SqlManage.OpRecord(sql, param);
                                 if (!w)
                                 {
@@ -226,10 +239,80 @@ namespace SDorder.BLL
             catch (SystemException e)
             {
                 msg += e.Message + ",";
-            
+
             }
             if (msg == "")
                 msg = "品牌导入成功,";
+            return msg.TrimEnd(',');
+        }
+        /// <summary>
+        /// 系统品类导入数据库
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        public static string TypeExportDB(string path, int projectId)
+        {
+            string msg = "";
+            try
+            {
+                DataTable table = UploadExcel(path: path, isColumnName: true);
+                Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+                //sqlparams.Add("@projectId", projectId);
+                DataTable typeTable = SqlManage.Query("SELECT id,brandTypeName,brandTypeOrder FROM fv_projectbrandtype where projectId=" + projectId, sqlparams).Tables[0];//拉取
+                int order = 0;
+                if (typeTable.Rows.Count != 0)
+                    order = (from p in typeTable.AsEnumerable().Select(p => p.Field<int>("brandTypeOrder")) select p).Max();
+                foreach (DataRow dr in table.Rows)
+                {
+                    order = order + int.Parse(dr[0].ToString());//品类排序
+                    string typeName = dr[1].ToString();//品类名称
+                    Dictionary<string, object> param = new Dictionary<string, object>();
+                    //param.Add("@brandName", bName);
+                    //string validateSql = "select count(*) from fv_projectbrand where brandName='" + bName + "'";
+                    //object o = SqlManage.Exists(validateSql, sqlparams);
+                    // if (int.Parse(o.ToString()) > 0)
+                    //if(false)
+                    //{
+                    // msg += "品类名称：" + bName + "的行写入失败，已有该品类,";
+                    //continue;//已有该品牌则跳过
+                    //}
+                    //else //只加入存在于已导入的品类
+                    //{
+                    var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<string>("brandTypeName") == typeName; })
+                               select p).FirstOrDefault();
+
+                    if (row != null)
+                    {
+                        //typeTable.Rows.Add(row);
+                        //param.Add("@brandTypeId", row[0].ToString());
+                        param.Add("@projectId", projectId);
+                        param.Add("@brandTypeName", typeName);
+                        param.Add("@brandTypeOrder", order);
+                        string sql = "insert into fv_projectbrandtype (projectId,brandTypeName,brandTypeOrder) values(@projectId,@brandTypeName,@brandTypeOrder) ";
+                        bool w = SqlManage.OpRecord(sql, param);
+                        if (!w)
+                        {
+                            msg += "品类名称：" + typeName + "的行写入失败，发生数据库阻塞,";
+                        }
+                    }
+                    else
+                    {
+                        msg += "品牌名称：" + typeName + "的行添加失败，已有对应品类,";
+                    }
+
+                    // }
+
+                }
+
+            }
+            catch (SystemException e)
+            {
+                msg += e.Message + ",";
+
+            }
+            if (msg == "")
+                msg = "品类导入成功,";
             return msg.TrimEnd(',');
         }
     }

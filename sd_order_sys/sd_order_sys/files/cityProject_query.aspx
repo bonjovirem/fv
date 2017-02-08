@@ -114,6 +114,12 @@
                 handler: function () {
                     SetBrand();
                 }
+            }, {
+                text: '导入项目品类',
+                iconCls: 'icon-print',
+                handler: function () {
+                    ExportBrand();
+                }
             }]
         });
     }
@@ -215,6 +221,18 @@
             top.topManager.openPage({
                 id: 'xmppsz',
                 href: '/files/projectExport.aspx?projectId=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
+                title: '项目品牌设置'
+            });
+        } else {
+            $.messager.alert('提示', '请选中一条记录');
+        }
+    }
+    function ExportBrand() {
+        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+        if (selectedRow) {
+            top.topManager.openPage({
+                id: 'xmppdr',
+                href: '/files/projectTypeExport.aspx?projectId=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
                 title: '项目品牌设置'
             });
         } else {
