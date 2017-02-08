@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>关键点设置</title>
+    <title>设置区域</title>
     <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../plugins/themes/metro/easyui.css" />
     <link rel="stylesheet" type="text/css" href="../plugins/themes/icon.css" />
@@ -44,8 +44,8 @@
         <div id='div' onmousedown="drawPt2();"></div>
         <p>
             <select id="floorLevel" runat="server" onchange="getText()" name="floorLevel">
-                    <option></option>
-                </select>
+                <option></option>
+            </select>
             <input onclick="reClear();" value="重新绘制" type="button" />
             <input id="txtArea" name="txtArea" value="" type="hidden" />
             <input onclick="AddArea();" value="确认绘制" type="button" />

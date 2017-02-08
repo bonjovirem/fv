@@ -64,6 +64,7 @@ namespace SDorder.BLL
                 param[num] = new MySqlParameter(key, sqlparams[key]);
                 num++;
             }
+
             return SDorder.DAL.MySqlHelper.ExecuteScalar(SDorder.DAL.MySqlHelper.connectionStringManager, CommandType.Text,
                 sql, param);
         }

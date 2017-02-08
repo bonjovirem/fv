@@ -95,7 +95,7 @@
                     DelRecord();
                 }
             }, {
-                text: '编辑项目品类',
+                text: '编辑项目品牌',
                 iconCls: 'icon-add',
                 handler: function () {
                     SetBrand();
@@ -223,7 +223,7 @@
                 品类名称：<input id="btName" type="text" name="btName" /><p></p>
             </div>
             <div class="fitem">
-                品类序号：<input id="btOrder" type="text" name="btOrder" /><p></p>
+                品类顺序：<input id="btOrder" type="text" name="btOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/><p></p>
             </div>
             <div class="fitem">
                 品类图片：<input id="btImg" type="text" name="btImg" /><p></p>
