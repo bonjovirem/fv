@@ -1,32 +1,35 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="projectTypeExport.aspx.cs" Inherits="sd_order_sys.files.projectTypeExport" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title></title>
-    <link href="../assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <form id="form1" runat="server" class="form-horizontal">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    项目名称：<asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <asp:Label ID="Label1" runat="server" Text="Label" CssClass="control_label"></asp:Label>的品类上传面板</div>
+        <div class="panel-body">
+            <form id="form1" runat="server" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">品类文件：</label>
+                    <div class="col-sm-10">
+                        <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-control" />
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <asp:FileUpload ID="FileUpload1" runat="server" />
+                <div class="form-group">
+                    <asp:Label ID="lblmsg" runat="server" Text="" ForeColor="Red" CssClass="col-sm-6 control-label"></asp:Label>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <asp:Label ID="lblmsg" runat="server" Text="" ForeColor="Red"></asp:Label><p></p>
-                    <asp:Button ID="btnExport" runat="server" Text="上传" CssClass="btn btn-primary" OnClick="btnExport_Click"/>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <asp:Button ID="btnExport" runat="server" Text="上传" CssClass="btn btn-primary" OnClick="btnExport_Click" />
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
+    </div>
 </body>
 </html>

@@ -29,6 +29,11 @@ namespace sd_order_sys.files
 
         protected void btnExport_Click(object sender, EventArgs e)
         {
+            if (!FileUpload1.HasFile)
+            {
+                lblmsg.Text = "请选择模板";
+                return;
+            }
             lblmsg.Text = "";
             if (!Directory.Exists(Server.MapPath(@"~/template")))
             {

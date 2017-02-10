@@ -16,46 +16,51 @@ namespace sd_order_sys.struts
         {
             context.Response.ContentType = "text/plain";
             string uname = context.Request.Form["username"].ToString();
-            string pwd = context.Request.Form["pwd"].ToString();
+            string upwd = context.Request.Form["pwd"].ToString();
             //string code = context.Request.Form["yzm"].ToString();
             LoginContent login = new LoginContent();
             //if (code == (context.Session["randomcode"] == null ? "nulltext" : context.Session["randomcode"].ToString()))
             //{
-                string sql = "select uloginid,utype from t_users where uloginid=@uloginid and pwd=@pwd";
-                System.Data.SqlClient.SqlParameter[] parameter = {
-                    new System.Data.SqlClient.SqlParameter("@uloginid", System.Data.SqlDbType.VarChar,50),
-                    new System.Data.SqlClient.SqlParameter("@pwd", System.Data.SqlDbType.VarChar,50),
-                };
-                parameter[0].Value = uname;
-                parameter[1].Value = pwd;
-                context.Session["person"] = uname.ToString();
-                login.url = "/sys/index.aspx";
+            string sql = "select count(*) from fv_users where uname=@uname and upwd=@upwd";
+            Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+            sqlparams.Add("@uname", uname);
+            sqlparams.Add("@upwd", upwd);
+            if (Convert.ToInt32(SqlManage.Exists(sql, sqlparams)) > 0)
+            {
+                context.Session["person"] = uname;
                 login.msg = "suc";
-                //SqlManage manage = new SqlManage();
-                //DataTable dt = manage.GetDataSet(sql, parameter).Tables[0];
-                //string type = dt.Rows[0]["visible"].ToString();
-                //if (dt.Rows.Count > 0)
-                //{
-                //    CAS.Model.UserModel model = new CAS.Model.UserModel();
-                //    model.uloginid = dt.Rows[0]["uloginid"].ToString();
-                //    //model.office = dt.Rows[0]["office"].ToString();
-                //    model.utype = dt.Rows[0]["utype"].ToString();
-                //    context.Session["person"] = model;
-                //    login.msg = "suc";
-                //    login.url = "validateuser.aspx";
+                login.url = "/sys/index.aspx";
+            }
+            else
+            {
+                login.msg = "用户不存在或用户名、密码错误";
+                    login.url = "/login.aspx";
+            }
+            //SqlManage manage = new SqlManage();
+            //DataTable dt = manage.GetDataSet(sql, parameter).Tables[0];
+            //string type = dt.Rows[0]["visible"].ToString();
+            //if (dt.Rows.Count > 0)
+            //{
+            //    CAS.Model.UserModel model = new CAS.Model.UserModel();
+            //    model.uloginid = dt.Rows[0]["uloginid"].ToString();
+            //    //model.office = dt.Rows[0]["office"].ToString();
+            //    model.utype = dt.Rows[0]["utype"].ToString();
+            //    context.Session["person"] = model;
+            //    login.msg = "suc";
+            //    login.url = "validateuser.aspx";
 
-                //}
-                //else
-                //{
-                //    login.msg = "用户不存在或用户名、密码错误";
-                //    login.url = "/index.aspx";
-                //}
             //}
             //else
             //{
-              //  login.msg = "验证码错误";
-               // login.url = "/index.aspx";
-           // }
+            //    login.msg = "用户不存在或用户名、密码错误";
+            //    login.url = "/index.aspx";
+            //}
+            //}
+            //else
+            //{
+            //  login.msg = "验证码错误";
+            // login.url = "/index.aspx";
+            // }
             JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
             context.Response.Write(javascriptSerializer.Serialize(login));
         }

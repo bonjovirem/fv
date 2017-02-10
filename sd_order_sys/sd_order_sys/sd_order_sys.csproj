@@ -169,6 +169,8 @@
     <Content Include="assets\js\module\build.xml" />
     <Content Include="assets\js\prettify.js" />
     <Content Include="assets\js\slider-min.js" />
+    <Content Include="bootstrap\bootstrap-theme.min.css" />
+    <Content Include="bootstrap\bootstrap.min.css" />
     <Content Include="css\demo.css" />
     <Content Include="css\demo_control.css" />
     <Content Include="css\H-ui.admin.css" />
@@ -179,6 +181,7 @@
     <Content Include="css\iconfont.css" />
     <Content Include="css\login.css" />
     <Content Include="css\style.css" />
+    <Content Include="error.html" />
     <Content Include="favicon.ico" />
     <Content Include="files\cityProject_query.aspx" />
     <Content Include="files\DrawPoint.aspx" />
@@ -201,6 +204,7 @@
     <Content Include="images\admin-login-bg.jpg" />
     <Content Include="images\admin-loginform-bg.png" />
     <Content Include="images\clear.jpg" />
+    <Content Include="images\error.jpg" />
     <Content Include="images\gq\cn.gif" />
     <Content Include="images\gq\gj.png" />
     <Content Include="images\gq\us.gif" />
