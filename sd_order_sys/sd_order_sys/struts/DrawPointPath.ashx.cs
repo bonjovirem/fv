@@ -49,11 +49,12 @@ namespace sd_order_sys.struts
                 sql = string.Format("update fv_walkway set walkWay=@walkWay where projectBrandId={0} and fromClientId={1}", projectBrandId, clientId);
 
             }
-            else {
+            else
+            {
                 sql = string.Format("insert into fv_walkway (projectBrandId,walkWay,fromClientId) values ({0},@walkWay,{1})", projectBrandId, clientId);
 
             }
-                bool w = SqlManage.OpRecord(sql, sqlparams);
+            bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)
                 msg = "suc";
