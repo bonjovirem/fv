@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>无标题页</title>
-    
+
     <script src="resources/scripts/jquery-1.7.1.min.js"></script>
     <script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
     <style>
@@ -32,12 +32,16 @@
     <script language="javascript" type="text/javascript">
         var arrPoints = new Array();
         var l = arrPoints.length;
-        function drawPt2() {
-            var x = event.offsetX;
-            var y = event.offsetY;
+        function drawPt3(x, y) {
             var div = drawDot(x, y, "red", 30, 1);
             //document.body.div.innerHTML += div;
             document.getElementById('div').innerHTML += div;
+
+        }
+        function drawPt2() {
+            var x = event.offsetX;
+            var y = event.offsetY;
+            drawPt3(x, y);
 
         }
         function drawDot(x, y, color, size, index) {
@@ -45,7 +49,7 @@
             arrPoints.push(p);
             l = arrPoints.length;
             //新建一个div
-            var div = "<div id='dlist"+l+"' style='position:absolute; border:0;left:" + (x - 15) + "px; top:" + (y - 15) +
+            var div = "<div id='dlist" + l + "' style='position:absolute; border:0;left:" + (x - 15) + "px; top:" + (y - 15) +
             "px; background-size: cover;cursor:pointer;background-image:url(images/c1.png)" + ";width:" + size + "px;height:" + size + "px;line-height:30px;text-align:center;'" + "onclick='alert();'" + "><b>" + l + "</b></div>";
             return div;
         }
@@ -55,12 +59,12 @@
 </head>
 <body border='0' style="margin:0px;padding:0px;">
     <div id="ds" style="background-image:url('images/floor1/floor_u32.png');background-size: cover;width:1300px;height:824px;">
-        <canvas id="ldsun" width="1300" height="824" onmousedown="drawPt2();"  usemap ="#newbook" ></canvas>
+        <canvas id="ldsun" width="1300" height="824" onmousedown="drawPt2();" usemap="#newbook"></canvas>
     </div>
     <div id='div' onmousedown="drawPt2();"></div>
     <input onclick="drawLine();" value="连成线" type="button" />
     <input onclick="drawBallSet();" value="动画" type="button" /><input onclick="smalls();" value="变小" type="button" />
- 
+
     <p></p>
     <p></p>
 </body>
@@ -75,7 +79,7 @@
     var maxX = 200,
          maxY = 200;
     function smalls() {
-       
+
         document.getElementById('ds').style.width = '400px';
         document.getElementById('ds').style.height = '300px';
         var canvas = document.querySelector('canvas');
@@ -87,8 +91,8 @@
             arrPoints[i] = new Point(arrPoints[i].x * qx, arrPoints[i].y * qy);
             ax = document.getElementById('dlist' + (i + 1)).style.left;
             ay = document.getElementById('dlist' + (i + 1)).style.top;
-            document.getElementById('dlist' + (i + 1)).style.left =( parseFloat(ax.replace('px', ''))-15) / 2 + "px";
-            document.getElementById('dlist' + (i + 1)).style.top = (parseFloat(ay.replace('px', ''))-15) / 2 + "px";
+            document.getElementById('dlist' + (i + 1)).style.left = (parseFloat(ax.replace('px', '')) - 15) / 2 + "px";
+            document.getElementById('dlist' + (i + 1)).style.top = (parseFloat(ay.replace('px', '')) - 15) / 2 + "px";
         }
 
     }
@@ -191,4 +195,26 @@
             window.cancelAnimationFrame(interVal);
         }
     }
+
+    function Forload() {
+        //获取对象
+        var ArrayBrand = new Array();
+        ArrayBrand["11"] = "(120,140);(520,250);(600,200)";
+        ArrayBrand["22"] = "(1,1);(20,50);(100,200)";
+        var indexBrand = getQueryString("brandId");
+        var points = ArrayBrand[indexBrand];
+        var s1 = points.split(";");
+        for (var i = 0; i < s1.length; i++) {
+            var s2p = s1[i].replace(/\(/, "").replace(/\)/, "");
+            var s2 = s2p.split(',')
+            drawPt3(parseFloat(s2[0]), parseFloat(s2[1]));
+        }
+    }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+    Forload();
+    drawBallSet();
 </script>
