@@ -239,7 +239,7 @@
             top.topManager.openPage({
                 id: 'xmppdr',
                 href: '/files/projectTypeExport.aspx?projectId=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
-                title: '项目品牌设置'
+                title: '项目品类设置'
             });
         } else {
             $.messager.alert('提示', '请选中一条记录');

@@ -219,7 +219,7 @@ namespace SDorder.BLL
                                 param.Add("@brandTypeId", row[0].ToString());
                                 param.Add("@brandTypeName", typeName);
                                 param.Add("@projectId", projectId);
-                                string sql = "insert into fv_projectbrand (brandName,brandOrder,brandTypeId,brandTypeName,projectId) values(@brandName,@brandOrder,@brandTypeId,@brandTypeName,@projectId) ";
+                                string sql = "insert into fv_projectbrand (brandName,brandOrder,brandTypeId,brandTypeName,projectId,createTime,lastChangeTime) values(@brandName,@brandOrder,@brandTypeId,@brandTypeName,@projectId,now(),now()) ";
                                 bool w = SqlManage.OpRecord(sql, param);
                                 if (!w)
                                 {
@@ -268,28 +268,17 @@ namespace SDorder.BLL
                     order = order + int.Parse(dr[0].ToString());//品类排序
                     string typeName = dr[1].ToString();//品类名称
                     Dictionary<string, object> param = new Dictionary<string, object>();
-                    //param.Add("@brandName", bName);
-                    //string validateSql = "select count(*) from fv_projectbrand where brandName='" + bName + "'";
-                    //object o = SqlManage.Exists(validateSql, sqlparams);
-                    // if (int.Parse(o.ToString()) > 0)
-                    //if(false)
-                    //{
-                    // msg += "品类名称：" + bName + "的行写入失败，已有该品类,";
-                    //continue;//已有该品牌则跳过
-                    //}
-                    //else //只加入存在于已导入的品类
-                    //{
                     var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<string>("brandTypeName") == typeName; })
                                select p).FirstOrDefault();
 
-                    if (row != null)
+                    if (row == null)
                     {
                         //typeTable.Rows.Add(row);
                         //param.Add("@brandTypeId", row[0].ToString());
                         param.Add("@projectId", projectId);
                         param.Add("@brandTypeName", typeName);
                         param.Add("@brandTypeOrder", order);
-                        string sql = "insert into fv_projectbrandtype (projectId,brandTypeName,brandTypeOrder) values(@projectId,@brandTypeName,@brandTypeOrder) ";
+                        string sql = "insert into fv_projectbrandtype (projectId,brandTypeName,brandTypeOrder,createTime,lastChangeTime) values(@projectId,@brandTypeName,@brandTypeOrder,now(),now()) ";
                         bool w = SqlManage.OpRecord(sql, param);
                         if (!w)
                         {
