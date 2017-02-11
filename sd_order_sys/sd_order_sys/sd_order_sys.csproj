@@ -612,6 +612,7 @@
     <Content Include="WebTemp\images\c1.png" />
     <Content Include="WebTemp\images\floor1\floor_u32.png" />
     <Content Include="WebTemp\images\floor1\moduo_u34.png" />
+    <Content Include="WebTemp\images\floor1\timg.jpg" />
     <Content Include="WebTemp\images\floor1\u49.png" />
     <Content Include="WebTemp\images\floor1\u60.jpg" />
     <Content Include="WebTemp\images\floor1\u65.png" />
