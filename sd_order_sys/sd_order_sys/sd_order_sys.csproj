@@ -567,6 +567,10 @@
     <Content Include="Web.config" />
     <Content Include="WebTemp\about.html" />
     <Content Include="WebTemp\brand.html" />
+    <Content Include="WebTemp\brandImg\img11_1.jpg" />
+    <Content Include="WebTemp\brandImg\img11_2.jpg" />
+    <Content Include="WebTemp\brandImg\img11_3.jpg" />
+    <Content Include="WebTemp\brandImg\logo11.png" />
     <Content Include="WebTemp\commodity.html" />
     <Content Include="WebTemp\data\document.js" />
     <Content Include="WebTemp\data\styles.css" />

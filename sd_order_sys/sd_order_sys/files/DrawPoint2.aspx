@@ -103,8 +103,8 @@
 </head>
 <body border='0' style="margin: 0px; padding: 0px;">
     <form id="personform">
-        <div id="ds" style="background-image: url('../projectImg/2/f1.jpg'); background-size: cover; width: 800px; height: 600px;">
-            <canvas id="ldsun" width="800" height="600" onmousedown="drawPt2();"></canvas>
+        <div id="ds" style="background-image: url('../projectImg/2/f1.jpg'); background-size: cover; width: 1300px; height: 824px;">
+            <canvas id="ldsun"  width="1300" height="824"  onmousedown="drawPt2();"></canvas>
         </div>
         <div id='div' onmousedown="drawPt2();"></div>
        <label id="typeShow" name="typeShow"></label>

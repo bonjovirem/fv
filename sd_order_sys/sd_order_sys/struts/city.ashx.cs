@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using SDorder.BLL;
 using System.Data;
+using System.IO;
 
 namespace sd_order_sys.struts
 {
@@ -35,6 +36,9 @@ namespace sd_order_sys.struts
                         break;
                     case "rRecord":
                         DelRecord(context);
+                        break;
+                    case "build":
+                        BuildHTML(context);
                         break;
                 }
             }
@@ -145,6 +149,180 @@ namespace sd_order_sys.struts
             context.Response.Write(javascriptSerializer.Serialize(msg));
 
         }
+
+        private void BuildHTML(HttpContext context)
+        {
+            string msg = "";
+            string sql = "";
+            int id = context.Request["id"].ToString() == "" ? 0 : int.Parse(context.Request["id"].ToString());
+
+            //sqlparams.Add("@projectName", bName);
+            //sqlparams.Add("@projectLogo", bLogo);
+            //sqlparams.Add("@projectDesc", bDesc);
+            //sqlparams.Add("@projectImg", bImg);
+            //sqlparams.Add("@projectVideo", bVideo);
+            //sqlparams.Add("@projectCity", bCity);
+            //sqlparams.Add("@projectFirstShow", bFirst);
+            if (id == 0)
+            {
+                msg = "";
+            }
+            else
+            {
+
+                //第一步复制文件  *floorLevel 1,2,3,4当前的楼层  *f1,2,3,4 指左侧导航的标记
+                string sourcePath = context.Server.MapPath("../WebTemp/");
+                string toPath = context.Server.MapPath("../release/2/");
+                CopyDirectory(sourcePath, toPath);
+                Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+                sql = "select floorLevel from fv_floor where projectid=" + id + " order by floorLevel";
+                DataTable dt = SqlManage.Query(sql, sqlparams).Tables[0];
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    //查找需要展示的信息
+                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,b.walkWay,a.brandName from fv_projectbrand a " +
+                            "left join fv_walkway b on a.id=b.projectBrandId where a.projectid=" + id + " and a.floorLevel is not null";
+                    DataTable dt2 = SqlManage.Query(sql, sqlparams).Tables[0];
+                    if (dt2 != null && dt2.Rows.Count > 0)
+                    {
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            string floorLevel = dt.Rows[i][0].ToString();
+                            #region 处理floor页面
+                            string oldFile = toPath + "floor.html";
+                            string newFile = toPath + "floor" + floorLevel + ".html";
+                            File.Copy(oldFile, newFile, true);
+                            string code = readFile(newFile);
+                            //替换楼层
+                            code = code.Replace("*floorLevel", floorLevel);
+                            //替换左侧显示信息
+                            for (int j = 1; j < 5; j++)
+                            {
+                                code = code.Replace("*f" + j, (j.ToString() == floorLevel ? "f" + j + "s" : "f" + j));
+                            }
+                            //替换全景路径
+                            string fvString = "";
+                            string descString = "";
+                            string areaString = "";
+                            DataRow[] dr = dt2.Select("floorLevel=" + floorLevel);
+                            foreach (DataRow item in dr)
+                            {
+                                fvString += string.Format("Arrayfv['{0}'] = '{1}';", item["id"].ToString(), item["fvUrl"].ToString());
+                                descString += string.Format("ArrayDesc['{0}'] = '{1}';", item["id"].ToString(), item["brandDesc"].ToString().Replace("*空格*", "&nbsp;").Replace("*换行*", "<br/>"));
+                                string areaCodes = item["areaPoints"].ToString().Replace("(", "").Replace(")", "").Replace(";", ",").Trim();
+                                if (!string.IsNullOrEmpty(areaCodes))
+                                {
+                                    areaString += string.Format(" <area onclick='loadPanelDesc({0});showPanel();' shape='polygon' coords='{1}' alt='{2}' title='{2}'>"
+                                  , item["id"].ToString(), areaCodes, item["brandName"].ToString());
+                                }
+
+                            }
+                            code = code.Replace("//*fvString", fvString);
+                            code = code.Replace("//*descString", descString);
+                            code = code.Replace("//*areaString", areaString);
+
+
+                            writeFile(newFile, code);
+                            #endregion
+
+                            #region 处理f页面
+                            string brandWalkway = "";
+                            //*brandWalkway
+                            oldFile = toPath + "f.html";
+                            newFile = toPath + "f" + floorLevel + ".html";
+                            File.Copy(oldFile, newFile, true);
+                            code = readFile(newFile);
+
+                            foreach (DataRow item in dr)
+                            {
+                                if (!string.IsNullOrEmpty(item["walkWay"].ToString().Trim()))
+                                {
+                                     brandWalkway += string.Format("ArrayBrand['{0}'] = '{1}';", item["id"].ToString(), item["walkWay"].ToString());
+
+                                }
+                               
+                            }
+                            code = code.Replace("*floorLevel", floorLevel);
+                            code = code.Replace("//*brandWalkway", brandWalkway);
+                            writeFile(newFile, code);
+                            #endregion
+
+                        }
+                    }
+                }
+                if (true)
+
+                    msg = "suc";
+                else
+                    msg = "数据库连接超时或出现未知错误";
+                JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
+                context.Response.Write(javascriptSerializer.Serialize(msg));
+            }
+
+
+        }
+
+
+        public void CopyDirectory(string sourceDirName, string destDirName)
+        {
+            try
+            {
+                //Directory.Delete(destDirName,true);
+                if (!Directory.Exists(destDirName))
+                {
+                    Directory.CreateDirectory(destDirName);
+                    File.SetAttributes(destDirName, File.GetAttributes(sourceDirName));
+                }
+
+                if (destDirName[destDirName.Length - 1] != Path.DirectorySeparatorChar)
+                    destDirName = destDirName + Path.DirectorySeparatorChar;
+
+                string[] files = Directory.GetFiles(sourceDirName);
+                foreach (string file in files)
+                {
+                    if (File.Exists(destDirName + Path.GetFileName(file)))
+                        continue;
+                    File.Copy(file, destDirName + Path.GetFileName(file), true);
+                    File.SetAttributes(destDirName + Path.GetFileName(file), FileAttributes.Normal);
+                }
+
+                string[] dirs = Directory.GetDirectories(sourceDirName);
+                foreach (string dir in dirs)
+                {
+                    CopyDirectory(dir, destDirName + Path.GetFileName(dir));
+                }
+            }
+            catch (Exception ex)
+            {
+                //StreamWriter sw = new StreamWriter(Application.StartupPath + "\\log.txt", true);
+                //sw.Write(ex.Message + "     " + DateTime.Now + "\r\n");
+                //sw.Close();
+            }
+        }
+
+        public string readFile(string path)
+        {
+            string str = "";
+            FileStream fs = new FileStream(path, FileMode.Open);
+            StreamReader sr = new StreamReader(fs);
+            str = sr.ReadToEnd();
+            sr.Close();
+            fs.Close();
+            return str;
+        }
+
+        public void writeFile(string path, string txt)
+        {
+            string str = "";
+            FileStream fs = new FileStream(path, FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs);
+            sw.Write(txt);
+            sw.Flush();
+            sw.Close();
+            fs.Close();
+
+        }
+
         public bool IsReusable
         {
             get
@@ -152,6 +330,6 @@ namespace sd_order_sys.struts
                 return false;
             }
         }
- 
+
     }
 }

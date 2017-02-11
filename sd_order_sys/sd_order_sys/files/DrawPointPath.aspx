@@ -38,8 +38,8 @@
 </head>
 <body border='0' style="margin: 0px; padding: 0px;">
     <form id="personform">
-        <div id="ds" style="background-image: url('../projectImg/<% =projectId  %>/f<% =floorLevel  %>.jpg'); background-size: cover; width: 800px; height: 600px;">
-            <canvas id="ldsun" width="800" height="600" onmousedown="drawPt2();"></canvas>
+        <div id="ds" style="background-image: url('../projectImg/<% =projectId  %>/f<% =floorLevel  %>.png'); background-size: cover; width: 1300px; height: 824px;">
+            <canvas id="ldsun" width="1300" height="824"  onmousedown="drawPt2();"></canvas>
         </div>
         <div id='div' onmousedown="drawPt2();"></div>
         <p>
@@ -97,7 +97,7 @@
         arrPoints = new Array();
         l = arrPoints.length;
         clearInterval(interVal);
-        context.clearRect(0, 0, 800, 600);
+        context.clearRect(0, 0, 1300,824);
          <% =strForClient %>
     }
 
@@ -130,7 +130,7 @@
         var val = $("#floorLevel").find("option:selected").val();
         $("#hidFloorId").attr("value", val);
         reClear();
-        $('#ds').css('background-image', 'url(../projectImg/<% =projectId  %>/f' + val + '.jpg)');
+        $('#ds').css('background-image', 'url(../projectImg/<% =projectId  %>/f' + val + '.png)');
     }
     <% =strForShow %>
 </script>
@@ -195,7 +195,7 @@
     var faqus = 0;
     function drawBall() {
         faqus = 300 / arrPoints.length;
-        context.clearRect(0, 0, 800, 600);
+        context.clearRect(0, 0, 1300,824);
         drawLine();
         p1 = arrPoints[indexS];
         p2 = arrPoints[indexS + 1];
@@ -212,7 +212,7 @@
         context.fill();
         if (Math.abs(p1.x + lx - p2.x) < Math.abs(stepX * 1.2) || Math.abs(p1.y + ly - p2.y) < Math.abs(1.2 * stepY)) { //判断当前线的位置，控制在区域内
             if (indexS >= arrPoints.length - 2) {
-                context.clearRect(0, 0, 800, 600);
+                context.clearRect(0, 0, 1300,824);
                 drawLine();
                 context.strokeStyle = "blue";
                 context.fillStyle = "blue";
