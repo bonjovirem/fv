@@ -65,9 +65,10 @@
             rownumbers: true,
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
+                { field: 'id', title: '品牌ID', align: 'center' },
                 { field: 'brandName', title: '品牌名称', align: 'center' },
                 { field: 'brandImg', title: '品牌图片', align: 'center', formatter: formatUploadFile },
-                { field: 'brandDesc', title: '品牌描述', align: 'center' },
+                //{ field: 'brandDesc', title: '品牌描述', align: 'center' },
                 { field: 'brandVideo', title: '品牌视频', align: 'center' },
                 { field: 'brandLogo', title: '品牌图标', align: 'center' },
                 { field: 'brandOrder', title: '品类顺序', align: 'center' },
@@ -75,11 +76,12 @@
                 { field: 'isShow', title: '是否展示', align: 'center', formatter: formatString },
                 { field: 'isStar', title: '是否标星', align: 'center', formatter: formatString },
                 { field: 'isShowWay', title: '是否显示路线', align: 'center', formatter: formatString },
-                { field: 'fvUrl', title: '全景地址', align: 'center' },
                 //{ field: 'createTime', title: '创建时间', align: 'center' },
                 //{ field: 'lastChangeTime', title: '最后修改时间', align: 'center' },
                 { field: 'hasArea', title: '是否设置区域', align: 'center', formatter: formatStringHas },
-                { field: 'haspath', title: '是否设置路径', align: 'center', formatter: formatStringHas }
+                { field: 'hasPath', title: '是否设置路径', align: 'center', formatter: formatStringHas },
+                { field: 'floorLevel', title: '楼层', align: 'center' }
+                //{ field: 'fvUrl', title: '全景地址', align: 'center' }
             ]], toolbar: [{
                 text: '添加',
                 iconCls: 'icon-add',
@@ -127,6 +129,12 @@
                 iconCls: 'icon-edit',
                 handler: function () {
                     setPath();
+                }
+            }, {
+                text: '刷新',
+                iconCls: 'icon-edit',
+                handler: function () {
+                    reloaddate();
                 }
             }]
         });
@@ -235,22 +243,22 @@
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
             window.open('drawpoint.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>');
-        } else {
-            $.messager.alert('提示', '请选中一条记录');
-        }
-        //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
+    } else {
+        $.messager.alert('提示', '请选中一条记录');
     }
+        //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
+}
 
-    function setPath(index) {
-        $('#persontable').datagrid('selectRow', index);
-        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
-        if (selectedRow) {
-            window.open('drawpointPath.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>' + '&floorLevel=' + selectedRow["floorLevel"]);
-        } else {
-            $.messager.alert('提示', '请选中一条记录');
-        }
-        //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
+function setPath(index) {
+    $('#persontable').datagrid('selectRow', index);
+    var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+    if (selectedRow) {
+        window.open('drawpointPath.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>' + '&floorLevel=' + selectedRow["floorLevel"]);
+    } else {
+        $.messager.alert('提示', '请选中一条记录');
     }
+        //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
+}
 </script>
 <body>
     <form id="personform" runat="server">
@@ -260,24 +268,15 @@
                     <ul>
                         <li>
                             <img src="../images/ico07.gif" /></li>
+                        <li></li>
                         <li>
-                            <select id="selectwhere" class="combo">
-
-                                <option value="brandName">品类名称</option>
-                            </select>
-                        </li>
-                        <li>
-                            <input id="txtwhere" type="text" />
+                            <span style="font-size: 16px;"><b><%=projectName %>(<%=projectId %>) -- <%=projectBtName %>(<%=projectBtId %>) </b></span>
                         </li>
                         <%--                        <li>
                             <select id="lywhere" style="display: none;" runat="server" name="lywhere">
                             </select>
                         </li>--%>
-                        <li><a href="javascript:void(0);" onclick="searchbtn()">
-                            <img src="../images/queren.jpg" border="0" /></a>
-                            <a href="javascript:void(0);" onclick="reloaddate()">
-                                <img src="../images/clear.jpg" border="0" /></a>
-                        </li>
+                        <li></li>
                     </ul>
                 </td>
             </tr>
@@ -306,7 +305,7 @@
                 品牌logo：<input id="txtlogo" type="text" name="txtlogo" /><p></p>
             </div>
             <div class="fitem">
-                品牌顺序：<input id="brandOrder" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/><p></p>
+                品牌顺序：<input id="brandOrder" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" /><p></p>
             </div>
             <input id="projectId" type="hidden" name="projectId" value="<%= projectId %>" />
             <input id="projectBtId" type="hidden" name="projectBtId" value="<%= projectBtId %>" />
@@ -352,8 +351,6 @@
             $('#persontable').datagrid('load');
         }
         function reloaddate() {
-            $("#txtwhere").attr("value", "");
-            $('#persontable').datagrid('options').url = "/struts/project.ashx?action=query";
             $('#persontable').datagrid('load');
         }
         function ValidateForm() {

@@ -26,7 +26,7 @@ namespace sd_order_sys.files
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
 
             //客户端的点
-            string sql = string.Format("select b.id,b.clientPoint from fv_projectbrand a,fv_client b " +
+            string sql = string.Format("select b.id,b.clientPoint,a.floorLevel from fv_projectbrand a,fv_client b " +
             "where a.projectId=b.projectId and a.floorLevel=b.floorLevel and a.id={0}", projectBrandId);
             DataTable dt = SqlManage.Query(sql, sqlparams).Tables[0];
             if (dt != null && dt.Rows.Count > 0)
@@ -34,6 +34,7 @@ namespace sd_order_sys.files
                 clientId = dt.Rows[0][0].ToString();
                 strForClient = string.Format("drawPt3{0};", dt.Rows[0][1].ToString());
                 strForShow += strForClient;
+                floorLevel = dt.Rows[0][2].ToString();
             }
             else
             {

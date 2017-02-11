@@ -120,6 +120,12 @@
                 handler: function () {
                     ExportBrand();
                 }
+            }, {
+                text: '生成html',
+                iconCls: 'icon-add',
+                handler: function () {
+                    buildHTML();
+                }
             }]
         });
     }
@@ -239,6 +245,33 @@
             $.messager.alert('提示', '请选中一条记录');
         }
     }
+    
+    function buildHTML(index) {
+
+        $('#persontable').datagrid('selectRow', index);
+        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+        $("#hid").attr("value", selectedRow["id"]);
+        if (selectedRow) {
+            $.ajax({
+                url: '/struts/city.ashx?action=build&id=' + selectedRow["id"],
+                success: function (data) {
+                    var comment = $.parseJSON(data);
+                    if (comment != "suc") {
+                        $.messager.alert("提示", "操作失败，请联系管理员");
+                    } else {
+                        $.messager.alert("提示", "您操作成功");
+                    }
+                },
+                error: function () {
+                    $.messager.alert("提示", "网络错误，请联系管理员");
+                }
+            });
+        } else {
+            $.messager.alert('提示', '请选中一条记录');
+        }
+       
+    }
+
 </script>
 <body>
     <form id="personform" runat="server">

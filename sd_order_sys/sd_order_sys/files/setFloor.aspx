@@ -77,7 +77,7 @@
                 iconCls: 'icon-edit',
                 handler: function () {
                     rowMark();
-                }
+                    }
             }, {
                 text: '删除',
                 iconCls: 'icon-remove',
@@ -89,6 +89,12 @@
                 iconCls: 'icon-add',
                 handler: function () {
                     SetClient();
+                }
+            }, {
+                text: '刷新',
+                iconCls: 'icon-add',
+                handler: function () {
+                    reloaddate();
                 }
             }]
         });
@@ -184,28 +190,20 @@
         <table width="100%" border="0">
             <tr>
                 <td align="left">
-                     项目名称：  <%=proName %>  <%=proId %>
-                    <ul style="display:none;">
-
+                    <ul>
                         <li>
                             <img src="../images/ico07.gif" /></li>
                         <li>
-                            <select id="selectwhere" class="combo">
-
-                                <option value="floorLevel">品类名称</option>
-                            </select>
+                             <span style="font-size: 16px;"><b><%=proName %>(<%=proId %>)</b></span>
                         </li>
                         <li>
-                            <input id="txtwhere" type="text" />
+                            
                         </li>
                         <%--                        <li>
                             <select id="lywhere" style="display: none;" runat="server" name="lywhere">
                             </select>
                         </li>--%>
-                        <li><a href="javascript:void(0);" onclick="searchbtn()">
-                            <img src="../images/queren.jpg" border="0" /></a>
-                            <a href="javascript:void(0);" onclick="reloaddate()">
-                                <img src="../images/clear.jpg" border="0" /></a>
+                        <li>
                         </li>
                     </ul>
                 </td>
@@ -247,8 +245,6 @@
             $('#persontable').datagrid('load');
         }
         function reloaddate() {
-            $("#txtwhere").attr("value", "");
-            $('#persontable').datagrid('options').url = "/struts/SetFloor.ashx?action=query";
             $('#persontable').datagrid('load');
         }
         function ValidateForm() {

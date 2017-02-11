@@ -61,11 +61,12 @@
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
                 { field: 'projectId', title: '项目ID', align: 'center' },
+                { field: 'id', title: '品类ID', align: 'center' },
                 { field: 'brandTypeName', title: '品类名称', align: 'center' },
-                { field: 'brandTypeOrder', title: '品类顺序', align: 'center'},
+                { field: 'brandTypeOrder', title: '品类顺序', align: 'center' },
                 { field: 'brandTypeImg', title: '品类图片', align: 'center' },
                 { field: 'brandTypeBackColor', title: '品类背景色', align: 'center' },
-                { field: 'isShow', title: '是否显示', align: 'center' , formatter: formatString },
+                { field: 'isShow', title: '是否显示', align: 'center', formatter: formatString },
                 { field: 'createTime', title: '创建时间', align: 'center' },
                 { field: 'lastChangeTime', title: '最后修改时间', align: 'center' }
             ]], toolbar: [{
@@ -100,6 +101,12 @@
                 handler: function () {
                     SetBrand();
                 }
+            }, {
+                text: '刷新',
+                iconCls: 'icon-edit',
+                handler: function () {
+                    reloaddate();
+                }
             }]
         });
     }
@@ -129,7 +136,7 @@
         }
     }
     function DelRecord() {
-        $.messager.confirm('确认', '是否确认删除所选记录', function(row) {
+        $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
             if (row) {
                 var selectedRow = $('#persontable').datagrid('getSelections'); //获取选中行
                 if (selectedRow.length == 0) {
@@ -145,7 +152,7 @@
                     }
                     $.ajax({
                         url: '/struts/projectBrandType_query.ashx?action=del&id=' + num,
-                        success: function(data) {
+                        success: function (data) {
                             var comment = $.parseJSON(data);
                             if (comment != "suc") {
                                 $.messager.alert("提示", "操作失败，请联系管理员");
@@ -154,7 +161,7 @@
                                 $('#persontable').datagrid('reload');
                             }
                         },
-                        error: function() {
+                        error: function () {
                             $.messager.alert("提示", "网络错误，请联系管理员");
                         }
                     });
@@ -186,27 +193,18 @@
     <form id="personform" runat="server">
         <table width="100%" border="0">
             <tr>
-                <td align="left"><%=projectId %> <%=projectName %>
+                <td align="left">
                     <ul>
                         <li>
                             <img src="../images/ico07.gif" /></li>
                         <li>
-                            <select id="selectwhere" class="combo">
-                                <option value="projectName">品类名称</option>
-                            </select>
-                        </li>
-                        <li>
-                            <input id="txtwhere" type="text" />
+                            <span style="font-size: 16px;"><b><%=projectName %>(<%=projectId %>)</b></span>
                         </li>
                         <%--                        <li>
                             <select id="lywhere" style="display: none;" runat="server" name="lywhere">
                             </select>
                         </li>--%>
-                        <li><a href="javascript:void(0);" onclick="searchbtn()">
-                            <img src="../images/queren.jpg" border="0" /></a>
-                            <a href="javascript:void(0);" onclick="reloaddate()">
-                                <img src="../images/clear.jpg" border="0" /></a>
-                        </li>
+                        <li></li>
                     </ul>
                 </td>
             </tr>
@@ -223,7 +221,7 @@
                 品类名称：<input id="btName" type="text" name="btName" /><p></p>
             </div>
             <div class="fitem">
-                品类顺序：<input id="btOrder" type="text" name="btOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/><p></p>
+                品类顺序：<input id="btOrder" type="text" name="btOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" /><p></p>
             </div>
             <div class="fitem">
                 品类图片：<input id="btImg" type="text" name="btImg" /><p></p>
@@ -232,10 +230,11 @@
                 品类背色：<input id="btBgcolor" type="text" name="btBgcolor" /><p></p>
             </div>
             <div class="fitem">
-                是否显示：  <select id="btIsShow" name="btIsShow" class="combo">
-                                <option value="1">是</option>
-                                <option value="0">否</option>
-                            </select><p></p>
+                是否显示： 
+                <select id="btIsShow" name="btIsShow" class="combo">
+                    <option value="1">是</option>
+                    <option value="0">否</option>
+                </select><p></p>
             </div>
             <div class="fitem">
                 <input id="hid" type="hidden" name="hid" />
@@ -258,8 +257,6 @@
             $('#persontable').datagrid('load');
         }
         function reloaddate() {
-            $("#txtwhere").attr("value", "");
-            $('#persontable').datagrid('options').url = "/struts/projectBrandType_query.ashx?action=query";
             $('#persontable').datagrid('load');
         }
         function ValidateForm() {
