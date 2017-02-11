@@ -190,6 +190,7 @@
     <Content Include="files\DrawPointPath.aspx" />
     <Content Include="files\projectBrandType_query.aspx" />
     <Content Include="files\projectExport.aspx" />
+    <Content Include="files\projectTypeExport.aspx" />
     <Content Include="files\project_query.aspx" />
     <Content Include="files\sbrand_query.aspx" />
     <Content Include="files\setFloor.aspx" />
@@ -853,6 +854,12 @@
     </Compile>
     <Compile Include="files\projectExport.aspx.designer.cs">
       <DependentUpon>projectExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\projectTypeExport.aspx.cs">
+      <DependentUpon>projectTypeExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\projectTypeExport.aspx.designer.cs">
+      <DependentUpon>projectTypeExport.aspx</DependentUpon>
     </Compile>
     <Compile Include="struts\DrawPoint.ashx.cs">
       <DependentUpon>DrawPoint.ashx</DependentUpon>
