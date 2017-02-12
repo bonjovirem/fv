@@ -858,6 +858,7 @@
     </Compile>
     <Compile Include="files\projectTypeExport.aspx.cs">
       <DependentUpon>projectTypeExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="files\projectTypeExport.aspx.designer.cs">
       <DependentUpon>projectTypeExport.aspx</DependentUpon>

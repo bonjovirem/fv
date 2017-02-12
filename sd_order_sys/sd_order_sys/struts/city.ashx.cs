@@ -181,7 +181,10 @@ namespace sd_order_sys.struts
                 {
                     //查找需要展示的信息
                     sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,b.walkWay,a.brandName from fv_projectbrand a " +
-                            "left join fv_walkway b on a.id=b.projectBrandId where a.projectid=" + id + " and a.floorLevel is not null";
+                            "left join fv_walkway b on a.id=b.projectBrandId where a.projectid=" + id + " and a.floorLevel is not null;";
+                    sql += "select id,brandTypeName from fv_projectbrandtype where projectId=" + id + " limit 24 ;";
+                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel from fv_projectbrand where isShowWay=1 and projectId=" + id + "  limit 12 ;";
+                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel from fv_projectbrand where fvUrl<>'' and fvUrl is not null and floorLevel is not null and projectId=" + id + "  limit 48 ;";
                     DataTable dt2 = SqlManage.Query(sql, sqlparams).Tables[0];
                     if (dt2 != null && dt2.Rows.Count > 0)
                     {
@@ -237,16 +240,101 @@ namespace sd_order_sys.struts
                             {
                                 if (!string.IsNullOrEmpty(item["walkWay"].ToString().Trim()))
                                 {
-                                     brandWalkway += string.Format("ArrayBrand['{0}'] = '{1}';", item["id"].ToString(), item["walkWay"].ToString());
+                                    brandWalkway += string.Format("ArrayBrand['{0}'] = '{1}';", item["id"].ToString(), item["walkWay"].ToString());
 
                                 }
-                               
+
                             }
                             code = code.Replace("*floorLevel", floorLevel);
                             code = code.Replace("//*brandWalkway", brandWalkway);
                             writeFile(newFile, code);
                             #endregion
 
+                            #region 处理brand.html页面
+
+                            string brandGuide1_6 = "";
+                            string brandGuide7_12 = "";
+                            string brandTypeGuide1_12 = "";
+                            string brandTypeGuide13_24 = "";
+                            //*brandWalkway
+                            oldFile = toPath + "brand.html";
+                            code = readFile(oldFile);
+                            DataTable dt3 = SqlManage.Query(sql, sqlparams).Tables[1];
+                            if (dt3 != null && dt3.Rows.Count > 0)
+                            {
+                                if (dt3.Rows.Count < 12)
+                                {
+                                    brandTypeGuide13_24 = "<div class='col-md-1'><a class='btn' href='#' role='button'>&nbsp;</a></div>"; //加内容占一行
+                                }
+                                for (int k = 0; k < dt3.Rows.Count; k++)
+                                {
+                                    if (k < 12)
+                                    {
+                                        brandTypeGuide1_12 += string.Format("<div class='col-md-1'><a class='btn btn-success' href='#' role='button'>{0}</a></div>", dt3.Rows[k]["brandTypeName"].ToString());
+                                    }
+                                    else
+                                    {
+                                        brandTypeGuide13_24 += string.Format("<div class='col-md-1'><a class='btn btn-success' href='#' role='button'>{0}</a></div>", dt3.Rows[k]["brandTypeName"].ToString());
+                                    }
+
+                                }
+                            }
+                            DataTable dt4 = SqlManage.Query(sql, sqlparams).Tables[2];
+                            if (dt4 != null && dt4.Rows.Count > 0)
+                            {
+
+                                for (int k = 0; k < dt4.Rows.Count; k++)
+                                {
+                                    if (k < 6)
+                                    {
+                                        brandGuide1_6 += string.Format("<div class='col-md-2'><img onclick=\"window.location='floor{1}.html?projectId={0}';\"  style='width:190px;height:190px;' src='brandImg/logo{0}.jpg' alt='...' class='img-circle'></div>", dt4.Rows[k]["id"].ToString(), dt4.Rows[k]["floorlevel"].ToString());
+                                    }
+                                    else
+                                    {
+                                        brandGuide7_12 += string.Format("<div class='col-md-2'><img onclick=\"window.location='floor{1}.html?projectId={0}';\"  style='width:190px;height:190px;' src='brandImg/logo{0}.jpg' alt='...' class='img-circle'></div>", dt4.Rows[k]["id"].ToString(), dt4.Rows[k]["floorlevel"].ToString());
+                                    }
+
+                                }
+                            }
+                            code = code.Replace("//*brandGuide1_6", brandGuide1_6);
+                            code = code.Replace("//*brandGuide7_12", brandGuide7_12);
+                            code = code.Replace("//*brandTypeGuide1_12", brandTypeGuide1_12);
+                            code = code.Replace("//*brandTypeGuide13_24", brandTypeGuide13_24);
+                            writeFile(oldFile, code);
+
+                            #endregion
+
+                            #region 处理vr.html页面
+
+                            string vrString = "";
+                            //*brandWalkway
+                            oldFile = toPath + "vr.html";
+                            code = readFile(oldFile);
+                            DataTable dt5 = SqlManage.Query(sql, sqlparams).Tables[3];
+                            if (dt5 != null && dt5.Rows.Count > 0)
+                            {
+                                for (int l = 0; l < dt5.Rows.Count; l++)
+                                {
+                                    if (l % 6 == 0 && l > 0)
+                                    {
+                                        //空一行
+                                        vrString += "<div class='row'><div class='col-md-1'>&nbsp;</div><div class='col-md-1'>&nbsp;</div> <div class='col-md-1'>&nbsp;</div><div class='col-md-1'>&nbsp;</div><div class='col-md-1'>&nbsp;</div> <div class='col-md-1'>&nbsp;</div>  <div class='col-md-1'>&nbsp;</div>   <div class='col-md-1'>&nbsp;</div> <div class='col-md-1'>&nbsp;</div>  <div class='col-md-1'>&nbsp;</div>div class='col-md-1'>&nbsp;</div>   <div class='col-md-1'>&nbsp;</div>    </div>";
+                                    }
+                                    if (l % 6 == 0)
+                                    {
+                                        vrString += "<div class='row'>";
+                                    }
+                                    vrString += string.Format("<div class='col-md-2'><img onclick=\"window.location='floor{1}.html?projectId={0}';\"  style='width:190px;height:190px;' src='brandImg/logo{0}.jpg' alt='...' class='img-circle'></div>", dt5.Rows[l]["id"].ToString(), dt5.Rows[l]["floorlevel"].ToString());
+                                    if (l % 6 == 5 || l == dt5.Rows.Count - 1)
+                                    {
+                                        vrString += "</div>";
+                                    }
+
+                                }
+                            }
+                            code = code.Replace("//*vrString", vrString);
+                            writeFile(oldFile, code);
+                            #endregion
                         }
                     }
                 }

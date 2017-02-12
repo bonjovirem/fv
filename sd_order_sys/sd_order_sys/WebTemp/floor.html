@@ -22,8 +22,8 @@
     </script>
     <style>
         #divForShow {
-            left: 50%;
-            top: 50%;
+             left: 960px;
+            top: 540px;
             height: 768px;
             width: 1422px;
             margin: 0px auto;
@@ -388,5 +388,17 @@
           //    "<area shape='rect' coords='106,68,128,136' href='pageall.htm' target='_blank' alt='网页制作者不可不读的书。' title='网页制作者不可不读的书。'>";
     }
     loadArea();
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return -1;
+    }
+    function loadProjectId() {
+        var projectId = getQueryString("projectId");
+        if (projectId != -1) {
+            loadPanelDesc(projectId); showPanel();
+        }
+    }
+    loadProjectId();
 
 </script>
