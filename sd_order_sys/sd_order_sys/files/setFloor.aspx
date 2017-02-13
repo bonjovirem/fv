@@ -52,23 +52,27 @@
             height: 'auto',
             striped: false,
             singleSelect: false,
-            url: '../struts/SetFloor.ashx?action=query',
+            url: '../struts/SetFloor.ashx?action=query&projectId=<%=proId%>',
             //queryParams:{},  
             loadMsg: '数据加载中请稍后……',
             pagination: true,
             rownumbers: true,
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
-                { field: 'floorLevel', title: '楼层编号', align: 'center' },
+                { field: 'id', title: 'floorId', align: 'center' },
+                { field: 'floorLevel', title: '第几层', align: 'center' },
                 { field: 'floorImg', title: '楼层图片', align: 'center' },
                 { field: 'createTime', title: '创建时间', align: 'center' },
                 { field: 'lastChangeTime', title: '最后修改时间', align: 'center' },
-                { field: 'hasClient', title: '是否设置client', align: 'center', formatter: formatString  }
+                { field: 'hasClient', title: '是否设置client', align: 'center', formatter: formatStringClient  }
             ]], toolbar: [{
                 text: '添加',
                 iconCls: 'icon-add',
                 handler: function () {
                     $("#dlg").dialog().parent().appendTo("#personform");
+                    $("#floorLevel").attr("value", '');
+                    $("#floorImg").attr("value", '');
+                    $("#hid").attr("value", '');
                     $('#dlg').dialog('open');
                 }
             },
@@ -77,7 +81,7 @@
                 iconCls: 'icon-edit',
                 handler: function () {
                     rowMark();
-                    }
+                }
             }, {
                 text: '删除',
                 iconCls: 'icon-remove',
@@ -91,10 +95,22 @@
                     SetClient();
                 }
             }, {
+                text: '编辑电梯点',
+                iconCls: 'icon-add',
+                handler: function () {
+                    SetLift();
+                }
+            }, {
                 text: '刷新',
                 iconCls: 'icon-add',
                 handler: function () {
                     reloaddate();
+                }
+            }, {
+                text: '生成html',
+                iconCls: 'icon-add',
+                handler: function () {
+                    buildHTML();
                 }
             }]
         });
@@ -104,6 +120,16 @@
             return "是";
         else
             return "否";
+    }
+    function formatStringClient(val, row, index) {
+        if (val == 3)
+            return "全设置";
+        else if (val == 2)
+            return "只client";
+        else if (val == 1)
+            return "只电梯";
+        else
+            return "未设置"
     }
     function formatUploadFile(val, row, index) {
         if (val) {
@@ -162,28 +188,62 @@
         })
     }
 
-    function SetClient() {
-        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
-        if (selectedRow) {
-            top.topManager.openPage({
-                id: 'szclient',
-                href: '/files/DrawPointClient.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"]+"&projectId="+<%=proId %>,
-                title: 'client设置'
-            });
-        } else {
-            $.messager.alert('提示', '请选中一条记录');
-        }
-
+    function SetClient(index) {
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
             //$("#hid").attr("value", selectedRow["id"]);
-            self.location = 'DrawPointClient.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"];
+            window.open( 'DrawCtoLift.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"]+"&projectId="+<%=proId %>);
+    } else {
+        $.messager.alert('提示', '请选中一条记录');
+    }
+}
+function buildHTML(index) {
+
+    $('#persontable').datagrid('selectRow', index);
+    var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+    $("#hid").attr("value", selectedRow["id"]);
+    if (selectedRow) {
+        $.ajax({
+            url: '/struts/city.ashx?action=build&id=' +<%=proId %>+"&floorLevel="+selectedRow["floorLevel"],
+            success: function (data) {
+                var comment = $.parseJSON(data);
+                if (comment != "suc") {
+                    $.messager.alert("提示", "操作失败，请联系管理员");
+                } else {
+                    $.messager.alert("提示", "您操作成功");
+                }
+            },
+            error: function () {
+                $.messager.alert("提示", "网络错误，请联系管理员");
+            }
+        });
+    } else {
+        $.messager.alert('提示', '请选中一条记录');
+    }
+       
+}
+function SetLift(index) {
+
+    $('#persontable').datagrid('selectRow', index);
+    var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+    if (selectedRow) {
+        //$("#hid").attr("value", selectedRow["id"]);
+        window.open(  '/files/DrawLift.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"]+"&projectId="+<%=proId %>);
+    } else {
+        $.messager.alert('提示', '请选中一条记录');
+    }
+   <%-- var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+    if (selectedRow) {
+        top.topManager.openPage({
+            id: 'szlift',
+            href: '/files/DrawLift.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"]+"&projectId="+<%=proId %>,
+                title: '电梯点设置'
+            });
         } else {
             $.messager.alert('提示', '请选中一条记录');
-        }
-       
-    }
+        }--%>
+}
 </script>
 <body>
     <form id="personform" runat="server">
@@ -194,17 +254,14 @@
                         <li>
                             <img src="../images/ico07.gif" /></li>
                         <li>
-                             <span style="font-size: 16px;"><b><%=proName %>(<%=proId %>)</b></span>
+                            <span style="font-size: 16px;"><b><%=proName %>(<%=proId %>)</b></span>
                         </li>
-                        <li>
-                            
-                        </li>
+                        <li></li>
                         <%--                        <li>
                             <select id="lywhere" style="display: none;" runat="server" name="lywhere">
                             </select>
                         </li>--%>
-                        <li>
-                        </li>
+                        <li></li>
                     </ul>
                 </td>
             </tr>
@@ -218,15 +275,15 @@
             <div class="ftitle">
             </div>
             <div class="fitem">
-                楼层：<input id="floorLevel" type="text" name="floorLevel" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')"/><p></p>
+                楼层：<input id="floorLevel" type="text" name="floorLevel" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" /><p></p>
             </div>
             <div class="fitem">
                 图片：<input id="floorImg" type="text" name="floorImg" /><p></p>
             </div>
             <div class="fitem">
-                <input id="hid" type="hidden" name="hid"/>
-                <input id="hidProId" type="hidden" name="hidProId" value="<%=proId %>"/>
-                <input id="hidProName" type="hidden" name="hidProName"  value="<%=proName %>"/>
+                <input id="hid" type="hidden" name="hid" />
+                <input id="hidProId" type="hidden" name="hidProId" value="<%=proId %>" />
+                <input id="hidProName" type="hidden" name="hidProName" value="<%=proName %>" />
                 <p></p>
             </div>
             <input type="hidden" name="hidnum" id="hidnum" />

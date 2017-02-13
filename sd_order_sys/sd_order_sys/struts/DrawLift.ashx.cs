@@ -5,13 +5,12 @@ using System.Web;
 using System.Web.Script.Serialization;
 using SDorder.BLL;
 using System.Data;
-
 namespace sd_order_sys.struts
 {
     /// <summary>
-    /// DrawPointClient 的摘要说明
+    /// DrawLift 的摘要说明
     /// </summary>
-    public class DrawPointClient : IHttpHandler
+    public class DrawLift : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
@@ -40,7 +39,7 @@ namespace sd_order_sys.struts
             sqlparams.Add("@clientPoint", clientPoint);
             string sql = "";
             if (id == 0)
-                sql = "insert into fv_client (clientPoint,clientName,projectId,floorLevel,floorId,nextPointId,nextPointName,isClient) values(@clientPoint,@clientPoint,@projectId,@floorLevel,@floorId,0,'',1)";
+                sql = "insert into fv_client (clientPoint,clientName,projectId,floorLevel,floorId,nextPointId,nextPointName,isclient) values(@clientPoint,@clientPoint,@projectId,@floorLevel,@floorId,0,'',0)";
             else
                 sql = "update fv_client set clientPoint=@clientPoint,clientName=@clientPoint where id=" + id;
             bool w = SqlManage.OpRecord(sql, sqlparams);

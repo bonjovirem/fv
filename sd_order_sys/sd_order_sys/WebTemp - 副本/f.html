@@ -2,9 +2,8 @@
 <html>
 <head>
     <title>无标题页</title>
-
     <script src="resources/scripts/jquery-1.7.1.min.js"></script>
-    <script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
+    <!--<script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>-->
     <style>
         #div {
             width: 500px;
@@ -58,7 +57,7 @@
 
 </head>
 <body border='0' style="margin:0px;padding:0px;">
-    <div id="ds" style="background-image:url('floorImg/f1.png');background-size: cover;width:1300px;height:824px;">
+    <div id="ds" style="background-image:url('floorImg/f*floorLevel.png');background-size: cover;width:1300px;height:824px;">
         <canvas id="ldsun" width="1300" height="824" onclick="drawBallSet();" usemap="#newbook"></canvas>
     </div>
     <div id='div'></div>
@@ -190,8 +189,9 @@
     function Forload() {
         //获取对象
         var ArrayBrand = new Array();
-        ArrayBrand["11"] = "(120,140);(520,250);(600,200)";
-        ArrayBrand["22"] = "(1,1);(20,50);(100,200)";
+        //*brandWalkway
+        //ArrayBrand["11"] = "(120,140);(520,250);(600,200)";
+        //ArrayBrand["22"] = "(1,1);(20,50);(100,200)";
         var indexBrand = getQueryString("brandId");
         var points = ArrayBrand[indexBrand];
         var s1 = points.split(";");

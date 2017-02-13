@@ -48,7 +48,7 @@
             </select>
             <input onclick="reClear();" value="重新绘制" type="button" />
             <input id="txtArea" name="txtArea" value="" type="hidden" />
-            <input onclick="AddArea();" value="确认绘制" type="button" />
+            <input id="btnsub" onclick="AddArea();" value="确认绘制" type="button" />
             <input type="hidden" name="hidFloorId" id="hidFloorId" runat="server" />
             <input type="hidden" name="projectId" id="projectId" value="<%=projectId %>" />
             <input type="hidden" name="projectBrandId" id="projectBrandId" value="<%=projectBrandId %>" />
@@ -95,6 +95,7 @@
     }
 
     function AddArea() {
+        $("#btnsub").attr("disabled", "disabled");
         $.ajax({
             type: "POST",
             url: "/struts/Drawpoint.ashx?action=add",

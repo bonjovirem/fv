@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DrawPointPath.aspx.cs" Inherits="sd_order_sys.files.DrawPointPath" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DrawLiftPath.aspx.cs" Inherits="sd_order_sys.files.DrawLiftPath" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>设置client路径</title>
+    <title>设置电梯路径</title>
     <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../plugins/themes/metro/easyui.css" />
     <link rel="stylesheet" type="text/css" href="../plugins/themes/icon.css" />
@@ -103,14 +103,14 @@
 
     function AddPath() {
         l = arrPoints.length;
-        if (l < 2) {
+        if (l<2) {
             $.messager.alert("提示", "一个点太少了，至少设置两个点！");
             return;
         }
         $("#btnsub").attr("disabled", "disabled");
         $.ajax({
             type: "POST",
-            url: "/struts/DrawpointPath.ashx?action=add",
+            url: "/struts/DrawLiftPath.ashx?action=add",
             data: $('#personform').serialize(),
             datatype: "json",
             success: function (data) {

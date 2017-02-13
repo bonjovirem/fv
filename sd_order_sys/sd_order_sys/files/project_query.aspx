@@ -79,7 +79,7 @@
                 //{ field: 'createTime', title: '创建时间', align: 'center' },
                 //{ field: 'lastChangeTime', title: '最后修改时间', align: 'center' },
                 { field: 'hasArea', title: '是否设置区域', align: 'center', formatter: formatStringHas },
-                { field: 'hasPath', title: '是否设置路径', align: 'center', formatter: formatStringHas },
+                { field: 'hasPath', title: '是否设置路径', align: 'center', formatter: formatStringPath },
                 { field: 'floorLevel', title: '楼层', align: 'center' }
                 //{ field: 'fvUrl', title: '全景地址', align: 'center' }
             ]], toolbar: [{
@@ -125,10 +125,16 @@
                     setArea();
                 }
             }, {
-                text: '设置路径',
+                text: '设置同层直达路径',
                 iconCls: 'icon-edit',
                 handler: function () {
                     setPath();
+                }
+            }, {
+                text: '设置电梯到达路径',
+                iconCls: 'icon-edit',
+                handler: function () {
+                    setLiftPath();
                 }
             }, {
                 text: '刷新',
@@ -157,6 +163,14 @@
             return "是";
         else
             return "否";
+    }
+    function formatStringPath(val, row, index) {
+        if (val == 2)
+            return "全设置";
+        else if (val == 1)
+            return "只一条";
+        else 
+            return "未设置"
     }
     function formatUrl(val, row, index) {
         if (val) {
@@ -256,9 +270,19 @@ function setPath(index) {
         window.open('drawpointPath.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>' + '&floorLevel=' + selectedRow["floorLevel"]);
     } else {
         $.messager.alert('提示', '请选中一条记录');
-    }
-        //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
+    } 
 }
+    function setLiftPath(index) {
+        $('#persontable').datagrid('selectRow', index);
+        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+        if (selectedRow) {
+            window.open('drawLiftPath.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>' + '&floorLevel=' + selectedRow["floorLevel"]);
+        } else {
+            $.messager.alert('提示', '请选中一条记录');
+        }
+    }
+    
+
 </script>
 <body>
     <form id="personform" runat="server">
