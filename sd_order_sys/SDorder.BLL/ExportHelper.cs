@@ -208,14 +208,14 @@ namespace SDorder.BLL
 
                             if (row != null)
                             {
-                                DataTable dt = SqlManage.Query("select max(brandOrder) from fv_projectbrand where projectId=" + projectId + " and brandTypeId=" + int.Parse(row[0].ToString()),sqlparams).Tables[0];
+                                DataTable dt = SqlManage.Query("select max(brandOrder) from fv_projectbrand where projectId=" + projectId + " and brandTypeId=" + int.Parse(row[0].ToString()), sqlparams).Tables[0];
                                 int maxOrder = 0;
                                 if (dt.Rows.Count == 0)
                                     maxOrder = 0;
                                 else
                                     maxOrder = int.Parse(dt.Rows[0][0].ToString());
                                 dt.Dispose();
-                                param.Add("@brandOrder", order+maxOrder);
+                                param.Add("@brandOrder", order + maxOrder);
                                 param.Add("@brandTypeId", row[0].ToString());
                                 param.Add("@brandTypeName", typeName);
                                 param.Add("@projectId", projectId);
@@ -246,7 +246,7 @@ namespace SDorder.BLL
             return msg.TrimEnd(',');
         }
         /// <summary>
-        /// 系统品类导入数据库
+        /// 项目品类导入数据库
         /// </summary>
         /// <param name="path"></param>
         /// <param name="projectId"></param>
@@ -304,6 +304,147 @@ namespace SDorder.BLL
                 msg = "品类导入成功,";
             return msg.TrimEnd(',');
         }
-    }
+        /// <summary>
+        /// 系统品类导入数据库
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="projectId"></param>
+        /// <returns></returns>
+        public static string TypeExportDB(string path)
+        {
+            string msg = "";
+            try
+            {
+                DataTable table = UploadExcel(path: path, isColumnName: true);
+                Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+                //sqlparams.Add("@projectId", projectId);
+                DataTable typeTable = SqlManage.Query("SELECT id,brandName FROM fv_sysbrand ", sqlparams).Tables[0];//拉取
 
+                //if (typeTable.Rows.Count != 0)
+                //    order = (from p in typeTable.AsEnumerable().Select(p => p.Field<int>("brandTypeOrder")) select p).Max();
+                foreach (DataRow dr in table.Rows)
+                {
+                    int order = int.Parse(dr[0].ToString());//品类排序
+                    string typeName = dr[1].ToString();//品类名称
+                    string tlogo = dr[2].ToString();//品类logo
+                    Dictionary<string, object> param = new Dictionary<string, object>();
+                    var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<string>("brandName") == typeName; })
+                               select p).FirstOrDefault();
+
+                    if (row == null)
+                    {
+                        //typeTable.Rows.Add(row);
+                        //param.Add("@brandTypeId", row[0].ToString());
+                        param.Add("@brandName", typeName);
+                        param.Add("@brandLogo", @"/brandTypeTemplate/" + tlogo);
+                        string sql = "insert into fv_sysbrand (brandName,brandDesc,brandLogo,createTime,lastChangeTime) values(@brandName,'',@brandLogo,now(),now())";
+                        bool w = SqlManage.OpRecord(sql, param);
+                        if (!w)
+                        {
+                            msg += "品类名称：" + typeName + "的行写入失败，发生数据库阻塞,";
+                        }
+                    }
+                    else
+                    {
+                        msg += "品牌名称：" + typeName + "的行添加失败，已有对应品类,";
+                    }
+
+                    // }
+
+                }
+
+            }
+            catch (SystemException e)
+            {
+                msg += e.Message + ",";
+
+            }
+            if (msg == "")
+                msg = "品类导入成功,";
+            return msg.TrimEnd(',');
+        }
+
+        /// <summary>
+        /// 项目品牌导入
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string BullToDB(string path)
+        {
+            string msg = "";
+            try
+            {
+                DataTable table = UploadExcel(path: path, isColumnName: true);
+                Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+                //sqlparams.Add("@projectId", projectId);
+                DataTable typeTable = SqlManage.Query("SELECT id,brandName FROM fv_sysbrand ", sqlparams).Tables[0];//拉取
+                if (typeTable.Rows.Count == 0)
+                {
+                    msg = "该项目无品类，导入操作失败";
+                }
+                else
+                {
+                    foreach (DataRow dr in table.Rows)
+                    {
+                        int order = int.Parse(dr[0].ToString());//品类id
+                        string desc = dr[1].ToString();//品牌描述
+                        string logo = dr[2].ToString();
+                        string bName = dr[3].ToString();
+                        string typeName = dr[4].ToString();//品类名称
+                        Dictionary<string, object> param = new Dictionary<string, object>();
+                        //param.Add("@brandName", bName);
+                        string validateSql = "select count(*) from fv_sys_brand where sys_nane='" + bName + "'";
+                        object o = SqlManage.Exists(validateSql, sqlparams);
+                        if (int.Parse(o.ToString()) > 0)
+                        //if(false)
+                        {
+                            msg += "品牌名称：" + bName + "的行写入失败，已有该品牌,";
+                            continue;//已有该品牌则跳过
+                        }
+                        else //只加入存在于已导入的品类
+                        {
+                            var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<int>("id") == order; })
+                                       select p).FirstOrDefault();
+
+                            if (row != null)
+                            {
+                                //DataTable dt = SqlManage.Query("select max(brandOrder) from fv_projectbrand ", sqlparams).Tables[0];
+                                //int maxOrder = 0;
+                                //if (dt.Rows.Count == 0)
+                                //    maxOrder = 0;
+                                //else
+                                //    maxOrder = int.Parse(dt.Rows[0][0].ToString());
+                                //dt.Dispose();
+                                param.Add("@sys_nane", bName);
+                                param.Add("@sys_logo", @"/brandTemplate/" + logo);
+                                param.Add("@sys_type", order);
+                                param.Add("@sys_typeName", typeName);
+                                param.Add("@sys_desc", desc);
+                                string sql = "insert into fv_sys_brand (sys_nane,sys_logo,sys_type,sys_typeName,createTime,lastChangeTime,sys_desc) values(@sys_nane,@sys_logo,@sys_type,@sys_typeName,now(),now(),@sys_desc) ";
+                                bool w = SqlManage.OpRecord(sql, param);
+                                if (!w)
+                                {
+                                    msg += "品牌名称：" + bName + "的行写入失败，发生数据库阻塞,";
+                                }
+                            }
+                            else
+                            {
+                                msg += "品牌名称：" + bName + "的行写入失败，无对应品类,";
+                            }
+
+                        }
+
+                    }
+                }
+            }
+            catch (SystemException e)
+            {
+                msg += e.Message + ",";
+
+            }
+            if (msg == "")
+                msg = "品牌导入成功,";
+            return msg.TrimEnd(',');
+        }
+    }
 }

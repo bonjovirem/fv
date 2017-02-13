@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sbrand_query.aspx.cs" Inherits="sd_order_sys.files.sbrand_query" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sysRecord.aspx.cs" Inherits="sd_order_sys.files.sysRecord" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -50,18 +49,18 @@
             height: 'auto',
             striped: false,
             singleSelect: false,
-            url: '../struts/sbrand.ashx?action=query',
+            url: '../struts/record.ashx?action=query',
             //queryParams:{},  
             loadMsg: '数据加载中请稍后……',
             pagination: true,
             rownumbers: true,
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
-                { field: 'brandName', title: '品类名称', align: 'center' },
-                { field: 'brandImg', title: '品类图片', align: 'center', formatter: formatUploadFile },
-                { field: 'brandDesc', title: '品类描述', align: 'center' },
-                { field: 'brandVideo', title: '品类视频', align: 'center' },
-                { field: 'brandLogo', title: '品类图标', align: 'center' },
+                { field: 'sys_nane', title: '品牌名称', align: 'center' },
+                { field: 'sys_typeName', title: '所属品类', align: 'center' },
+                { field: 'sys_video', title: '品类视频', align: 'center' },
+                { field: 'sys_desc', title: '品牌描述', align: 'center' },
+                { field: 'sys_logo', title: '品类图标', align: 'center' },
                 { field: 'createTime', title: '创建时间', align: 'center' },
                 { field: 'lastChangeTime', title: '最后修改时间', align: 'center' }
             ]], toolbar: [{
@@ -85,7 +84,7 @@
                     DelRecord();
                 }
             }, {
-                text: '导入项目品类',
+                text: '导入项目品牌',
                 iconCls: 'icon-print',
                 handler: function () {
                     ExportBrand();
@@ -100,21 +99,6 @@
         else
             return "";
     }
-    //function formateTime(val, row, index) {
-    //    if (val) {
-    //        var dateTimeJsonStr = val;
-    //        var msecStr = dateTimeJsonStr.toString().replace(/\/Date\(([-]?\d+)\)\//gi, "$1");
-    //        var msesInt = Number(msecStr);
-    //        var dt = new Date(msesInt);
-    //        return dt.toLocaleString();
-    //    }
-    //    else {
-    //        return "";
-    //    }
-    //}
-    //function formatOper(val, row, index) {
-    //    return '<a href="javascript:void(0);", onclick="rowMark(' + index + ')">查看</a>';
-    //};
     function rowMark(index) {
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
@@ -168,9 +152,9 @@
     }
     function ExportBrand() {
             top.topManager.openPage({
-                id: 'xtplsc',
-                href: '/files/SysSrandExport.aspx',
-                title: '系统品类上传'
+                id: 'xtppsc',
+                href: '/files/sysRecordExport.aspx',
+                title: '系统品牌上传'
             });
     }
 </script>
