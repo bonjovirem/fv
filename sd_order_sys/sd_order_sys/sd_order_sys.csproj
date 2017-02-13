@@ -202,6 +202,9 @@
     <Content Include="files\SysSrandExport.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\11.jpg" />
+    <Content Include="images\123.png" />
+    <Content Include="images\1234-f.png" />
+    <Content Include="images\1234.png" />
     <Content Include="images\acrossTab-2.png" />
     <Content Include="images\acrossTab-2bak.png" />
     <Content Include="images\acrossTab-bg.png" />
@@ -580,13 +583,9 @@
     <Content Include="WebTemp\bootstrap\bootstrap-theme.min.css" />
     <Content Include="WebTemp\bootstrap\bootstrap.min.css" />
     <Content Include="WebTemp\brand.html" />
-    <Content Include="WebTemp\brandImg\5.jpg" />
     <Content Include="WebTemp\brandImg\img11_1.jpg" />
     <Content Include="WebTemp\brandImg\img11_2.jpg" />
     <Content Include="WebTemp\brandImg\img11_3.jpg" />
-    <Content Include="WebTemp\brandImg\img11_4.jpg" />
-    <Content Include="WebTemp\brandImg\logo10.jpg" />
-    <Content Include="WebTemp\brandImg\logo11.jpg" />
     <Content Include="WebTemp\brandImg\logo11.png" />
     <Content Include="WebTemp\commodity.html" />
     <Content Include="WebTemp\data\document.js" />
@@ -662,6 +661,9 @@
     <Content Include="WebTemp\images\index\u6.png" />
     <Content Include="WebTemp\images\index\u8.png" />
     <Content Include="WebTemp\images\promotions\u341.png" />
+    <Content Include="WebTemp\images\redX.png" />
+    <Content Include="WebTemp\images\way.gif" />
+    <Content Include="WebTemp\images\x.png" />
     <Content Include="WebTemp\index.html" />
     <Content Include="WebTemp\online.html" />
     <Content Include="WebTemp\plugins\page_notes\styles\images\back.png" />
@@ -811,11 +813,10 @@
     <Content Include="struts\DrawPointClient.ashx" />
     <Content Include="struts\projectBrandType_query.ashx" />
     <Content Include="struts\DrawPointPath.ashx" />
-    <None Include="Properties\PublishProfiles\fv.pubxml" />
+    <Content Include="struts\record.ashx" />
+    <Content Include="struts\DrawCtoLift.ashx" />
     <Content Include="struts\DrawLift.ashx" />
     <Content Include="struts\DrawLiftPath.ashx" />
-    <Content Include="struts\DrawCtoLift.ashx" />
-    <Content Include="struts\record.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -836,21 +837,18 @@
     </Compile>
     <Compile Include="files\DrawCToLift.aspx.cs">
       <DependentUpon>DrawCToLift.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="files\DrawCToLift.aspx.designer.cs">
       <DependentUpon>DrawCToLift.aspx</DependentUpon>
     </Compile>
     <Compile Include="files\DrawLift.aspx.cs">
       <DependentUpon>DrawLift.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="files\DrawLift.aspx.designer.cs">
       <DependentUpon>DrawLift.aspx</DependentUpon>
     </Compile>
     <Compile Include="files\DrawLiftPath.aspx.cs">
       <DependentUpon>DrawLiftPath.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="files\DrawLiftPath.aspx.designer.cs">
       <DependentUpon>DrawLiftPath.aspx</DependentUpon>
@@ -897,14 +895,6 @@
     <Compile Include="files\projectTypeExport.aspx.designer.cs">
       <DependentUpon>projectTypeExport.aspx</DependentUpon>
     </Compile>
-    <Compile Include="struts\DrawCtoLift.ashx.cs">
-      <DependentUpon>DrawCtoLift.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="struts\DrawLift.ashx.cs">
-      <DependentUpon>DrawLift.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="struts\DrawLiftPath.ashx.cs">
-      <DependentUpon>DrawLiftPath.ashx</DependentUpon>
     <Compile Include="files\sysRecord.aspx.cs">
       <DependentUpon>sysRecord.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -925,6 +915,15 @@
     </Compile>
     <Compile Include="files\SysSrandExport.aspx.designer.cs">
       <DependentUpon>SysSrandExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawCtoLift.ashx.cs">
+      <DependentUpon>DrawCtoLift.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawLift.ashx.cs">
+      <DependentUpon>DrawLift.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawLiftPath.ashx.cs">
+      <DependentUpon>DrawLiftPath.ashx</DependentUpon>
     </Compile>
     <Compile Include="struts\DrawPoint.ashx.cs">
       <DependentUpon>DrawPoint.ashx</DependentUpon>
@@ -1014,6 +1013,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="brandTypeTemplate\" />
     <Folder Include="projectImg\" />
+    <Folder Include="release\" />
     <Folder Include="WebTemp\images\brand\" />
     <Folder Include="WebTemp\images\commodity\" />
     <Folder Include="WebTemp\images\online\" />
