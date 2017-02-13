@@ -20,6 +20,19 @@
       $axure.utils.getOtherPath = function() { return 'resources/Other.html'; };
       $axure.utils.getReloadPath = function() { return 'resources/reload.html'; };
     </script>
+	    <style>
+        .divForShow {
+            left: 960px;
+            top: 50px;
+            height: 200px;
+            width: 300px;
+            margin: 0px auto;
+            z-index: 100;
+            position: fixed;
+            margin-top: -384px;
+            margin-left: -741px;
+        }
+    </style>
   </head>
   <body>
     <div id="base" class="">
@@ -149,12 +162,17 @@
 
       <!-- Unnamed (图像) -->
       <div id="u26" class="ax_default _图像">
-        <img id="u26_img" class="img " src="images/index/u26.png"/>
-        <!-- Unnamed () -->
+        <img id="u26_img" class="img " src="images/index/u26.png"/><div style="left:700px; z-index:100; position:absolute;top:50px;width:290px; height:96px">
+                                                                       <iframe allowtransparency="true" frameborder="0" width="290" height="96" scrolling="no" style="background-color:transparent"  src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=0&v=0&d=2&bd=0&k=000000&f=&q=1&e=0&a=1&c=54830&w=290&h=96&align=center"></iframe>
+          </div>
+          <!-- Unnamed () -->
         <div id="u27" class="text" style="display:none; visibility: hidden">
           <p><span></span></p>
         </div>
       </div>
     </div>
+	<div class="divForShow">
+        <!--<iframe allowtransparency="true" frameborder="0" width="195" height="96" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=1&z=3&t=0&v=0&d=1&bd=0&k=000000&f=&q=1&e=0&a=1&c=54511&w=195&h=96&align=center"></iframe>-->
+	</div>
   </body>
 </html>

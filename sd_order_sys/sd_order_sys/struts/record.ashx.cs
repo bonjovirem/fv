@@ -5,13 +5,12 @@ using System.Web;
 using System.Web.Script.Serialization;
 using SDorder.BLL;
 using System.Data;
-
 namespace sd_order_sys.struts
 {
     /// <summary>
-    /// sbrand 的摘要说明
+    /// record 的摘要说明
     /// </summary>
-    public class sbrand : IHttpHandler, System.Web.SessionState.IRequiresSessionState
+    public class record : IHttpHandler, System.Web.SessionState.IRequiresSessionState
     {
 
         public void ProcessRequest(HttpContext context)
@@ -51,18 +50,18 @@ namespace sd_order_sys.struts
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             int total = 0;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Append(@"SELECT * FROM fv_sysbrand");
+            builder.Append(@"SELECT * FROM fv_sys_brand");
 
             if (context.Request["cul"] == null && context.Request["where"] == null)
             {
 
-                total = SqlManage.Query(@"select * from fv_sysbrand",sqlparams).Tables[0].Rows.Count;
+                total = SqlManage.Query(@"select * from fv_sys_brand", sqlparams).Tables[0].Rows.Count;
                 //return;
             }
             else
             {
                 string where = context.Request["cul"].ToString() + " LIKE '%" + context.Request["where"].ToString() + "%'";
-                total = SqlManage.Query(@"select * from fv_sysbrand " + where, sqlparams).Tables[0].Rows.Count;
+                total = SqlManage.Query(@"select * from fv_sys_brand " + where, sqlparams).Tables[0].Rows.Count;
                 builder.Append(" where " + where);
             }
             builder.Append(" LIMIT " + (page - 1) + "," + size);

@@ -197,6 +197,9 @@
     <Content Include="files\project_query.aspx" />
     <Content Include="files\sbrand_query.aspx" />
     <Content Include="files\setFloor.aspx" />
+    <Content Include="files\sysRecord.aspx" />
+    <Content Include="files\sysRecordExport.aspx" />
+    <Content Include="files\SysSrandExport.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\11.jpg" />
     <Content Include="images\acrossTab-2.png" />
@@ -812,6 +815,7 @@
     <Content Include="struts\DrawLift.ashx" />
     <Content Include="struts\DrawLiftPath.ashx" />
     <Content Include="struts\DrawCtoLift.ashx" />
+    <Content Include="struts\record.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -901,6 +905,26 @@
     </Compile>
     <Compile Include="struts\DrawLiftPath.ashx.cs">
       <DependentUpon>DrawLiftPath.ashx</DependentUpon>
+    <Compile Include="files\sysRecord.aspx.cs">
+      <DependentUpon>sysRecord.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\sysRecord.aspx.designer.cs">
+      <DependentUpon>sysRecord.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\sysRecordExport.aspx.cs">
+      <DependentUpon>sysRecordExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\sysRecordExport.aspx.designer.cs">
+      <DependentUpon>sysRecordExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\SysSrandExport.aspx.cs">
+      <DependentUpon>SysSrandExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\SysSrandExport.aspx.designer.cs">
+      <DependentUpon>SysSrandExport.aspx</DependentUpon>
     </Compile>
     <Compile Include="struts\DrawPoint.ashx.cs">
       <DependentUpon>DrawPoint.ashx</DependentUpon>
@@ -962,6 +986,9 @@
     <Compile Include="struts\projectBrandType_query.ashx.cs">
       <DependentUpon>projectBrandType_query.ashx</DependentUpon>
     </Compile>
+    <Compile Include="struts\record.ashx.cs">
+      <DependentUpon>record.ashx</DependentUpon>
+    </Compile>
     <Compile Include="struts\sbrand.ashx.cs">
       <DependentUpon>sbrand.ashx</DependentUpon>
     </Compile>
@@ -985,6 +1012,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="brandTypeTemplate\" />
     <Folder Include="projectImg\" />
     <Folder Include="WebTemp\images\brand\" />
     <Folder Include="WebTemp\images\commodity\" />
