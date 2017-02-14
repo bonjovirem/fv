@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>floor1</title>
+    <title>第*floorLevel层</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -22,8 +22,8 @@
     </script>
     <style>
         #divForShow {
-            left: 50%;
-            top: 50%;
+             left: 960px;
+            top: 540px;
             height: 768px;
             width: 1422px;
             margin: 0px auto;
@@ -51,6 +51,7 @@
 </head>
 <body>
     <div id="base" class="">
+        <input type="hidden" id="hidBrandId"/>
         <div id="divForShow" style="display:none;">
             <div id="imgX" onclick="hidePanel();">
                 <img src="images/floor1/x.png" style="margin-top:10px;margin-left:10px;" />
@@ -65,7 +66,7 @@
                 </tr>
                 <tr>
                     <td height="160"><div id="divImg" style="text-align:center;">divImg</div></td>
-                    <td height="160" align="right"><div onclick="showPath();"><img src="images/floor1/way.gif" /></div></td>
+                    <td height="160" align="right"><div style="cursor:pointer;" onclick="showPath();"><img src="images/floor1/way.gif" /></div></td>
                 </tr>
             </table>
         </div>
@@ -90,7 +91,7 @@
         <!-- floor (图像) -->
         <div id="u32" class="ax_default _图像" data-label="floor">
             <iframe id="frame1" src='' width="1300" height="824" allowtransparency="true" style="background-color:transparent" frameborder="0" scrolling="no"></iframe>
-            <img id="u32_img" class="img " src="floorImg/f1.png" width="1300" height="824" usemap="#newbook" />
+            <img id="u32_img" class="img " src="floorImg/f*floorLevel.png" width="1300" height="824" usemap="#newbook" />
             <map name="newbook" id="newbook"></map>
             <!-- Unnamed () -->
             <div id="u33" class="text" style="display:none; visibility: hidden">
@@ -294,7 +295,7 @@
 
             <!-- Unnamed (图像) -->
             <div id="u76" class="ax_default _图像" style="cursor:pointer;" onclick="javascript: window.location = 'floor1.html';">
-                <img id="u76_img" class="img " src="floorImg/logof1s.png" />
+                <img id="u76_img" class="img " src="floorImg/logo*f1.png" />
                 <!-- Unnamed () -->
                 <div id="u77" class="text" style="display:none; visibility: hidden">
                     <p><span></span></p>
@@ -303,7 +304,7 @@
 
             <!-- Unnamed (图像) -->
             <div id="u78" class="ax_default _图像" style="cursor:pointer;" onclick="javascript: window.location = 'floor2.html';">
-                <img id="u78_img" class="img " src="floorImg/logof2.png" />
+                <img id="u78_img" class="img " src="floorImg/logo*f2.png" />
                 <!-- Unnamed () -->
                 <div id="u79" class="text" style="display:none; visibility: hidden">
                     <p><span></span></p>
@@ -312,7 +313,7 @@
 
             <!-- Unnamed (图像) -->
             <div id="u80" class="ax_default _图像" style="cursor:pointer;"  onclick="javascript: window.location = 'floor3.html';">
-                <img id="u80_img" class="img " src="floorImg/logof3.png" />
+                <img id="u80_img" class="img " src="floorImg/logo*f3.png" />
                 <!-- Unnamed () -->
                 <div id="u81" class="text" style="display:none; visibility: hidden">
                     <p><span></span></p>
@@ -321,7 +322,7 @@
 
             <!-- Unnamed (图像) -->
             <div id="u82" class="ax_default _图像" style="cursor:pointer;"  onclick="javascript: window.location = 'floor4.html';">
-                <img id="u82_img" class="img " src="floorImg/logof4.png" />
+                <img id="u82_img" class="img " src="floorImg/logo*f4.png" />
                 <!-- Unnamed () -->
                 <div id="u83" class="text" style="display:none; visibility: hidden">
                     <p><span></span></p>
@@ -333,6 +334,8 @@
 </html>
 
 <script language="javascript" type="text/javascript">
+    var pageFloorLevel =*floorLevel ;   //本页显示第几层
+    var thisClientFloorLevel =//*thisClientFloorLevel ;   //当前客户端是在第几层
     function showPanel() {
         // $('#u32_img').hide();  //大图片
         //$('#frame1').attr("src", "floor2.html");  //动画的iframe
@@ -344,12 +347,12 @@
         //$('#frame1').attr("src", "floor2.html");
         $('#divForShow').fadeOut(500);
         //setTimeout("rollback()", 3000);
-    }
+    }1
     function showPath() {
         $('#divForShow').fadeOut(200);
-        $('#frame1').attr("src", "f1.html?brandId=11");
+        $('#frame1').attr("src", "f*floorLevel.html?brandId=" + document.getElementById('hidBrandId').value);
         $('#u32_img').hide();
-        setTimeout("rollback()", 4000);
+        setTimeout("rollback()", 5000);
     }
     function rollback() {
         $('#u32_img').show();
@@ -361,11 +364,14 @@
 
     function loadPanelDesc(brandId) {
         var Arrayfv = new Array();
-        Arrayfv["11"] = "http://www.vrssd.com/case/jiaju/hxmkl/zibo/2f/nuobeier/";
-        Arrayfv["22"] = "222222";
         var ArrayDesc = new Array();
-        ArrayDesc["11"] = "&nbsp;&nbsp;&nbsp;&nbsp;杭州诺贝尔集团有限公司创立于1992年，是注重多元化选择、价值实现、服务体验的中国消费者和工程客户首选的磁砖生产与销售公司。<br />&nbsp;&nbsp;&nbsp;&nbsp;目前，诺贝尔旗下拥有瓷抛砖、微晶玻璃陶瓷复合砖、陶质釉面墙地砖、瓷质釉面墙地砖、完全玻化抛光砖、欧式复古砖、亚光砖、瓷片系列及各种装饰配件，并演绎出多种全新的装饰设计理念，为中国和全球客户提供完美产品与服务。";
-        ArrayDesc["22"] = "222222";
+        //*fvString
+        //*descString
+        document.getElementById('hidBrandId').value = brandId;
+        //Arrayfv["11"] = "http://www.vrssd.com/case/jiaju/hxmkl/zibo/2f/nuobeier/";
+        //Arrayfv["22"] = "222222";
+        //ArrayDesc["11"] = "&nbsp;&nbsp;&nbsp;&nbsp;杭州诺贝尔集团有限公司创立于1992年，是注重多元化选择、价值实现、服务体验的中国消费者和工程客户首选的磁砖生产与销售公司。<br />&nbsp;&nbsp;&nbsp;&nbsp;目前，诺贝尔旗下拥有瓷抛砖、微晶玻璃陶瓷复合砖、陶质釉面墙地砖、瓷质釉面墙地砖、完全玻化抛光砖、欧式复古砖、亚光砖、瓷片系列及各种装饰配件，并演绎出多种全新的装饰设计理念，为中国和全球客户提供完美产品与服务。";
+        //ArrayDesc["22"] = "222222";
         document.getElementById('divfv').innerHTML = "<iframe id='iffv' width='100%' height='100%' data-label='quanjing' scrolling='no' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen='' src='" + Arrayfv[brandId] + "'></iframe>";
         document.getElementById('divlogo').innerHTML = " <img src='brandImg/logo" + brandId + ".jpg' style='padding:3px;height:160px;'/>";
         document.getElementById('divDesc').innerHTML = ArrayDesc[brandId];
@@ -378,11 +384,23 @@
     }
 
     function loadArea() {
-        document.getElementById('newbook').innerHTML =
-          "  <area shape='rect' coords='56,69,78,139' style=' background:red;' href='urlall.htm' target='_blank' alt='这里收集十万多个网址。' title='这里收集十万多个网址。'>" +
-             " <area shape='rect' coords='82,70,103,136' href='siteall.htm' target='_blank' alt='网站设计师的启蒙读本。' title='网站设计师的启蒙读本。'>" +
-              "<area shape='rect' coords='106,68,128,136' href='pageall.htm' target='_blank' alt='网页制作者不可不读的书。' title='网页制作者不可不读的书。'>";
+        document.getElementById('newbook').innerHTML = "//*areaString";
+          //"  <area shape='rect' coords='56,69,78,139' style=' background:red;' href='urlall.htm' target='_blank' alt='这里收集十万多个网址。' title='这里收集十万多个网址。'>" +
+          //   " <area shape='rect' coords='82,70,103,136' href='siteall.htm' target='_blank' alt='网站设计师的启蒙读本。' title='网站设计师的启蒙读本。'>" +
+          //    "<area shape='rect' coords='106,68,128,136' href='pageall.htm' target='_blank' alt='网页制作者不可不读的书。' title='网页制作者不可不读的书。'>";
     }
     loadArea();
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return -1;
+    }
+    function loadProjectId() {
+        var projectId = getQueryString("projectId");
+        if (projectId != -1) {
+            loadPanelDesc(projectId); showPanel();
+        }
+    }
+    loadProjectId();
 
 </script>

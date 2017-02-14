@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace sd_order_sys.files
 {
-    public partial class DrawPointClient : System.Web.UI.Page
+    public partial class DrawLift : System.Web.UI.Page
     {
         public string floorId = "";
         public string projectId = "";
@@ -23,7 +23,8 @@ namespace sd_order_sys.files
             projectId = Request.QueryString["projectId"];
             floorLevel = Request.QueryString["floorLevel"];
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-            string sql = string.Format("select id,clientPoint from fv_client where isClient=1 and floorId={0} and projectId={1} and floorLevel={2} limit 1 ", floorId, projectId, floorLevel);
+            //isClient=0  表示电梯点
+            string sql = string.Format("select id,clientPoint from fv_client where isClient=0 and floorId={0} and projectId={1} and floorLevel={2} limit 1 ", floorId, projectId, floorLevel);
             DataTable dt = SqlManage.Query(sql, sqlparams).Tables[0];
             if (dt != null && dt.Rows.Count > 0)
             {

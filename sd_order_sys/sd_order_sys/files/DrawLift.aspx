@@ -1,9 +1,9 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DrawPointClient.aspx.cs" Inherits="sd_order_sys.files.DrawPointClient" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DrawLift.aspx.cs" Inherits="sd_order_sys.files.DrawLift" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>client设置</title>
+    <title>电梯点设置</title>
     <script type="text/javascript" src="../js/jquery-1.8.2.min.js"></script>
       <link rel="stylesheet" type="text/css" href="../plugins/themes/metro/easyui.css" />
     <link rel="stylesheet" type="text/css" href="../plugins/themes/icon.css" />
@@ -98,7 +98,7 @@
             $("#btnsub").attr("disabled", "disabled");
             $.ajax({
                 type: "POST",
-                url: "/struts/DrawPointClient.ashx?action=add",
+                url: "/struts/DrawLift.ashx?action=add",
                 data: $('#personform').serialize(),
                 datatype: "json",
                 success: function (data) {

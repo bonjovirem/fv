@@ -199,7 +199,7 @@
             //$.messager.alert('提示', '1');
             top.topManager.openPage({
                 id: 'sbs',
-                href:  '/files/setFloor.aspx?projectid=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
+                href:  '/files/setFloor.aspx?projectId=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
                 title: '楼层设置'
             });
             //window.location = 'setFloor.aspx?projectid=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"];

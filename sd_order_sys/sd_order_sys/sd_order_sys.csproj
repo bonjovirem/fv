@@ -184,6 +184,9 @@
     <Content Include="error.html" />
     <Content Include="favicon.ico" />
     <Content Include="files\cityProject_query.aspx" />
+    <Content Include="files\DrawCToLift.aspx" />
+    <Content Include="files\DrawLift.aspx" />
+    <Content Include="files\DrawLiftPath.aspx" />
     <Content Include="files\DrawPoint.aspx" />
     <Content Include="files\DrawPoint2.aspx" />
     <Content Include="files\DrawPointClient.aspx" />
@@ -199,6 +202,9 @@
     <Content Include="files\SysSrandExport.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\11.jpg" />
+    <Content Include="images\123.png" />
+    <Content Include="images\1234-f.png" />
+    <Content Include="images\1234.png" />
     <Content Include="images\acrossTab-2.png" />
     <Content Include="images\acrossTab-2bak.png" />
     <Content Include="images\acrossTab-bg.png" />
@@ -574,6 +580,8 @@
     <Content Include="themes\theme-pic2.jpg" />
     <Content Include="Web.config" />
     <Content Include="WebTemp\about.html" />
+    <Content Include="WebTemp\bootstrap\bootstrap-theme.min.css" />
+    <Content Include="WebTemp\bootstrap\bootstrap.min.css" />
     <Content Include="WebTemp\brand.html" />
     <Content Include="WebTemp\brandImg\img11_1.jpg" />
     <Content Include="WebTemp\brandImg\img11_2.jpg" />
@@ -582,8 +590,7 @@
     <Content Include="WebTemp\commodity.html" />
     <Content Include="WebTemp\data\document.js" />
     <Content Include="WebTemp\data\styles.css" />
-    <Content Include="WebTemp\f1 - 副本.html" />
-    <Content Include="WebTemp\f1.html" />
+    <Content Include="WebTemp\f.html" />
     <Content Include="WebTemp\files\about\data.js" />
     <Content Include="WebTemp\files\about\styles.css" />
     <Content Include="WebTemp\files\brand\data.js" />
@@ -606,12 +613,20 @@
     <Content Include="WebTemp\files\promotions\styles.css" />
     <Content Include="WebTemp\files\vr\data.js" />
     <Content Include="WebTemp\files\vr\styles.css" />
-    <Content Include="WebTemp\floor1.html" />
-    <Content Include="WebTemp\floor2.html" />
-    <Content Include="WebTemp\floor3.html" />
-    <Content Include="WebTemp\floor4.html" />
+    <Content Include="WebTemp\floor.html" />
+    <Content Include="WebTemp\floorImg\f1.png" />
+    <Content Include="WebTemp\floorImg\f2.png" />
+    <Content Include="WebTemp\floorImg\f3.png" />
+    <Content Include="WebTemp\floorImg\f4.png" />
+    <Content Include="WebTemp\floorImg\logof1.png" />
+    <Content Include="WebTemp\floorImg\logof1s.png" />
+    <Content Include="WebTemp\floorImg\logof2.png" />
+    <Content Include="WebTemp\floorImg\logof2s.png" />
+    <Content Include="WebTemp\floorImg\logof3.png" />
+    <Content Include="WebTemp\floorImg\logof3s.png" />
+    <Content Include="WebTemp\floorImg\logof4.png" />
+    <Content Include="WebTemp\floorImg\logof4s.png" />
     <Content Include="WebTemp\images\about\u362.png" />
-    <Content Include="WebTemp\images\c.png" />
     <Content Include="WebTemp\images\c1.png" />
     <Content Include="WebTemp\images\floor1\floor_u32.png" />
     <Content Include="WebTemp\images\floor1\moduo_u34.png" />
@@ -646,17 +661,11 @@
     <Content Include="WebTemp\images\index\u6.png" />
     <Content Include="WebTemp\images\index\u8.png" />
     <Content Include="WebTemp\images\promotions\u341.png" />
+    <Content Include="WebTemp\images\redX.png" />
+    <Content Include="WebTemp\images\way.gif" />
+    <Content Include="WebTemp\images\x.png" />
     <Content Include="WebTemp\index.html" />
     <Content Include="WebTemp\online.html" />
-    <Content Include="WebTemp\plugins\debug\styles\debug.css" />
-    <Content Include="WebTemp\plugins\debug\styles\images\reset.svg" />
-    <Content Include="WebTemp\plugins\debug\styles\images\reset_hover.svg" />
-    <Content Include="WebTemp\plugins\debug\styles\images\variables_hover.png" />
-    <Content Include="WebTemp\plugins\debug\styles\images\variables_hover.svg" />
-    <Content Include="WebTemp\plugins\debug\styles\images\variables_off.png" />
-    <Content Include="WebTemp\plugins\debug\styles\images\variables_off.svg" />
-    <Content Include="WebTemp\plugins\debug\styles\images\variables_on.png" />
-    <Content Include="WebTemp\plugins\debug\styles\images\variables_on.svg" />
     <Content Include="WebTemp\plugins\page_notes\styles\images\back.png" />
     <Content Include="WebTemp\plugins\page_notes\styles\images\back.svg" />
     <Content Include="WebTemp\plugins\page_notes\styles\images\back_hover.png" />
@@ -795,7 +804,6 @@
   <ItemGroup>
     <Content Include="images\gq\Thumbs.db" />
     <Content Include="images\Thumbs.db" />
-    <Content Include="themes\Thumbs.db" />
     <Content Include="struts\login.ashx" />
     <Content Include="struts\sbrand.ashx" />
     <Content Include="struts\project.ashx" />
@@ -806,13 +814,15 @@
     <Content Include="struts\projectBrandType_query.ashx" />
     <Content Include="struts\DrawPointPath.ashx" />
     <Content Include="struts\record.ashx" />
+    <Content Include="struts\DrawCtoLift.ashx" />
+    <Content Include="struts\DrawLift.ashx" />
+    <Content Include="struts\DrawLiftPath.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="WebTemp\debug.log" />
     <Content Include="WebTemp\resources\chrome\axure-chrome-extension.crx" />
   </ItemGroup>
   <ItemGroup>
@@ -824,6 +834,24 @@
     </Compile>
     <Compile Include="files\cityProject_query.aspx.designer.cs">
       <DependentUpon>cityProject_query.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\DrawCToLift.aspx.cs">
+      <DependentUpon>DrawCToLift.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\DrawCToLift.aspx.designer.cs">
+      <DependentUpon>DrawCToLift.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\DrawLift.aspx.cs">
+      <DependentUpon>DrawLift.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\DrawLift.aspx.designer.cs">
+      <DependentUpon>DrawLift.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\DrawLiftPath.aspx.cs">
+      <DependentUpon>DrawLiftPath.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\DrawLiftPath.aspx.designer.cs">
+      <DependentUpon>DrawLiftPath.aspx</DependentUpon>
     </Compile>
     <Compile Include="files\DrawPoint2.aspx.cs">
       <DependentUpon>DrawPoint2.aspx</DependentUpon>
@@ -887,6 +915,15 @@
     </Compile>
     <Compile Include="files\SysSrandExport.aspx.designer.cs">
       <DependentUpon>SysSrandExport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawCtoLift.ashx.cs">
+      <DependentUpon>DrawCtoLift.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawLift.ashx.cs">
+      <DependentUpon>DrawLift.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawLiftPath.ashx.cs">
+      <DependentUpon>DrawLiftPath.ashx</DependentUpon>
     </Compile>
     <Compile Include="struts\DrawPoint.ashx.cs">
       <DependentUpon>DrawPoint.ashx</DependentUpon>
@@ -976,6 +1013,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="brandTypeTemplate\" />
     <Folder Include="projectImg\" />
+    <Folder Include="release\" />
     <Folder Include="WebTemp\images\brand\" />
     <Folder Include="WebTemp\images\commodity\" />
     <Folder Include="WebTemp\images\online\" />

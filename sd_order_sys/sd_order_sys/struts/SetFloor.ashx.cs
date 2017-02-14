@@ -48,18 +48,11 @@ namespace sd_order_sys.struts
             int page = context.Request["page"] != "" ? Convert.ToInt32(context.Request.Form["page"]) : 1;
             int size = context.Request["rows"] != "" ? Convert.ToInt32(context.Request.Form["rows"]) : 1;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Append(@"SELECT a.*,isnull(b.clientPoint) as hasClient FROM fv_floor a left join fv_client b on a.id=b.floorId ");
+            builder.Append(@"SELECT a.id,a.projectId,a.floorLevel,a.floorImg,a.createTime,a.lastChangeTime,sum(case b.isClient when 1 then 2 when 0 then 1 else 0 end) as hasClient "+ 
+            "FROM fv_floor a left join fv_client b on a.floorLevel=b.floorLevel and a.projectId=b.projectId ");
 
-            if (context.Request["cul"] == null && context.Request["where"] == null && context.Request["projectid"] == null)
-            {
-                //return;
-            }
-            else
-            {
-               // string where = context.Request["cul"].ToString() + " LIKE '%" + context.Request["where"].ToString() + "%'";
 
-                builder.Append(" where a.projectid=" + context.Request["projectid"]);
-            }
+            builder.Append(" where a.projectid=" + context.Request["projectId"] + "  group by a.id,a.projectId,a.floorLevel,a.floorImg,a.createTime,a.lastChangeTime ");
             builder.Append(" LIMIT " + (page - 1) + "," + size);
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
@@ -126,7 +119,7 @@ namespace sd_order_sys.struts
                 msg = "数据库网络延迟";
             else
             {
-                sql = "delete from fv_project where id in (" + where + ")";
+                sql = "delete from fv_floor where id in (" + where + ")";
                 w = SqlManage.OpRecord(sql, sqlparams);
             }
             if (w)

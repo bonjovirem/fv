@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DrawPointPath.aspx.cs" Inherits="sd_order_sys.files.DrawPointPath" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DrawCToLift.aspx.cs" Inherits="sd_order_sys.files.DrawCToLift" %>
 
 <!DOCTYPE html>
 <html>
@@ -55,6 +55,7 @@
             <input type="hidden" name="projectId" id="projectId" value="<%=projectId %>" />
             <input type="hidden" name="projectBrandId" id="projectBrandId" value="<%=projectBrandId %>" />
             <input type="hidden" name="floorLevel" id="floorLevel" value="<%=floorLevel %>" />
+            <input type="hidden" name="floorId" id="floorId" value="<%=floorId %>" />
             <input type="hidden" name="clientId" id="clientId" value="<%=clientId %>" />
         </p>
 
@@ -98,7 +99,7 @@
         l = arrPoints.length;
         clearInterval(interVal);
         context.clearRect(0, 0, 1300,824);
-         <% =strForClient %>
+       <%--  <% =strForClient %>--%>
     }
 
     function AddPath() {
@@ -110,7 +111,7 @@
         $("#btnsub").attr("disabled", "disabled");
         $.ajax({
             type: "POST",
-            url: "/struts/DrawpointPath.ashx?action=add",
+            url: "/struts/DrawCtoLift.ashx?action=add",
             data: $('#personform').serialize(),
             datatype: "json",
             success: function (data) {

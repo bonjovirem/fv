@@ -155,15 +155,8 @@ namespace sd_order_sys.struts
             string msg = "";
             string sql = "";
             int id = context.Request["id"].ToString() == "" ? 0 : int.Parse(context.Request["id"].ToString());
-
-            //sqlparams.Add("@projectName", bName);
-            //sqlparams.Add("@projectLogo", bLogo);
-            //sqlparams.Add("@projectDesc", bDesc);
-            //sqlparams.Add("@projectImg", bImg);
-            //sqlparams.Add("@projectVideo", bVideo);
-            //sqlparams.Add("@projectCity", bCity);
-            //sqlparams.Add("@projectFirstShow", bFirst);
-            if (id == 0)
+            string thisClientFloorLevel = context.Request["floorLevel"].ToString();
+            if (id == 0 || string.IsNullOrEmpty(thisClientFloorLevel))
             {
                 msg = "";
             }
@@ -172,20 +165,29 @@ namespace sd_order_sys.struts
 
                 //第一步复制文件  *floorLevel 1,2,3,4当前的楼层  *f1,2,3,4 指左侧导航的标记
                 string sourcePath = context.Server.MapPath("../WebTemp/");
-                string toPath = context.Server.MapPath("../release/2/");
+                string toPath = context.Server.MapPath("../release/2/f" + thisClientFloorLevel + "/");
                 CopyDirectory(sourcePath, toPath);
                 Dictionary<string, object> sqlparams = new Dictionary<string, object>();
                 sql = "select floorLevel from fv_floor where projectid=" + id + " order by floorLevel";
                 DataTable dt = SqlManage.Query(sql, sqlparams).Tables[0];
                 if (dt != null && dt.Rows.Count > 0)
                 {
-                    //查找需要展示的信息
-                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,b.walkWay,a.brandName from fv_projectbrand a " +
-                            "left join fv_walkway b on a.id=b.projectBrandId where a.projectid=" + id + " and a.floorLevel is not null;";
+                    //查找需要展示的信息 for  floor.html   0
+                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName from fv_projectbrand a " +
+                           " where a.projectid=" + id + " and a.floorLevel is not null;";
+                    //品类展示   1
                     sql += "select id,brandTypeName from fv_projectbrandtype where projectId=" + id + " limit 24 ;";
+                    //品牌展示   2
                     sql += "select id,brandName,fvUrl,brandDesc,floorlevel from fv_projectbrand where isShowWay=1 and projectId=" + id + "  limit 12 ;";
+                    //取全景展示的品牌   3
                     sql += "select id,brandName,fvUrl,brandDesc,floorlevel from fv_projectbrand where fvUrl<>'' and fvUrl is not null and floorLevel is not null and projectId=" + id + "  limit 48 ;";
-                    DataTable dt2 = SqlManage.Query(sql, sqlparams).Tables[0];
+                    //取到品牌的路径 for f.html  4
+                    sql += "select b.projectBrandId,b.walkWay,a.IsClient,a.floorLevel from fv_client a,fv_walkway b where a.id=b.fromClientId and a.projectId=" + id + "; ";
+                    //取C to lift 路径 for f.html  5
+                    sql += "select a.floorLevel,a.nextPointName from fv_client a where a.isClient=1 and a.projectId=" + id;
+
+                    DataSet ds = SqlManage.Query(sql, sqlparams);
+                    DataTable dt2 = ds.Tables[0];
                     if (dt2 != null && dt2.Rows.Count > 0)
                     {
                         for (int i = 0; i < dt.Rows.Count; i++)
@@ -223,7 +225,7 @@ namespace sd_order_sys.struts
                             code = code.Replace("//*fvString", fvString);
                             code = code.Replace("//*descString", descString);
                             code = code.Replace("//*areaString", areaString);
-
+                            code = code.Replace("//*thisClientFloorLevel", thisClientFloorLevel);
 
                             writeFile(newFile, code);
                             #endregion
@@ -235,15 +237,28 @@ namespace sd_order_sys.struts
                             newFile = toPath + "f" + floorLevel + ".html";
                             File.Copy(oldFile, newFile, true);
                             code = readFile(newFile);
-
-                            foreach (DataRow item in dr)
+                            DataTable dtF = ds.Tables[4];
+                            if (dtF != null && dtF.Rows.Count > 0)
                             {
-                                if (!string.IsNullOrEmpty(item["walkWay"].ToString().Trim()))
+                                dr = dtF.Select("floorLevel=" + floorLevel);
+                                foreach (DataRow item in dr)
                                 {
-                                    brandWalkway += string.Format("ArrayBrand['{0}'] = '{1}';", item["id"].ToString(), item["walkWay"].ToString());
+                                    if (!string.IsNullOrEmpty(item["walkWay"].ToString().Trim()))
+                                    {
+                                        brandWalkway += string.Format("ArrayBrand['{0}'] = '{1}';",
+                                            item["projectBrandId"].ToString() + "_" + item["IsClient"].ToString(), item["walkWay"].ToString());
+                                    }
 
                                 }
-
+                            }
+                            DataTable dtF2 = ds.Tables[5];
+                            if (dtF2 != null && dtF2.Rows.Count > 0)
+                            {
+                                dr = dtF2.Select("floorLevel=" + floorLevel);
+                                if (dr.Length > 0)
+                                {
+                                    brandWalkway += string.Format("ArrayBrand['CTOL'] = '{0}';", dr[0]["nextPointName"].ToString());  //nextPointName
+                                }
                             }
                             code = code.Replace("*floorLevel", floorLevel);
                             code = code.Replace("//*brandWalkway", brandWalkway);
@@ -259,7 +274,7 @@ namespace sd_order_sys.struts
                             //*brandWalkway
                             oldFile = toPath + "brand.html";
                             code = readFile(oldFile);
-                            DataTable dt3 = SqlManage.Query(sql, sqlparams).Tables[1];
+                            DataTable dt3 = ds.Tables[1];
                             if (dt3 != null && dt3.Rows.Count > 0)
                             {
                                 if (dt3.Rows.Count < 12)
@@ -279,7 +294,7 @@ namespace sd_order_sys.struts
 
                                 }
                             }
-                            DataTable dt4 = SqlManage.Query(sql, sqlparams).Tables[2];
+                            DataTable dt4 = ds.Tables[2];
                             if (dt4 != null && dt4.Rows.Count > 0)
                             {
 
@@ -310,7 +325,7 @@ namespace sd_order_sys.struts
                             //*brandWalkway
                             oldFile = toPath + "vr.html";
                             code = readFile(oldFile);
-                            DataTable dt5 = SqlManage.Query(sql, sqlparams).Tables[3];
+                            DataTable dt5 = ds.Tables[3];
                             if (dt5 != null && dt5.Rows.Count > 0)
                             {
                                 for (int l = 0; l < dt5.Rows.Count; l++)

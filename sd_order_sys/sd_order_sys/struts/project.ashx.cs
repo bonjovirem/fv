@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using SDorder.BLL;
 using System.Data;
+using System.IO;
 
 namespace sd_order_sys.struts
 {
@@ -49,8 +50,9 @@ namespace sd_order_sys.struts
             int page = context.Request["page"] != "" ? Convert.ToInt32(context.Request.Form["page"]) : 1;
             int size = context.Request["rows"] != "" ? Convert.ToInt32(context.Request.Form["rows"]) : 1;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Append(@"SELECT a.*,isnull(a.areaPoints) as hasArea,isnull(b.walkWay) as hasPath FROM fv_projectBrand a left join fv_walkway b " +
-               "on a.id=b.projectBrandId where a.brandTypeId=" + context.Request["projectBtId"].ToString());
+            builder.Append(@"SELECT a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints,isnull(a.areaPoints) as hasArea,sum( case isnull(b.walkWay) when 0 then 1 else 0 end) as hasPath "
+                + " FROM fv_projectBrand a left join fv_walkway b on a.id=b.projectBrandId where a.brandTypeId= " + context.Request["projectBtId"].ToString()
+   + " GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ");
 
             builder.Append(" LIMIT " + (page - 1) + "," + size);
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
@@ -120,6 +122,7 @@ namespace sd_order_sys.struts
                 msg = "suc";
             else
                 msg = "数据库连接超时或出现未知错误";
+
             JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
             context.Response.Write(javascriptSerializer.Serialize(msg));
 
