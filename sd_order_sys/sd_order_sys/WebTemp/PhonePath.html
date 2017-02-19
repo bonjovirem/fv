@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>手机导航</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link href="resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet" />
+    <link href="resources/css/axure_rp_page.css" type="text/css" rel="stylesheet" />
+    <link href="data/styles.css" type="text/css" rel="stylesheet" />
+    <!--<link href="files/floor1/styles.css" type="text/css" rel="stylesheet" />-->
+    <script src="resources/scripts/jquery-1.7.1.min.js"></script>
+    <script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
+    <script type="text/javascript">
+        //$axure.utils.getTransparentGifPath = function () { return 'resources/images/transparent.gif'; };
+        //$axure.utils.getOtherPath = function () { return 'resources/Other.html'; };
+        //$axure.utils.getReloadPath = function () { return 'resources/reload.html'; };
+    </script>
+    <style>
+    </style>
+</head>
+<body>
+    <input type="hidden" id="hidBrandId" />
+    <iframe id="frame1" src='' width="1300" height="824" allowtransparency="true" style="background-color:transparent" frameborder="0" scrolling="no"></iframe>
+    <iframe id="frame2" src='' width="1400" height="824" allowtransparency="true" style="background-color:transparent" frameborder="0" scrolling="no"></iframe>
+</body>
+</html>
+
+<script language="javascript" type="text/javascript">
+    var pageFloorLevel =-1 ;   //本页显示第几层
+    var thisClientFloorLevel =//*thisClientFloorLevel ;   //当前客户端是在第几层
+    function showPath() {
+        if (pageFloorLevel==thisClientFloorLevel) { //直达
+            $('#frame1').attr("src", "f" + pageFloorLevel + ".html?brandId=" + document.getElementById('hidBrandId').value + "_1");
+            setTimeout("rollback()", 4100);
+        }else{
+            $('#frame1').attr("src", "f" + thisClientFloorLevel + ".html?brandId=CTOL"); //本层先到电梯
+            $('#frame2').attr("src", "f" + pageFloorLevel + ".html?brandId=" + document.getElementById('hidBrandId').value + "_0");
+            //setTimeout("OhterFloorRun()", 4100);//再从另一层电梯到品牌店
+        }
+    }
+    function OhterFloorRun() {//再从目标层电梯到品牌店
+        $('#frame2').attr("src", "f"+pageFloorLevel+".html?brandId=" + document.getElementById('hidBrandId').value+"_0");
+        setTimeout("rollback()", 4100);
+    }
+    function rollback() {
+        //$('#frame1').attr("src", "");
+        //showPath();
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return -1;
+    }
+    function loadBrandId() {
+        pageFloorLevel= getQueryString("pageFloorLevel");
+        var brandId = getQueryString("brandId");
+        if (brandId != -1) {
+            document.getElementById('hidBrandId').value=brandId;
+        }
+        showPath();
+    }
+    loadBrandId();
+
+</script>

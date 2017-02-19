@@ -7,7 +7,7 @@
     <style>
         #div {
             width: 500px;
-            height: 1px;
+            height: 0px;
             border-color: #FF0000;
             border-width: 0.5em;
             background-color: #CCCCCC;
@@ -49,7 +49,7 @@
             l = arrPoints.length;
             //新建一个div
             var div = "<div id='dlist" + l + "' style='position:absolute; border:0;left:" + (x - 15) + "px; top:" + (y - 15) +
-            "px; background-size: cover;cursor:pointer;background-image:url(images/redX.png)" + ";width:" + size + "px;height:" + size + "px;line-height:30px;text-align:center;'" + "onclick='alert();'" + "></div>";
+            "px; background-size: cover;cursor:pointer;background-image:url(images/redX.png)" + ";width:" + size + "px;height:" + size + "px;line-height:30px;text-align:center;'" + "" + "></div>";
             return div;
         }
     </script>
@@ -123,7 +123,7 @@
     var interVal = 0.0;
     var faqus = 0;
     function drawBall() {
-        faqus = 400 / arrPoints.length;
+        faqus = 200 / arrPoints.length;
         context.clearRect(0, 0, 1300,824);
         drawLine();
         p1 = arrPoints[indexS];
@@ -163,7 +163,7 @@
         indexS = 0;
         lx = 0;
         ly = 0;
-        interVal = setInterval(drawBall, 10);
+        interVal = setInterval(drawBall, 20);
     }
 
     //method 1
