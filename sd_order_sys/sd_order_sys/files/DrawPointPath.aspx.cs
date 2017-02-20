@@ -34,7 +34,7 @@ namespace sd_order_sys.files
                 clientId = dt.Rows[0][0].ToString();
                 strForClient = string.Format("drawPt3{0};", dt.Rows[0][1].ToString());
                 strForShow += strForClient;
-                floorLevel = dt.Rows[0][2].ToString();
+                floorLevel = dt.Rows[0][2].ToString();  //重新获取一下，免得数据不准确
             }
             else
             {

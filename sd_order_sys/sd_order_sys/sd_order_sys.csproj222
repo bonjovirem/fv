@@ -202,9 +202,6 @@
     <Content Include="files\SysSrandExport.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\11.jpg" />
-    <Content Include="images\123.png" />
-    <Content Include="images\1234-f.png" />
-    <Content Include="images\1234.png" />
     <Content Include="images\acrossTab-2.png" />
     <Content Include="images\acrossTab-2bak.png" />
     <Content Include="images\acrossTab-bg.png" />
@@ -574,14 +571,6 @@
     <Content Include="plugins\themes\metro\tree.css" />
     <Content Include="plugins\themes\metro\validatebox.css" />
     <Content Include="plugins\themes\metro\window.css" />
-    <Content Include="projectImg\12\f1.png" />
-    <Content Include="projectImg\12\f2.png" />
-    <Content Include="projectImg\12\f3.png" />
-    <Content Include="projectImg\12\f4.png" />
-    <Content Include="projectImg\2\f1.png" />
-    <Content Include="projectImg\2\f2.png" />
-    <Content Include="projectImg\2\f3.png" />
-    <Content Include="projectImg\2\f4.png" />
     <Content Include="sys\index.aspx" />
     <Content Include="sys\quit.aspx" />
     <Content Include="themes\theme-pic1.jpg" />
@@ -591,9 +580,13 @@
     <Content Include="WebTemp\bootstrap\bootstrap-theme.min.css" />
     <Content Include="WebTemp\bootstrap\bootstrap.min.css" />
     <Content Include="WebTemp\brand.html" />
+    <Content Include="WebTemp\brandImg\5.jpg" />
     <Content Include="WebTemp\brandImg\img11_1.jpg" />
     <Content Include="WebTemp\brandImg\img11_2.jpg" />
     <Content Include="WebTemp\brandImg\img11_3.jpg" />
+    <Content Include="WebTemp\brandImg\img11_4.jpg" />
+    <Content Include="WebTemp\brandImg\logo10.jpg" />
+    <Content Include="WebTemp\brandImg\logo11.jpg" />
     <Content Include="WebTemp\brandImg\logo11.png" />
     <Content Include="WebTemp\commodity.html" />
     <Content Include="WebTemp\data\document.js" />
@@ -621,7 +614,6 @@
     <Content Include="WebTemp\files\promotions\styles.css" />
     <Content Include="WebTemp\files\vr\data.js" />
     <Content Include="WebTemp\files\vr\styles.css" />
-    <Content Include="WebTemp\PhonePath.html" />
     <Content Include="WebTemp\floor.html" />
     <Content Include="WebTemp\floorImg\f1.png" />
     <Content Include="WebTemp\floorImg\f2.png" />
@@ -670,9 +662,6 @@
     <Content Include="WebTemp\images\index\u6.png" />
     <Content Include="WebTemp\images\index\u8.png" />
     <Content Include="WebTemp\images\promotions\u341.png" />
-    <Content Include="WebTemp\images\redX.png" />
-    <Content Include="WebTemp\images\way.gif" />
-    <Content Include="WebTemp\images\x.png" />
     <Content Include="WebTemp\index.html" />
     <Content Include="WebTemp\online.html" />
     <Content Include="WebTemp\plugins\page_notes\styles\images\back.png" />
@@ -822,10 +811,11 @@
     <Content Include="struts\DrawPointClient.ashx" />
     <Content Include="struts\projectBrandType_query.ashx" />
     <Content Include="struts\DrawPointPath.ashx" />
-    <Content Include="struts\record.ashx" />
-    <Content Include="struts\DrawCtoLift.ashx" />
+    <None Include="Properties\PublishProfiles\fv.pubxml" />
     <Content Include="struts\DrawLift.ashx" />
     <Content Include="struts\DrawLiftPath.ashx" />
+    <Content Include="struts\DrawCtoLift.ashx" />
+    <Content Include="struts\record.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -907,6 +897,14 @@
     <Compile Include="files\projectTypeExport.aspx.designer.cs">
       <DependentUpon>projectTypeExport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="struts\DrawCtoLift.ashx.cs">
+      <DependentUpon>DrawCtoLift.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawLift.ashx.cs">
+      <DependentUpon>DrawLift.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="struts\DrawLiftPath.ashx.cs">
+      <DependentUpon>DrawLiftPath.ashx</DependentUpon>
     <Compile Include="files\sysRecord.aspx.cs">
       <DependentUpon>sysRecord.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -927,15 +925,6 @@
     </Compile>
     <Compile Include="files\SysSrandExport.aspx.designer.cs">
       <DependentUpon>SysSrandExport.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="struts\DrawCtoLift.ashx.cs">
-      <DependentUpon>DrawCtoLift.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="struts\DrawLift.ashx.cs">
-      <DependentUpon>DrawLift.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="struts\DrawLiftPath.ashx.cs">
-      <DependentUpon>DrawLiftPath.ashx</DependentUpon>
     </Compile>
     <Compile Include="struts\DrawPoint.ashx.cs">
       <DependentUpon>DrawPoint.ashx</DependentUpon>
@@ -1024,7 +1013,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="brandTypeTemplate\" />
-    <Folder Include="release\" />
+    <Folder Include="projectImg\" />
     <Folder Include="WebTemp\images\brand\" />
     <Folder Include="WebTemp\images\commodity\" />
     <Folder Include="WebTemp\images\online\" />

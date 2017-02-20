@@ -89,16 +89,10 @@
                     DelRecord();
                 }
             }, {
-                text: '编辑客户机',
+                text: '编辑客户机/电梯点路径',
                 iconCls: 'icon-add',
                 handler: function () {
-                    SetClient();
-                }
-            }, {
-                text: '编辑电梯点',
-                iconCls: 'icon-add',
-                handler: function () {
-                    SetLift();
+                    SetClientandLift();
                 }
             }, {
                 text: '刷新',
@@ -188,7 +182,7 @@
         })
     }
 
-    function SetClient(index) {
+    function SetClientandLift(index) {
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {

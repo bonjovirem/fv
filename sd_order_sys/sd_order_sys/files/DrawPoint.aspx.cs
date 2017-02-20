@@ -53,7 +53,7 @@ namespace sd_order_sys.files
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             DataTable dt = SqlManage.Query("select id,floorlevel from fv_floor where projectId=" + projectId, sqlparams).Tables[0];
             floorLevel.DataSource = dt;
-            floorLevel.DataValueField = "id";
+            floorLevel.DataValueField = "floorlevel";
             floorLevel.DataTextField = "floorlevel";
             floorLevel.DataBind();
             if (dt.Rows.Count > 0)

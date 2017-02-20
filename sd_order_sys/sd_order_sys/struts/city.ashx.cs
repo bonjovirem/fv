@@ -154,7 +154,7 @@ namespace sd_order_sys.struts
         {
             string msg = "";
             string sql = "";
-            int id = context.Request["id"].ToString() == "" ? 0 : int.Parse(context.Request["id"].ToString());
+            int id = context.Request["id"].ToString() == "" ? 0 : int.Parse(context.Request["id"].ToString()); //projectId
             string thisClientFloorLevel = context.Request["floorLevel"].ToString();
             if (id == 0 || string.IsNullOrEmpty(thisClientFloorLevel))
             {
@@ -165,7 +165,7 @@ namespace sd_order_sys.struts
 
                 //第一步复制文件  *floorLevel 1,2,3,4当前的楼层  *f1,2,3,4 指左侧导航的标记
                 string sourcePath = context.Server.MapPath("../WebTemp/");
-                string toPath = context.Server.MapPath("../release/2/f" + thisClientFloorLevel + "/");
+                string toPath = context.Server.MapPath("../release/"+id+"/f" + thisClientFloorLevel + "/");
                 CopyDirectory(sourcePath, toPath);
                 Dictionary<string, object> sqlparams = new Dictionary<string, object>();
                 sql = "select floorLevel from fv_floor where projectid=" + id + " order by floorLevel";
@@ -264,6 +264,14 @@ namespace sd_order_sys.struts
                             code = code.Replace("//*brandWalkway", brandWalkway);
                             writeFile(newFile, code);
                             #endregion
+
+
+                            oldFile = toPath + "PhonePath.html";
+                            code = readFile(oldFile);
+                            code = code.Replace("//*thisClientFloorLevel", thisClientFloorLevel);
+                            writeFile(oldFile, code);
+
+
 
                             #region 处理brand.html页面
 
