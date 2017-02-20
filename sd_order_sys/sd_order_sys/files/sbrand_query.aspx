@@ -68,8 +68,9 @@
                 text: '添加',
                 iconCls: 'icon-add',
                 handler: function () {
-                    $("#dlg").dialog().parent().appendTo("#personform");
-                    $('#dlg').dialog('open');
+                    //$("#dlg").dialog().parent().appendTo("#personform");
+                    //$('#dlg').dialog('open');
+                    window.location = "editSysBrandInfo.aspx";
                 }
             },
             {
@@ -119,15 +120,15 @@
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
-            $("#dlg").dialog().parent().appendTo("#personform");
-            $("#txtName").attr("value", selectedRow["brandName"]);
-            $("#txtImg").attr("value", selectedRow["brandImg"]);
-            $("#txtdsc").attr("value", selectedRow["brandDesc"]);
-            $("#txtvideo").attr("value", selectedRow["brandVideo"]);
-            $("#txtlogo").attr("value", selectedRow["brandLogo"]);
-            $("#hid").attr("value", selectedRow["id"]);
-            $('#dlg').dialog('open');
-            //window.location = "replylist.aspx?id=" + selectedRow["id"];
+            //$("#dlg").dialog().parent().appendTo("#personform");
+            //$("#txtName").attr("value", selectedRow["brandName"]);
+            //$("#txtImg").attr("value", selectedRow["brandImg"]);
+            //$("#txtdsc").attr("value", selectedRow["brandDesc"]);
+            //$("#txtvideo").attr("value", selectedRow["brandVideo"]);
+            //$("#txtlogo").attr("value", selectedRow["brandLogo"]);
+            //$("#hid").attr("value", selectedRow["id"]);
+            //$('#dlg').dialog('open');
+            window.location = "editSysBrandInfo.aspx?id=" + selectedRow["id"];
         } else {
             $.messager.alert('提示', '请选中一条记录');
         }

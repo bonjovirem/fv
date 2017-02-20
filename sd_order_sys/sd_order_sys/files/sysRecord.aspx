@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="sysRecord.aspx.cs" Inherits="sd_order_sys.files.sysRecord" %>
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -17,10 +18,12 @@
             list-style: none;
             padding: 2px;
         }
+
         ul {
             padding: 2px;
             margin: 5px;
         }
+
         input {
             border: 1px solid #D3D3D3;
             border-radius: 5px;
@@ -67,8 +70,7 @@
                 text: '添加',
                 iconCls: 'icon-add',
                 handler: function () {
-                    $("#dlg").dialog().parent().appendTo("#personform");
-                    $('#dlg').dialog('open');
+                    window.location = "editBrandInfo.aspx";
                 }
             },
             {
@@ -103,15 +105,16 @@
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
-            $("#dlg").dialog().parent().appendTo("#personform");
-            $("#txtName").attr("value", selectedRow["brandName"]);
-            $("#txtImg").attr("value", selectedRow["brandImg"]);
-            $("#txtdsc").attr("value", selectedRow["brandDesc"]);
-            $("#txtvideo").attr("value", selectedRow["brandVideo"]);
-            $("#txtlogo").attr("value", selectedRow["brandLogo"]);
-            $("#hid").attr("value", selectedRow["id"]);
-            $('#dlg').dialog('open');
-            //window.location = "replylist.aspx?id=" + selectedRow["id"];
+            //$("#dlg").dialog().parent().appendTo("#personform");
+            //$("#txtName").attr("value", selectedRow["brandName"]);
+            //$("#txtImg").attr("value", selectedRow["brandImg"]);
+            //$("#txtdsc").attr("value", selectedRow["brandDesc"]);
+            //$("#txtvideo").attr("value", selectedRow["brandVideo"]);
+            //$("#txtlogo").attr("value", selectedRow["brandLogo"]);
+            //$("#hid").attr("value", selectedRow["id"]);
+            //$('#dlg').dialog('open');
+            ////window.location = "replylist.aspx?id=" + selectedRow["id"];
+            window.location = "editBrandInfo.aspx?id=" + selectedRow["id"];
         } else {
             $.messager.alert('提示', '请选中一条记录');
         }
@@ -151,11 +154,11 @@
         })
     }
     function ExportBrand() {
-            top.topManager.openPage({
-                id: 'xtppsc',
-                href: '/files/sysRecordExport.aspx',
-                title: '系统品牌上传'
-            });
+        top.topManager.openPage({
+            id: 'xtppsc',
+            href: '/files/sysRecordExport.aspx',
+            title: '系统品牌上传'
+        });
     }
 </script>
 <body>
@@ -212,7 +215,8 @@
                 品类logo：<input id="txtlogo" type="text" name="txtlogo" /><p></p>
             </div>
             <div class="fitem">
-                <input id="hid" type="hidden" name="hid"/> <p></p>
+                <input id="hid" type="hidden" name="hid" />
+                <p></p>
             </div>
             <input type="hidden" name="hidnum" id="hidnum" />
             <input type="hidden" name="hidaccount" id="hidaccount" />
