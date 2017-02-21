@@ -1,0 +1,112 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.IO;
+using System.Data;
+using SDorder.BLL;
+
+namespace sd_order_sys.files
+{
+    public partial class editProjectBrand : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                if (Request["id"] == null)
+                    hidpro.Value = "0";//表示插入数据
+                else
+                {
+                    hidpro.Value = Request["id"].ToString();
+                    LoadInfo(id: int.Parse(hidpro.Value));
+                }
+                if (Request["proId"] != null)
+                {
+                    ViewState["proId"] = Request["proId"].ToString();
+                    LoadControl(int.Parse(Request["proId"].ToString()));
+                }
+            }
+        }
+
+        protected void btnExport_Click(object sender, EventArgs e)
+        {
+            if (!Directory.Exists(Server.MapPath(@"~/brandTemplate")))
+            {
+                Directory.CreateDirectory(Server.MapPath(@"~/" + ViewState["proId"].ToString() + @"/brandTemplate"));
+            }
+            string bName = txtName.Value;
+            //string bImg = "";
+            string bDesc = txtdesc.Value;
+            string bLogo = txtlogo.FileName;
+            string bVideo = txtvideo.FileName;
+            int isStar = int.Parse(ddlisStar.SelectedValue);
+            int isShow = int.Parse(ddlisShow.SelectedValue);
+            string url = fvUrl.Value;
+            string tel = telephone.Value;
+            string addr = address.Value;
+            int id = hidpro.Value == "0" ? 0 : int.Parse(hidpro.Value);
+            Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+            sqlparams.Add("@projectId", int.Parse(ViewState["proId"].ToString()));
+            sqlparams.Add("@brandName", bName);
+            sqlparams.Add("@brandDesc", bDesc);
+            sqlparams.Add("@brandLogo", bLogo);
+            sqlparams.Add("@brandVideo", bVideo);
+            sqlparams.Add("@brandOrder", int.Parse(brandOrder.Value));
+            sqlparams.Add("@brandTypeId", int.Parse(ddltype.SelectedValue));
+            sqlparams.Add("@brandTypeName", ddltype.SelectedItem.Text);
+            sqlparams.Add("@isShow", isShow);
+            sqlparams.Add("@isStar", isStar);
+            sqlparams.Add("@isShowWay", 0);
+            sqlparams.Add("@fvUrl", url);
+            sqlparams.Add("@telephone", tel);
+            sqlparams.Add("@address", addr);
+            if (txtlogo.HasFile)
+            {
+                txtlogo.SaveAs(Server.MapPath(@"~/" + ViewState["ProId"].ToString() + "/brandTemplate/" + txtlogo.FileName));
+            }
+            //else if (txtvideo.HasFile)
+            //{
+            //    txtvideo.SaveAs(Server.MapPath(@"~/brandTemplate/" + txtvideo.FileName));
+            //}
+            string sql = "";
+            if (id == 0)
+                sql = "insert into fv_projectBrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,brandOrder,brandTypeId,brandTypeName,projectId,isShow,isStar,isShowWay,fvUrl,createTime,lastChangeTime,telephone,address) values(@brandName,@brandImg,@brandDesc,@brandLogo,@brandVideo,@brandOrder,@brandTypeId,@brandTypeName,@projectId,@isShow,@isStar,@isShowWay,@fvUrl,now(),now(),@telephone,@address)";
+            else
+                sql = "update fv_projectBrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandLogo=@brandLogo,brandVideo=@brandVideo,brandOrder=@brandOrder,brandTypeId=@brandTypeId,brandTypeName=@brandTypeName,isShow=@isShow,isStar=@isStar,fvUrl=@fvUrl,lastChangeTime=NOW(),telephone=@telephone,address=@address where id=" + id;
+            bool w = SqlManage.OpRecord(sql, sqlparams);
+            if (w)
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "success",
+                    "alert('您操作成功！稍后自动跳转到列表页'); window.location='project_query.aspx'", true);
+            else
+                ScriptManager.RegisterStartupScript(Page, this.GetType(), "error",
+     "alert('数据库连接异常！');", true);
+        }
+        private void LoadInfo(int id)
+        {
+            string sql = "select * from fv_projectbrand where id= " + id;
+            Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+            //sqlparams.Add("@id", id);
+            DataTable table = SqlManage.Query(sql, sqlparams).Tables[0];
+            if (table.Rows.Count > 0)
+            {
+                txtName.Value = table.Rows[0]["sys_nane"].ToString();
+                txtdesc.Value = table.Rows[0]["sys_desc"].ToString();
+                ddltype.SelectedValue = table.Rows[0]["sys_type"].ToString();
+            }
+        }
+        private void LoadControl(int pid)
+        {
+            string sql = "select id,brandTypeName from fv_projectbrand where projectId=" + pid;
+            Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+            //sqlparams.Add("@id", id);
+            DataTable table = SqlManage.Query(sql, sqlparams).Tables[0];
+            ddltype.DataSource = table;
+            ddltype.DataTextField = "brandTypeName";
+            ddltype.DataValueField = "id";
+            ddltype.DataBind();
+        }
+    }
+}

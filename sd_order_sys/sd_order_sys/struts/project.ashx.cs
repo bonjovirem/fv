@@ -54,7 +54,7 @@ namespace sd_order_sys.struts
                 + " FROM fv_projectBrand a left join fv_walkway b on a.id=b.projectBrandId where a.brandTypeId= " + context.Request["projectBtId"].ToString()
    + " GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ");
 
-            builder.Append(" LIMIT " + (page - 1) + "," + size);
+            builder.Append(" order by lastChangeTime desc LIMIT " + (page - 1) + "," + size);
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
