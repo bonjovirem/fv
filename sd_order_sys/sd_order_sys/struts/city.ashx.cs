@@ -38,7 +38,7 @@ namespace sd_order_sys.struts
                         DelRecord(context);
                         break;
                     case "build":
-                        BuildHTML(context);
+                        BuildHTML2(context);
                         break;
                 }
             }
@@ -373,7 +373,241 @@ namespace sd_order_sys.struts
 
         }
 
+        /// <summary>
+        /// 用于第二版模板生成
+        /// </summary>
+        /// <param name="context"></param>
+        private void BuildHTML2(HttpContext context)
+        {
+            string msg = "";
+            string sql = "";
+            int id = context.Request["id"].ToString() == "" ? 0 : int.Parse(context.Request["id"].ToString()); //projectId
+            string thisClientFloorLevel = context.Request["floorLevel"].ToString();
+            if (id == 0 || string.IsNullOrEmpty(thisClientFloorLevel))
+            {
+                msg = "";
+            }
+            else
+            {
 
+                //第一步复制文件  *floorLevel 1,2,3,4当前的楼层  *f1,2,3,4 指左侧导航的标记
+                string sourcePath = context.Server.MapPath("../WebTemp2/");
+                string toPath = context.Server.MapPath("../release/" + id + "/f" + thisClientFloorLevel + "/");
+                CopyDirectory(sourcePath, toPath);
+                Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+                sql = "select floorLevel from fv_floor where projectid=" + id + " order by floorLevel";
+                DataTable dt = SqlManage.Query(sql, sqlparams).Tables[0];
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    //查找需要展示的信息 for  floor.html   0
+                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName,a.telephone,a.address from fv_projectbrand a " +
+                           " where a.projectid=" + id + " and a.floorLevel is not null;";
+                    //品类展示   1
+                    sql += "select id,brandTypeName from fv_projectbrandtype where projectId=" + id + " limit 24 ;";
+                    //品牌展示   2
+                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel from fv_projectbrand where isShowWay=1 and projectId=" + id + "  limit 12 ;";
+                    //取全景展示的品牌   3
+                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel from fv_projectbrand where fvUrl<>'' and fvUrl is not null and floorLevel is not null and projectId=" + id + "  limit 48 ;";
+                    //取到品牌的路径 for f.html  4
+                    sql += "select b.projectBrandId,b.walkWay,a.IsClient,a.floorLevel from fv_client a,fv_walkway b where a.id=b.fromClientId and a.projectId=" + id + "; ";
+                    //取C to lift 路径 for f.html  5
+                    sql += "select a.floorLevel,a.nextPointName from fv_client a where a.isClient=1 and a.projectId=" + id;
+
+                    DataSet ds = SqlManage.Query(sql, sqlparams);
+                    DataTable dt2 = ds.Tables[0];
+                    if (dt2 != null && dt2.Rows.Count > 0)
+                    {
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            string floorLevel = dt.Rows[i][0].ToString();
+                            #region 处理floor页面
+                            string oldFile = toPath + "floor.html";
+                            string newFile = toPath + "floor" + floorLevel + ".html";
+                            File.Copy(oldFile, newFile, true);
+                            string code = readFile(newFile);
+                            //替换楼层
+                            code = code.Replace("*floorLevel", floorLevel);
+                            //替换左侧显示信息
+                            for (int j = 1; j < 5; j++)
+                            {
+                                code = code.Replace("*f" + j, (j.ToString() == floorLevel ? "f" + j + "s" : "f" + j));
+                            }
+                            //替换全景路径
+                            string fvString = "";
+                            string descString = "";
+                            string telephoneString = "";
+                            string addressString = "";
+                            string areaString = "";
+                            DataRow[] dr = dt2.Select("floorLevel=" + floorLevel);
+                            foreach (DataRow item in dr)
+                            {
+                    
+                                fvString += string.Format("Arrayfv['{0}'] = '{1}';", item["id"].ToString(), item["fvUrl"].ToString());
+                                descString += string.Format("ArrayDesc['{0}'] = '{1}';", item["id"].ToString(), item["brandDesc"].ToString().Replace("*空格*", "&nbsp;").Replace("*换行*", "<br/>"));
+                                telephoneString += string.Format("ArrayTele['{0}'] = '{1}';", item["id"].ToString(), item["telephone"].ToString());
+                                addressString += string.Format("ArrayAddress['{0}'] = '{1}';", item["id"].ToString(), item["address"].ToString());
+                                string areaCodes = item["areaPoints"].ToString().Replace("(", "").Replace(")", "").Replace(";", ",").Trim();
+                                if (!string.IsNullOrEmpty(areaCodes))
+                                {
+                                    areaString += string.Format(" <area onclick='loadPanelDesc({0});showPanel();' shape='polygon' coords='{1}' alt='{2}' title='{2}'>"
+                                  , item["id"].ToString(), areaCodes, item["brandName"].ToString());
+                                }
+
+                            }
+                            code = code.Replace("//*fvString", fvString);
+                            code = code.Replace("//*descString", descString);
+                            code = code.Replace("//*telephoneString", fvString);
+                            code = code.Replace("//*addressString", descString);
+                            code = code.Replace("//*areaString", areaString);
+                            code = code.Replace("//*thisClientFloorLevel", thisClientFloorLevel);
+                           
+                            
+
+                            writeFile(newFile, code);
+                            #endregion
+
+                            #region 处理f页面
+                            string brandWalkway = "";
+                            //*brandWalkway
+                            oldFile = toPath + "f.html";
+                            newFile = toPath + "f" + floorLevel + ".html";
+                            File.Copy(oldFile, newFile, true);
+                            code = readFile(newFile);
+                            DataTable dtF = ds.Tables[4];
+                            if (dtF != null && dtF.Rows.Count > 0)
+                            {
+                                dr = dtF.Select("floorLevel=" + floorLevel);
+                                foreach (DataRow item in dr)
+                                {
+                                    if (!string.IsNullOrEmpty(item["walkWay"].ToString().Trim()))
+                                    {
+                                        brandWalkway += string.Format("ArrayBrand['{0}'] = '{1}';",
+                                            item["projectBrandId"].ToString() + "_" + item["IsClient"].ToString(), item["walkWay"].ToString());
+                                    }
+
+                                }
+                            }
+                            DataTable dtF2 = ds.Tables[5];
+                            if (dtF2 != null && dtF2.Rows.Count > 0)
+                            {
+                                dr = dtF2.Select("floorLevel=" + floorLevel);
+                                if (dr.Length > 0)
+                                {
+                                    brandWalkway += string.Format("ArrayBrand['CTOL'] = '{0}';", dr[0]["nextPointName"].ToString());  //nextPointName
+                                }
+                            }
+                            code = code.Replace("*floorLevel", floorLevel);
+                            code = code.Replace("//*brandWalkway", brandWalkway);
+                            writeFile(newFile, code);
+                            #endregion
+
+
+                            oldFile = toPath + "PhonePath.html";
+                            code = readFile(oldFile);
+                            code = code.Replace("//*thisClientFloorLevel", thisClientFloorLevel);
+                            writeFile(oldFile, code);
+
+
+
+                            //#region 处理brand.html页面
+
+                            //string brandGuide1_6 = "";
+                            //string brandGuide7_12 = "";
+                            //string brandTypeGuide1_12 = "";
+                            //string brandTypeGuide13_24 = "";
+                            ////*brandWalkway
+                            //oldFile = toPath + "brand.html";
+                            //code = readFile(oldFile);
+                            //DataTable dt3 = ds.Tables[1];
+                            //if (dt3 != null && dt3.Rows.Count > 0)
+                            //{
+                            //    if (dt3.Rows.Count < 12)
+                            //    {
+                            //        brandTypeGuide13_24 = "<div class='col-md-1'><a class='btn' href='#' role='button'>&nbsp;</a></div>"; //加内容占一行
+                            //    }
+                            //    for (int k = 0; k < dt3.Rows.Count; k++)
+                            //    {
+                            //        if (k < 12)
+                            //        {
+                            //            brandTypeGuide1_12 += string.Format("<div class='col-md-1'><a class='btn btn-success' href='#' role='button'>{0}</a></div>", dt3.Rows[k]["brandTypeName"].ToString());
+                            //        }
+                            //        else
+                            //        {
+                            //            brandTypeGuide13_24 += string.Format("<div class='col-md-1'><a class='btn btn-success' href='#' role='button'>{0}</a></div>", dt3.Rows[k]["brandTypeName"].ToString());
+                            //        }
+
+                            //    }
+                            //}
+                            //DataTable dt4 = ds.Tables[2];
+                            //if (dt4 != null && dt4.Rows.Count > 0)
+                            //{
+
+                            //    for (int k = 0; k < dt4.Rows.Count; k++)
+                            //    {
+                            //        if (k < 6)
+                            //        {
+                            //            brandGuide1_6 += string.Format("<div class='col-md-2'><img onclick=\"window.location='floor{1}.html?projectId={0}';\"  style='width:190px;height:190px;' src='brandImg/logo{0}.jpg' alt='...' class='img-circle'></div>", dt4.Rows[k]["id"].ToString(), dt4.Rows[k]["floorlevel"].ToString());
+                            //        }
+                            //        else
+                            //        {
+                            //            brandGuide7_12 += string.Format("<div class='col-md-2'><img onclick=\"window.location='floor{1}.html?projectId={0}';\"  style='width:190px;height:190px;' src='brandImg/logo{0}.jpg' alt='...' class='img-circle'></div>", dt4.Rows[k]["id"].ToString(), dt4.Rows[k]["floorlevel"].ToString());
+                            //        }
+
+                            //    }
+                            //}
+                            //code = code.Replace("//*brandGuide1_6", brandGuide1_6);
+                            //code = code.Replace("//*brandGuide7_12", brandGuide7_12);
+                            //code = code.Replace("//*brandTypeGuide1_12", brandTypeGuide1_12);
+                            //code = code.Replace("//*brandTypeGuide13_24", brandTypeGuide13_24);
+                            //writeFile(oldFile, code);
+
+                            //#endregion
+
+                            //#region 处理vr.html页面
+
+                            //string vrString = "";
+                            ////*brandWalkway
+                            //oldFile = toPath + "vr.html";
+                            //code = readFile(oldFile);
+                            //DataTable dt5 = ds.Tables[3];
+                            //if (dt5 != null && dt5.Rows.Count > 0)
+                            //{
+                            //    for (int l = 0; l < dt5.Rows.Count; l++)
+                            //    {
+                            //        if (l % 6 == 0 && l > 0)
+                            //        {
+                            //            //空一行
+                            //            vrString += "<div class='row'><div class='col-md-1'>&nbsp;</div><div class='col-md-1'>&nbsp;</div> <div class='col-md-1'>&nbsp;</div><div class='col-md-1'>&nbsp;</div><div class='col-md-1'>&nbsp;</div> <div class='col-md-1'>&nbsp;</div>  <div class='col-md-1'>&nbsp;</div>   <div class='col-md-1'>&nbsp;</div> <div class='col-md-1'>&nbsp;</div>  <div class='col-md-1'>&nbsp;</div>div class='col-md-1'>&nbsp;</div>   <div class='col-md-1'>&nbsp;</div>    </div>";
+                            //        }
+                            //        if (l % 6 == 0)
+                            //        {
+                            //            vrString += "<div class='row'>";
+                            //        }
+                            //        vrString += string.Format("<div class='col-md-2'><img onclick=\"window.location='floor{1}.html?projectId={0}';\"  style='width:190px;height:190px;' src='brandImg/logo{0}.jpg' alt='...' class='img-circle'></div>", dt5.Rows[l]["id"].ToString(), dt5.Rows[l]["floorlevel"].ToString());
+                            //        if (l % 6 == 5 || l == dt5.Rows.Count - 1)
+                            //        {
+                            //            vrString += "</div>";
+                            //        }
+
+                            //    }
+                            //}
+                            //code = code.Replace("//*vrString", vrString);
+                            //writeFile(oldFile, code);
+                            //#endregion
+                        }
+                    }
+                }
+                if (true)
+
+                    msg = "suc";
+                else
+                    msg = "数据库连接超时或出现未知错误";
+                JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
+                context.Response.Write(javascriptSerializer.Serialize(msg));
+            }
+
+
+        }
         public void CopyDirectory(string sourceDirName, string destDirName)
         {
             try

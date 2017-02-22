@@ -16,12 +16,12 @@ namespace sd_order_sys.struts
 
         public void ProcessRequest(HttpContext context)
         {
-            string user = context.Session["person"] == null ? "nouser" : context.Session["person"].ToString();
-            context.Response.ContentType = "text/plain";
-            if ("nouser".Equals(user))
+            //string user = context.Session["person"] == null ? "nouser" : context.Session["person"].ToString();
+            //context.Response.ContentType = "text/plain";
+            //if ("nouser".Equals(user))
 
-                context.Response.Redirect("/login.aspx");
-            else
+            //    context.Response.Redirect("/login.aspx");
+            //else
             {
                 string key = context.Request["action"] == null ? "" : context.Request["action"].ToString();
                 switch (key)
@@ -48,7 +48,7 @@ namespace sd_order_sys.struts
             int page = context.Request["page"] != "" ? Convert.ToInt32(context.Request.Form["page"]) : 1;
             int size = context.Request["rows"] != "" ? Convert.ToInt32(context.Request.Form["rows"]) : 1;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Append(@"SELECT a.id,a.projectId,a.floorLevel,a.floorImg,a.createTime,a.lastChangeTime,sum(case b.isClient when 1 then 2 when 0 then 1 else 0 end) as hasClient "+ 
+            builder.Append(@"SELECT a.id,a.projectId,a.floorLevel,a.floorImg,a.createTime,a.lastChangeTime,sum(case b.isClient when 1 then 2 when 0 then 1 else 0 end) as hasClient " +
             "FROM fv_floor a left join fv_client b on a.floorLevel=b.floorLevel and a.projectId=b.projectId ");
 
 
@@ -81,15 +81,17 @@ namespace sd_order_sys.struts
         /// <param name="context"></param>
         private void RecordAdd(HttpContext context)
         {
-            string floorLevel = context.Request.Form["floorLevel"].ToString();
-            string hidProId = context.Request.Form["hidProId"].ToString();
+            HttpPostedFile _upfile = context.Request.Files["File1"];
+            _upfile.SaveAs(HttpContext.Current.Server.MapPath("~/images/logo.jpg")); //保存图片       
+            string floorLevel = context.Request.Form["floorLevel"].ToString();   //楼层是第几层
+            string hidProId = context.Request.Form["hidProId"].ToString();   //隐藏的projectID 项目ID
             int id = context.Request.Form["hid"].ToString() == "" ? 0 : int.Parse(context.Request.Form["hid"].ToString());
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             sqlparams.Add("@floorLevel", floorLevel);
             sqlparams.Add("@hidProId", hidProId);
             sqlparams.Add("@floorImg", "f" + floorLevel);
             string sql = "";
-            if (id == 0)
+            if (id == 0)  //用来标识是添加还是修改，如果有ID，则是修改（根据ID修改），如果为0则是添加
                 sql = "insert into fv_floor (projectId,floorLevel,floorImg,createTime,lastChangeTime) values(@hidProId,@floorLevel,@floorImg,now(),now())";
             else
                 sql = "update fv_floor set projectId=@hidProId,floorLevel=@floorLevel,floorImg=@floorImg,lastChangeTime=now() where id=" + id;
