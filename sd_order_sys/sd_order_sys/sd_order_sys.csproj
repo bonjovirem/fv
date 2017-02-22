@@ -193,6 +193,7 @@
     <Content Include="files\DrawPointPath.aspx" />
     <Content Include="files\editBrandInfo.aspx" />
     <Content Include="files\editProjectBrand.aspx" />
+    <Content Include="files\editProjectFloor.aspx" />
     <Content Include="files\editSysBrandInfo.aspx" />
     <Content Include="files\projectBrandType_query.aspx" />
     <Content Include="files\projectExport.aspx" />
@@ -902,6 +903,13 @@
     </Compile>
     <Compile Include="files\editProjectBrand.aspx.designer.cs">
       <DependentUpon>editProjectBrand.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\editProjectFloor.aspx.cs">
+      <DependentUpon>editProjectFloor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\editProjectFloor.aspx.designer.cs">
+      <DependentUpon>editProjectFloor.aspx</DependentUpon>
     </Compile>
     <Compile Include="files\editSysBrandInfo.aspx.cs">
       <DependentUpon>editSysBrandInfo.aspx</DependentUpon>

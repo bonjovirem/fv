@@ -48,7 +48,7 @@ namespace sd_order_sys.struts
             int page = context.Request["page"] != "" ? Convert.ToInt32(context.Request.Form["page"]) : 1;
             int size = context.Request["rows"] != "" ? Convert.ToInt32(context.Request.Form["rows"]) : 1;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Append(@"SELECT a.id,a.projectId,a.floorLevel,a.floorImg,a.createTime,a.lastChangeTime,sum(case b.isClient when 1 then 2 when 0 then 1 else 0 end) as hasClient "+ 
+            builder.Append(@"SELECT a.id,a.projectId,a.floorLevel,a.floorImg,a.createTime,a.lastChangeTime,sum(case b.isClient when 1 then 2 when 0 then 1 else 0 end) as hasClient " +
             "FROM fv_floor a left join fv_client b on a.floorLevel=b.floorLevel and a.projectId=b.projectId ");
 
 
@@ -81,18 +81,38 @@ namespace sd_order_sys.struts
         /// <param name="context"></param>
         private void RecordAdd(HttpContext context)
         {
+            string img = "";
+            string projectid = context.Request.Form["hidpro"].ToString();
+            if (context.Request.Files["floorImg"] != null)
+            {
+                HttpPostedFile _upfile = context.Request.Files["floorImg"];
+                if (!System.IO.Directory.Exists(context.Server.MapPath("~/" + projectid + "/floors")))//创建项目楼层图片目录
+                {
+                    System.IO.Directory.CreateDirectory(context.Server.MapPath("~/" + projectid + "/floors"));
+                }
+                _upfile.SaveAs(HttpContext.Current.Server.MapPath("~/images/logo.jpg")); //保存图片 
+                img = context.Server.MapPath("~/" + projectid + "/floors") + "/" + _upfile.FileName;
+            }
+            else
+                img = "";
             string floorLevel = context.Request.Form["floorLevel"].ToString();
             string hidProId = context.Request.Form["hidProId"].ToString();
             int id = context.Request.Form["hid"].ToString() == "" ? 0 : int.Parse(context.Request.Form["hid"].ToString());
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             sqlparams.Add("@floorLevel", floorLevel);
             sqlparams.Add("@hidProId", hidProId);
-            sqlparams.Add("@floorImg", "f" + floorLevel);
+            sqlparams.Add("@floorImg", "f" + img);
             string sql = "";
             if (id == 0)
                 sql = "insert into fv_floor (projectId,floorLevel,floorImg,createTime,lastChangeTime) values(@hidProId,@floorLevel,@floorImg,now(),now())";
             else
-                sql = "update fv_floor set projectId=@hidProId,floorLevel=@floorLevel,floorImg=@floorImg,lastChangeTime=now() where id=" + id;
+                if (img != "")
+                    sql = "update fv_floor set projectId=@hidProId,floorLevel=@floorLevel,floorImg=@floorImg,lastChangeTime=now() where id=" + id;
+                else
+                {
+                    sqlparams.Remove("@floorImg");
+                    sql = "update fv_floor set projectId=@hidProId,floorLevel=@floorLevel,lastChangeTime=now() where id=" + id;
+                }
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)

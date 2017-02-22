@@ -15,6 +15,7 @@ namespace sd_order_sys.files
         {
             proId = Request.QueryString["projectId"];
             proName = Request.QueryString["projectName"];
+            hidpro.Value = proId;
         }
     }
 }

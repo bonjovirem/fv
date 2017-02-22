@@ -69,11 +69,7 @@
                 text: '添加',
                 iconCls: 'icon-add',
                 handler: function () {
-                    $("#dlg").dialog().parent().appendTo("#personform");
-                    $("#floorLevel").attr("value", '');
-                    $("#floorImg").attr("value", '');
-                    $("#hid").attr("value", '');
-                    $('#dlg').dialog('open');
+                    window.location = "editProjectFloor.aspx?proId=<%=proId%>&projectName=<%=proName%>";
                 }
             },
             {
@@ -137,57 +133,57 @@
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
-            $("#dlg").dialog().parent().appendTo("#personform");
-            $("#floorLevel").attr("value", selectedRow["floorLevel"]);
-            $("#floorImg").attr("value", selectedRow["floorImg"]);
-            $("#hid").attr("value", selectedRow["id"]);
-            $('#dlg').dialog('open');
-            //window.location = "replylist.aspx?id=" + selectedRow["id"];
-        } else {
-            $.messager.alert('提示', '请选中一条记录');
-        }
-    }
-    function DelRecord() {
-        $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
-            if (row) {
-                var selectedRow = $('#persontable').datagrid('getSelections');  //获取选中行
-                if (selectedRow.length == 0) {
-                    $.messager.alert('提示', '请选中一条记录');
-                } else {
-                    var num = "";
-                    for (var i = 0; i < selectedRow.length; i++) {
-                        if (i == selectedRow.length - 1) {
-                            num = num + selectedRow[i].id + "";
-                        } else {
-                            num = num + selectedRow[i].id + ",";
-                        }
-                    }
-                    $.ajax({
-                        url: '/struts/SetFloor.ashx?action=rRecord&id=' + num,
-                        success: function (data) {
-                            var comment = $.parseJSON(data);
-                            if (comment != "suc") {
-                                $.messager.alert("提示", "操作失败，请联系管理员");
-                            } else {
-                                $.messager.alert("提示", "您删除成功");
-                                $('#persontable').datagrid('reload');
-                            }
-                        },
-                        error: function () {
-                            $.messager.alert("提示", "网络错误，请联系管理员");
-                        }
-                    });
-                }
-            }
-        })
-    }
-
-    function SetClientandLift(index) {
-        $('#persontable').datagrid('selectRow', index);
-        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
-        if (selectedRow) {
+            //$("#dlg").dialog().parent().appendTo("#personform");
+            //$("#floorLevel").attr("value", selectedRow["floorLevel"]);
+            ////$("#floorImg").attr("value", selectedRow["floorImg"]);
             //$("#hid").attr("value", selectedRow["id"]);
-            window.open( 'DrawCtoLift.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"]+"&projectId="+<%=proId %>);
+            //$('#dlg').dialog('open');
+            window.location = "editProjectFloor.aspx?id=" + selectedRow["id"]+"&proId=<%=proId%>&projectName=<%=proName%>";
+    } else {
+        $.messager.alert('提示', '请选中一条记录');
+    }
+}
+function DelRecord() {
+    $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
+        if (row) {
+            var selectedRow = $('#persontable').datagrid('getSelections');  //获取选中行
+            if (selectedRow.length == 0) {
+                $.messager.alert('提示', '请选中一条记录');
+            } else {
+                var num = "";
+                for (var i = 0; i < selectedRow.length; i++) {
+                    if (i == selectedRow.length - 1) {
+                        num = num + selectedRow[i].id + "";
+                    } else {
+                        num = num + selectedRow[i].id + ",";
+                    }
+                }
+                $.ajax({
+                    url: '/struts/SetFloor.ashx?action=rRecord&id=' + num,
+                    success: function (data) {
+                        var comment = $.parseJSON(data);
+                        if (comment != "suc") {
+                            $.messager.alert("提示", "操作失败，请联系管理员");
+                        } else {
+                            $.messager.alert("提示", "您删除成功");
+                            $('#persontable').datagrid('reload');
+                        }
+                    },
+                    error: function () {
+                        $.messager.alert("提示", "网络错误，请联系管理员");
+                    }
+                });
+            }
+        }
+    })
+}
+
+function SetClientandLift(index) {
+    $('#persontable').datagrid('selectRow', index);
+    var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+    if (selectedRow) {
+        //$("#hid").attr("value", selectedRow["id"]);
+        window.open( 'DrawCtoLift.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"]+"&projectId="+<%=proId %>);
     } else {
         $.messager.alert('提示', '请选中一条记录');
     }
@@ -240,7 +236,8 @@ function SetLift(index) {
 }
 </script>
 <body>
-    <form id="personform" runat="server">
+    <form id="personform" runat="server" action="/struts/SetFloor.ashx?action=opt">
+        <input id="hidpro" type="hidden" name="hidpro" runat="server" />
         <table width="100%" border="0">
             <tr>
                 <td align="left">
@@ -265,14 +262,14 @@ function SetLift(index) {
                 <th field="id" width="100" hidden="true">序号</th>
             </tr>
         </table>
-        <div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="系统品类信息">
+        <%--<div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="系统品类信息">
             <div class="ftitle">
             </div>
             <div class="fitem">
                 楼层：<input id="floorLevel" type="text" name="floorLevel" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" /><p></p>
             </div>
             <div class="fitem">
-                图片：<input id="floorImg" type="text" name="floorImg" /><p></p>
+                图片：<input id="floorImg" type="file" name="floorImg" /><p></p>
             </div>
             <div class="fitem">
                 <input id="hid" type="hidden" name="hid" />
@@ -283,10 +280,10 @@ function SetLift(index) {
             <input type="hidden" name="hidnum" id="hidnum" />
             <input type="hidden" name="hidaccount" id="hidaccount" />
         </div>
-        <div id="dlg-buttons">
+      <div id="dlg-buttons">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="ValidateForm()" iconcls="icon-save">保存</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')" iconcls="icon-cancel">取消</a>
-        </div>
+        </div>--%>
     </form>
     <script>
         function searchbtn() {
@@ -304,25 +301,27 @@ function SetLift(index) {
                 return;
             }
             else {
-                $.ajax({
-                    type: "POST",
-                    url: "/struts/SetFloor.ashx?action=opt",
-                    data: $('#personform').serialize(),
-                    datatype: "json",
-                    success: function (data) {
-                        var comment = $.parseJSON(data);
-                        if (comment != "suc") {
-                            $.messager.alert(comment.msg);
-                        } else {
-                            $('#dlg').dialog('close');
-                            $('#persontable').datagrid('load');
-                        }
-                    },
-                    //调用出错执行的函数
-                    error: function () {
-                        $.messager.alert("提示", "网络错误，请联系管理员");
-                    }
-                });
+                $("#personform").submit();
+                //$.ajax({
+                //    type: "POST",
+                //    url: "/struts/SetFloor.ashx?action=opt",
+                //    data: $('#personform').serialize(),
+                //    datatype: "json",
+                //    fileElementId: 'floorImg',
+                //    success: function (data) {
+                //        var comment = $.parseJSON(data);
+                //        if (comment != "suc") {
+                //            $.messager.alert(comment.msg);
+                //        } else {
+                //            $('#dlg').dialog('close');
+                //            $('#persontable').datagrid('load');
+                //        }
+                //    },
+                //    //调用出错执行的函数
+                //    error: function () {
+                //        $.messager.alert("提示", "网络错误，请联系管理员");
+                //    }
+                //});
             }
         }
     </script>
