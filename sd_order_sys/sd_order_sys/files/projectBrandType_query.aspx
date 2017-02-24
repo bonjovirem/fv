@@ -73,14 +73,7 @@
                 text: '添加',
                 iconCls: 'icon-add',
                 handler: function () {
-                    $("#dlg").dialog().parent().appendTo("#personform");
-                    $("#btName").attr("value", '');
-                    $("#btOrder").attr("value", '');
-                    $("#btImg").attr("value", '');
-                    $("#btBgcolor").attr("value", '');
-                    $("#btIsshow").attr("value", '1');
-                    $("#hid").attr("value", '');
-                    $('#dlg').dialog('open');
+                    window.location = "editProjectType.aspx?projectId=<%=projectId %>&projectName=<%=projectName%>"
                 }
             },
             {
@@ -100,6 +93,26 @@
                 iconCls: 'icon-add',
                 handler: function () {
                     SetBrand();
+                }
+            }, {
+                text: '数据库同步',
+                iconCls: 'icon-redo',
+                handler: function () {
+                    $.ajax({
+                        url: '/struts/projectBrandType_query.ashx?action=redo&id=<%=projectId %>',
+                        success: function (data) {
+                            var comment = $.parseJSON(data);
+                            if (comment != "suc") {
+                                $.messager.alert("提示", "操作失败，请联系管理员");
+                            } else {
+                                $.messager.alert("提示", "您同步成功");
+                                $('#persontable').datagrid('reload');
+                            }
+                        },
+                        error: function () {
+                            $.messager.alert("提示", "网络错误，请联系管理员");
+                        }
+                    });
                 }
             }, {
                 text: '刷新',
@@ -122,60 +135,61 @@
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
-            $("#dlg").dialog().parent().appendTo("#personform");
-            $("#btName").attr("value", selectedRow["brandTypeName"]);
-            $("#btOrder").attr("value", selectedRow["brandTypeOrder"]);
-            $("#btImg").attr("value", selectedRow["brandTypeImg"]);
-            $("#btBgcolor").attr("value", selectedRow["brandTypeBackColor"]);
-            $("#btIsshow").attr("value", selectedRow["isShow"]);
-            $("#hid").attr("value", selectedRow["id"]);
-            $('#dlg').dialog('open');
+            //$("#dlg").dialog().parent().appendTo("#personform");
+            //$("#btName").attr("value", selectedRow["brandTypeName"]);
+            //$("#btOrder").attr("value", selectedRow["brandTypeOrder"]);
+            //$("#btImg").attr("value", selectedRow["brandTypeImg"]);
+            //$("#btBgcolor").attr("value", selectedRow["brandTypeBackColor"]);
+            //$("#btIsshow").attr("value", selectedRow["isShow"]);
+            //$("#hid").attr("value", selectedRow["id"]);
+            //$('#dlg').dialog('open');
+            window.location = "editProjectType.aspx?projectId=<%=projectId %>&projectName=<%=projectName%>&id=" + selectedRow["id"];
             //window.location = "replylist.aspx?id=" + selectedRow["id"];
-        } else {
-            $.messager.alert('提示', '请选中一条记录');
-        }
+    } else {
+        $.messager.alert('提示', '请选中一条记录');
     }
-    function DelRecord() {
-        $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
-            if (row) {
-                var selectedRow = $('#persontable').datagrid('getSelections'); //获取选中行
-                if (selectedRow.length == 0) {
-                    $.messager.alert('提示', '请选中一条记录');
-                } else {
-                    var num = "";
-                    for (var i = 0; i < selectedRow.length; i++) {
-                        if (i == selectedRow.length - 1) {
-                            num = num + selectedRow[i].id + "";
-                        } else {
-                            num = num + selectedRow[i].id + ",";
-                        }
+}
+function DelRecord() {
+    $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
+        if (row) {
+            var selectedRow = $('#persontable').datagrid('getSelections'); //获取选中行
+            if (selectedRow.length == 0) {
+                $.messager.alert('提示', '请选中一条记录');
+            } else {
+                var num = "";
+                for (var i = 0; i < selectedRow.length; i++) {
+                    if (i == selectedRow.length - 1) {
+                        num = num + selectedRow[i].id + "";
+                    } else {
+                        num = num + selectedRow[i].id + ",";
                     }
-                    $.ajax({
-                        url: '/struts/projectBrandType_query.ashx?action=del&id=' + num,
-                        success: function (data) {
-                            var comment = $.parseJSON(data);
-                            if (comment != "suc") {
-                                $.messager.alert("提示", "操作失败，请联系管理员");
-                            } else {
-                                $.messager.alert("提示", "您删除成功");
-                                $('#persontable').datagrid('reload');
-                            }
-                        },
-                        error: function () {
-                            $.messager.alert("提示", "网络错误，请联系管理员");
-                        }
-                    });
                 }
+                $.ajax({
+                    url: '/struts/projectBrandType_query.ashx?action=del&id=' + num,
+                    success: function (data) {
+                        var comment = $.parseJSON(data);
+                        if (comment != "suc") {
+                            $.messager.alert("提示", "操作失败，请联系管理员");
+                        } else {
+                            $.messager.alert("提示", "您删除成功");
+                            $('#persontable').datagrid('reload');
+                        }
+                    },
+                    error: function () {
+                        $.messager.alert("提示", "网络错误，请联系管理员");
+                    }
+                });
             }
-        });
-    }
+        }
+    });
+}
 
-    function SetBrand() {
-        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
-        if (selectedRow) {
-            top.topManager.openPage({
-                id: 'xmppsz',
-                href: '/files/project_query.aspx?projectid=<% =projectId %>&projectName=<% =projectName %>' + '&projectBtId=' + selectedRow["id"] + '&projectBtName=' + selectedRow["brandTypeName"],
+function SetBrand() {
+    var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+    if (selectedRow) {
+        top.topManager.openPage({
+            id: 'xmppsz',
+            href: '/files/project_query.aspx?projectid=<% =projectId %>&projectName=<% =projectName %>' + '&projectBtId=' + selectedRow["id"] + '&projectBtName=' + selectedRow["brandTypeName"],
                 title: '项目品牌设置'
             });
         } else {

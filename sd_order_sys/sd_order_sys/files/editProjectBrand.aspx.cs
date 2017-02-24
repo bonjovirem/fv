@@ -12,10 +12,13 @@ namespace sd_order_sys.files
 {
     public partial class editProjectBrand : System.Web.UI.Page
     {
+        public string projectId = "";
+        public string projectName = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
+
                 if (Request["id"] == null)
                     hidpro.Value = "0";//表示插入数据
                 else
@@ -23,20 +26,21 @@ namespace sd_order_sys.files
                     hidpro.Value = Request["id"].ToString();
                     LoadInfo(id: int.Parse(hidpro.Value));
                 }
-                if (Request["proId"] != null)
+                if (Request["projectId"] != null)
                 {
-                    ViewState["proId"] = Request["proId"].ToString();
-                    LoadControl(int.Parse(Request["proId"].ToString()));
+                    ViewState["proId"] = Request["projectId"].ToString();
+                    LoadControl(int.Parse(Request["projectId"].ToString()));
+                    lblpro.Text = Request.QueryString["projectName"];
                 }
             }
         }
 
         protected void btnExport_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(Server.MapPath(@"~/brandTemplate")))
-            {
-                Directory.CreateDirectory(Server.MapPath(@"~/" + ViewState["proId"].ToString() + @"/brandTemplate"));
-            }
+            //if (!Directory.Exists(Server.MapPath(@"~/brandTemplate")))
+            //{
+            //    Directory.CreateDirectory(Server.MapPath(@"~/" + ViewState["proId"].ToString() + @"/brandTemplate"));
+            //}
             string bName = txtName.Value;
             //string bImg = "";
             string bDesc = txtdesc.Value;
@@ -51,6 +55,7 @@ namespace sd_order_sys.files
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             sqlparams.Add("@projectId", int.Parse(ViewState["proId"].ToString()));
             sqlparams.Add("@brandName", bName);
+            sqlparams.Add("@brandImg", "");
             sqlparams.Add("@brandDesc", bDesc);
             sqlparams.Add("@brandLogo", bLogo);
             sqlparams.Add("@brandVideo", bVideo);
@@ -65,7 +70,7 @@ namespace sd_order_sys.files
             sqlparams.Add("@address", addr);
             if (txtlogo.HasFile)
             {
-                txtlogo.SaveAs(Server.MapPath(@"~/" + ViewState["ProId"].ToString() + "/brandTemplate/" + txtlogo.FileName));
+                txtlogo.SaveAs(Server.MapPath(@"~/release" + ViewState["ProId"].ToString() + "/images/" + txtlogo.FileName));
             }
             //else if (txtvideo.HasFile)
             //{
@@ -73,13 +78,21 @@ namespace sd_order_sys.files
             //}
             string sql = "";
             if (id == 0)
+                //    sql=string.Format("nsert into fv_projectBrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,brandOrder,brandTypeId,brandTypeName,projectId,isShow,isStar,isShowWay,fvUrl,createTime,lastChangeTime,telephone,address) values('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}',{8},{9},{10},{11},'{12}',now(),now(),'{13}','{14}')",
+                //bName,
+                //        );
                 sql = "insert into fv_projectBrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,brandOrder,brandTypeId,brandTypeName,projectId,isShow,isStar,isShowWay,fvUrl,createTime,lastChangeTime,telephone,address) values(@brandName,@brandImg,@brandDesc,@brandLogo,@brandVideo,@brandOrder,@brandTypeId,@brandTypeName,@projectId,@isShow,@isStar,@isShowWay,@fvUrl,now(),now(),@telephone,@address)";
             else
                 sql = "update fv_projectBrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandLogo=@brandLogo,brandVideo=@brandVideo,brandOrder=@brandOrder,brandTypeId=@brandTypeId,brandTypeName=@brandTypeName,isShow=@isShow,isStar=@isStar,fvUrl=@fvUrl,lastChangeTime=NOW(),telephone=@telephone,address=@address where id=" + id;
             bool w = SqlManage.OpRecord(sql, sqlparams);
             if (w)
+                //                projectId = Request.QueryString["projectId"];
+                // projectName = Request.QueryString["projectName"];
+                // projectBtId = Request.QueryString["projectBtId"];
+                //   projectBtName = Request.QueryString["projectBtName"];
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "success",
-                    "alert('您操作成功！稍后自动跳转到列表页'); window.location='project_query.aspx'", true);
+                    "alert('您操作成功！稍后自动跳转到列表页'); window.location='project_query.aspx?projectId=" +
+                    ViewState["proId"].ToString() + "&projectName=" + lblpro.Text + "&projectBtId=" + ddltype.SelectedValue + "&projectBtName=" + ddltype.SelectedItem.Text + "'", true);
             else
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "error",
      "alert('数据库连接异常！');", true);
@@ -92,14 +105,14 @@ namespace sd_order_sys.files
             DataTable table = SqlManage.Query(sql, sqlparams).Tables[0];
             if (table.Rows.Count > 0)
             {
-                txtName.Value = table.Rows[0]["sys_nane"].ToString();
-                txtdesc.Value = table.Rows[0]["sys_desc"].ToString();
-                ddltype.SelectedValue = table.Rows[0]["sys_type"].ToString();
+                txtName.Value = table.Rows[0]["brandName"].ToString();
+                txtdesc.Value = table.Rows[0]["brandDesc"].ToString();
+                ddltype.SelectedValue = table.Rows[0]["brandTypeId"].ToString();
             }
         }
         private void LoadControl(int pid)
         {
-            string sql = "select id,brandTypeName from fv_projectbrand where projectId=" + pid;
+            string sql = "select id,brandTypeName from fv_projectbrandType where projectId=" + pid;
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             //sqlparams.Add("@id", id);
             DataTable table = SqlManage.Query(sql, sqlparams).Tables[0];
@@ -107,6 +120,7 @@ namespace sd_order_sys.files
             ddltype.DataTextField = "brandTypeName";
             ddltype.DataValueField = "id";
             ddltype.DataBind();
+            ddltype.SelectedValue = Request.QueryString["projectBtId"];
         }
     }
 }

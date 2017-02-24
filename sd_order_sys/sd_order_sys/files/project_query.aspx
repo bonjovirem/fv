@@ -90,20 +90,21 @@
                         $.messager.alert('提示', '无任何品类信息，请先编辑品类');
                         return;
                     }
-                    $("#dlg").dialog().parent().appendTo("#personform");
-                    $("#txtName").attr("value", '');
-                    $("#txtImg").attr("value", '');
-                    $("#txtdsc").attr("value", '');
-                    $("#txtvideo").attr("value", '');
-                    $("#txtlogo").attr("value", '');
-                    $("#brandOrder").attr("value", '');
-                    //alert(selectedRow["brandTypeName"]);
-                    $("#isShow").find("option[value='1']").attr("selected", true);
-                    $("#isStar").find("option[value='1']").attr("selected", true);
-                    $("#isShowWay").find("option[value='1']").attr("selected", true);
-                    $("#fvUrl").attr("value", '');
-                    $("#hid").attr("value", '');
-                    $('#dlg').dialog('open');
+                    //$("#dlg").dialog().parent().appendTo("#personform");
+                    //$("#txtName").attr("value", '');
+                    //$("#txtImg").attr("value", '');
+                    //$("#txtdsc").attr("value", '');
+                    //$("#txtvideo").attr("value", '');
+                    //$("#txtlogo").attr("value", '');
+                    //$("#brandOrder").attr("value", '');
+                    ////alert(selectedRow["brandTypeName"]);
+                    //$("#isShow").find("option[value='1']").attr("selected", true);
+                    //$("#isStar").find("option[value='1']").attr("selected", true);
+                    //$("#isShowWay").find("option[value='1']").attr("selected", true);
+                    //$("#fvUrl").attr("value", '');
+                    //$("#hid").attr("value", '');
+                    //$('#dlg').dialog('open');
+                    window.location = "editProjectBrand.aspx?projectId=<%=projectId%>&projectName=<%=projectName%>&projectBtId=<%=projectBtId%>&projectBtName=<%=projectBtName%>"
                 }
             },
             {
@@ -142,6 +143,26 @@
                 handler: function () {
                     reloaddate();
                 }
+            }, {
+                text: '同步数据库',
+                iconCls: 'icon-ok',
+                handler: function () {
+                    $.ajax({
+                        url: '/struts/project.ashx?action=redo&id=<%=projectId %>',
+                        success: function (data) {
+                            var comment = $.parseJSON(data);
+                            if (comment != "suc") {
+                                $.messager.alert("提示", "操作失败，请联系管理员");
+                            } else {
+                                $.messager.alert("提示", "您同步成功");
+                                $('#persontable').datagrid('reload');
+                            }
+                        },
+                        error: function () {
+                            $.messager.alert("提示", "网络错误，请联系管理员");
+                        }
+                    });
+                }
             }]
         });
     }
@@ -169,7 +190,7 @@
             return "全设置";
         else if (val == 1)
             return "只一条";
-        else 
+        else
             return "未设置"
     }
     function formatUrl(val, row, index) {
@@ -198,65 +219,66 @@
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
-            $("#dlg").dialog().parent().appendTo("#personform");
-            $("#txtName").attr("value", selectedRow["brandName"]);
-            $("#txtImg").attr("value", selectedRow["brandImg"]);
-            $("#txtdsc").attr("value", selectedRow["brandDesc"]);
-            $("#txtvideo").attr("value", selectedRow["brandVideo"]);
-            $("#txtlogo").attr("value", selectedRow["brandLogo"]);
-            $("#brandOrder").attr("value", selectedRow["brandOrder"]);
-            //alert(selectedRow["brandTypeName"]);
-            $("#isShow").find("option[value='" + selectedRow["isShow"] + "']").attr("selected", true);
-            $("#isStar").find("option[value='" + selectedRow["isStar"] + "']").attr("selected", true);
-            $("#isShowWay").find("option[value='" + selectedRow["isShowWay"] + "']").attr("selected", true);
-            $("#fvUrl").attr("value", selectedRow["fvUrl"]);
-            $("#hid").attr("value", selectedRow["id"]);
-            $('#dlg').dialog('open');
-            //window.location = "replylist.aspx?id=" + selectedRow["id"];
-        } else {
-            $.messager.alert('提示', '请选中一条记录');
-        }
+            //$("#dlg").dialog().parent().appendTo("#personform");
+            //$("#txtName").attr("value", selectedRow["brandName"]);
+            //$("#txtImg").attr("value", selectedRow["brandImg"]);
+            //$("#txtdsc").attr("value", selectedRow["brandDesc"]);
+            //$("#txtvideo").attr("value", selectedRow["brandVideo"]);
+            //$("#txtlogo").attr("value", selectedRow["brandLogo"]);
+            //$("#brandOrder").attr("value", selectedRow["brandOrder"]);
+            ////alert(selectedRow["brandTypeName"]);
+            //$("#isShow").find("option[value='" + selectedRow["isShow"] + "']").attr("selected", true);
+            //$("#isStar").find("option[value='" + selectedRow["isStar"] + "']").attr("selected", true);
+            //$("#isShowWay").find("option[value='" + selectedRow["isShowWay"] + "']").attr("selected", true);
+            //$("#fvUrl").attr("value", selectedRow["fvUrl"]);
+            //$("#hid").attr("value", selectedRow["id"]);
+            //$('#dlg').dialog('open');
+            ////window.location = "replylist.aspx?id=" + selectedRow["id"];
+            window.location = "editProjectBrand.aspx?projectId=<%=projectId%>&projectName=<%=projectName%>&projectBtId=<%=projectBtId%>&projectBtName=<%=projectBtName%>&id=" + selectedRow["id"];
+    } else {
+        $.messager.alert('提示', '请选中一条记录');
     }
-    function DelRecord() {
-        $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
-            if (row) {
-                var selectedRow = $('#persontable').datagrid('getSelections');  //获取选中行
-                if (selectedRow.length == 0) {
-                    $.messager.alert('提示', '请选中一条记录');
-                } else {
-                    var num = "";
-                    for (var i = 0; i < selectedRow.length; i++) {
-                        if (i == selectedRow.length - 1) {
-                            num = num + selectedRow[i].id + "";
-                        } else {
-                            num = num + selectedRow[i].id + ",";
-                        }
+}
+function DelRecord() {
+    $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
+        if (row) {
+            var selectedRow = $('#persontable').datagrid('getSelections');  //获取选中行
+            if (selectedRow.length == 0) {
+                $.messager.alert('提示', '请选中一条记录');
+            } else {
+                var num = "";
+                for (var i = 0; i < selectedRow.length; i++) {
+                    if (i == selectedRow.length - 1) {
+                        num = num + selectedRow[i].id + "";
+                    } else {
+                        num = num + selectedRow[i].id + ",";
                     }
-                    $.ajax({
-                        url: '/struts/project.ashx?action=rRecord&id=' + num,
-                        success: function (data) {
-                            var comment = $.parseJSON(data);
-                            if (comment != "suc") {
-                                $.messager.alert("提示", "操作失败，请联系管理员");
-                            } else {
-                                $.messager.alert("提示", "您删除成功");
-                                $('#persontable').datagrid('reload');
-                            }
-                        },
-                        error: function () {
-                            $.messager.alert("提示", "网络错误，请联系管理员");
-                        }
-                    });
                 }
+                $.ajax({
+                    url: '/struts/project.ashx?action=rRecord&id=' + num,
+                    success: function (data) {
+                        var comment = $.parseJSON(data);
+                        if (comment != "suc") {
+                            $.messager.alert("提示", "操作失败，请联系管理员");
+                        } else {
+                            $.messager.alert("提示", "您删除成功");
+                            $('#persontable').datagrid('reload');
+                        }
+                    },
+                    error: function () {
+                        $.messager.alert("提示", "网络错误，请联系管理员");
+                    }
+                });
             }
-        })
-    }
+        }
+    })
+}
 
-    function setArea(index) {
-        $('#persontable').datagrid('selectRow', index);
-        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
-        if (selectedRow) {
-            window.open('drawpoint.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>');
+function setArea(index) {
+    $('#persontable').datagrid('selectRow', index);
+    var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+    if (selectedRow) {
+        window.open('drawpoint.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>');
     } else {
         $.messager.alert('提示', '请选中一条记录');
     }
@@ -268,20 +290,20 @@ function setPath(index) {
     var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
     if (selectedRow) {
         window.open('drawpointPath.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>' + '&floorLevel=' + selectedRow["floorLevel"]);
+} else {
+    $.messager.alert('提示', '请选中一条记录');
+}
+}
+function setLiftPath(index) {
+    $('#persontable').datagrid('selectRow', index);
+    var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
+    if (selectedRow) {
+        window.open('drawLiftPath.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>' + '&floorLevel=' + selectedRow["floorLevel"]);
     } else {
         $.messager.alert('提示', '请选中一条记录');
-    } 
-}
-    function setLiftPath(index) {
-        $('#persontable').datagrid('selectRow', index);
-        var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
-        if (selectedRow) {
-            window.open('drawLiftPath.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>' + '&floorLevel=' + selectedRow["floorLevel"]);
-        } else {
-            $.messager.alert('提示', '请选中一条记录');
-        }
     }
-    
+}
+
 
 </script>
 <body>
@@ -310,7 +332,7 @@ function setPath(index) {
                 <th field="id" width="100" hidden="true">序号</th>
             </tr>
         </table>
-        <div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="系统品类信息">
+ <%--       <div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="系统品类信息">
             <div class="ftitle">
             </div>
             <div class="fitem">
@@ -365,7 +387,7 @@ function setPath(index) {
         <div id="dlg-buttons">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="ValidateForm()" iconcls="icon-save">保存</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')" iconcls="icon-cancel">取消</a>
-        </div>
+        </div>--%>
     </form>
     <script>
         function searchbtn() {

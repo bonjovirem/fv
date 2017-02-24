@@ -42,13 +42,19 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">品牌顺序：</label>
                     <div class="col-sm-10">
-                        <input id="brandOrder" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" runat="server" /><p></p>
+                        <input id="brandOrder" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" runat="server" class="form-control" value="0"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">所属品类：</label>
                     <div class="col-sm-10">
                         <asp:DropDownList ID="ddltype" runat="server" CssClass="form-control"></asp:DropDownList>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">所属项目：</label>
+                    <div class="col-sm-10">
+                        <asp:Label ID="lblpro" runat="server" Text="" CssClass="form-control"></asp:Label>
                     </div>
                 </div>
                 <div class="form-group">

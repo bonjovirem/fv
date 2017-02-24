@@ -24,9 +24,12 @@ namespace sd_order_sys.struts
                     LoadMsg(context);
                     break;
 
-                case "add":
-                    RecordAdd(context);
+                case "redo":
+                    UpdateFromBase(context);
                     break;
+                //case "add":
+                //    RecordAdd(context);
+                //    break;
                 case "del":
                     DelRecord(context);
                     break;
@@ -66,31 +69,13 @@ namespace sd_order_sys.struts
             context.Response.Write(javascriptSerializer.Serialize(dictionary));
         }
         /// <summary>
-        /// 增更数据库
+        /// 同步数据库
         /// </summary>
         /// <param name="context"></param>
-        private void RecordAdd(HttpContext context)
+        private void UpdateFromBase(HttpContext context)
         {
-            string projectId = context.Request.Form["projectId"].ToString();
-            string btName = context.Request.Form["btName"].ToString();
-            string btOrder = context.Request.Form["btOrder"].ToString();
-            string btImg = context.Request.Form["btImg"].ToString();
-            string btBgcolor = context.Request.Form["btBgcolor"].ToString();
-            string btIsShow = context.Request.Form["btIsShow"].ToString();
-            int id = context.Request.Form["hid"].ToString() == "" ? 0 : int.Parse(context.Request.Form["hid"].ToString());
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-            sqlparams.Add("@projectId", projectId);
-            sqlparams.Add("@brandTypeName", btName);
-            sqlparams.Add("@brandTypeOrder", btOrder);
-            sqlparams.Add("@brandTypeImg", btImg);
-            sqlparams.Add("@brandTypeBackColor", btBgcolor);
-            sqlparams.Add("@btIsShow", btIsShow);
-            string sql = "";
-            if (id == 0)
-                sql = "insert into fv_projectbrandtype (projectId,brandTypeName,brandTypeOrder,brandTypeImg,isShow,brandTypeBackColor,createTime,lastChangeTime)" +
-                     "values(@projectId,@brandTypeName,@brandTypeOrder,@brandTypeImg,@btIsShow,@brandTypeBackColor,now(),now())";
-            else
-                sql = "update fv_projectbrandtype set brandTypeName=@brandTypeName,brandTypeOrder=@brandTypeOrder,brandTypeImg=@brandTypeImg,isShow=@btIsShow,brandTypeBackColor=@brandTypeBackColor,lastChangeTime=NOW() where id=" + id;
+            string sql = "update fv_projectbrandtype p ,fv_sysbrand v set p.brandTypeImg=v.brandLogo where brandTypeName=v.brandName and p.projectid=" + int.Parse(context.Request["id"].ToString());
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)
@@ -100,8 +85,44 @@ namespace sd_order_sys.struts
                 msg = "数据库连接超时或出现未知错误";
             JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
             context.Response.Write(javascriptSerializer.Serialize(msg));
-
         }
+        /// <summary>
+        /// 增更数据库
+        /// </summary>
+        /// <param name="context"></param>
+        //private void RecordAdd(HttpContext context)
+        //{
+        //    string projectId = context.Request.Form["projectId"].ToString();
+        //    string btName = context.Request.Form["btName"].ToString();
+        //    string btOrder = context.Request.Form["btOrder"].ToString();
+        //    string btImg = context.Request.Form["btImg"].ToString();
+        //    string btBgcolor = context.Request.Form["btBgcolor"].ToString();
+        //    string btIsShow = context.Request.Form["btIsShow"].ToString();
+        //    int id = context.Request.Form["hid"].ToString() == "" ? 0 : int.Parse(context.Request.Form["hid"].ToString());
+        //    Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+        //    sqlparams.Add("@projectId", projectId);
+        //    sqlparams.Add("@brandTypeName", btName);
+        //    sqlparams.Add("@brandTypeOrder", btOrder);
+        //    sqlparams.Add("@brandTypeImg", btImg);
+        //    sqlparams.Add("@brandTypeBackColor", btBgcolor);
+        //    sqlparams.Add("@btIsShow", btIsShow);
+        //    string sql = "";
+        //    if (id == 0)
+        //        sql = "insert into fv_projectbrandtype (projectId,brandTypeName,brandTypeOrder,brandTypeImg,isShow,brandTypeBackColor,createTime,lastChangeTime)" +
+        //             "values(@projectId,@brandTypeName,@brandTypeOrder,@brandTypeImg,@btIsShow,@brandTypeBackColor,now(),now())";
+        //    else
+        //        sql = "update fv_projectbrandtype set brandTypeName=@brandTypeName,brandTypeOrder=@brandTypeOrder,brandTypeImg=@brandTypeImg,isShow=@btIsShow,brandTypeBackColor=@brandTypeBackColor,lastChangeTime=NOW() where id=" + id;
+        //    bool w = SqlManage.OpRecord(sql, sqlparams);
+        //    string msg = "";
+        //    if (w)
+
+        //        msg = "suc";
+        //    else
+        //        msg = "数据库连接超时或出现未知错误";
+        //    JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
+        //    context.Response.Write(javascriptSerializer.Serialize(msg));
+
+        //}
         /// <summary>
         /// 删除数据库记录
         /// </summary>

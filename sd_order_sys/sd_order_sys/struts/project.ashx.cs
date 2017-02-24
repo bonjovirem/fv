@@ -31,10 +31,12 @@ namespace sd_order_sys.struts
                     case "query":
                         LoadMsg(context);
                         break;
-
-                    case "opt":
-                        RecordAdd(context);
+                    case "redo":
+                        UpdateFromBase(context);
                         break;
+                    //case "opt":
+                    //    RecordAdd(context);
+                    //    break;
                     case "rRecord":
                         DelRecord(context);
                         break;
@@ -77,44 +79,13 @@ namespace sd_order_sys.struts
             context.Response.Write(javascriptSerializer.Serialize(dictionary));
         }
         /// <summary>
-        /// 增更数据库
+        /// 同步数据库
         /// </summary>
         /// <param name="context"></param>
-        private void RecordAdd(HttpContext context)
+        private void UpdateFromBase(HttpContext context)
         {
-            string projectId = context.Request.Form["projectId"].ToString();
-            string bName = context.Request.Form["txtName"].ToString();
-            string bImg = context.Request.Form["txtImg"].ToString();
-            string bDesc = context.Request.Form["txtdsc"].ToString();
-            string bLogo = context.Request.Form["txtlogo"].ToString();
-            string bVideo = context.Request.Form["txtvideo"].ToString();
-            string bOrder = context.Request.Form["brandOrder"].ToString();
-            int brandTypeID = int.Parse(context.Request.Form["projectBtId"].ToString());
-            string bTypeName = context.Request.Form["projectBtName"].ToString();
-            int isShow = int.Parse(context.Request.Form["isShow"].ToString());
-            int isStar = int.Parse(context.Request.Form["isStar"].ToString());
-            int isShowWay = int.Parse(context.Request.Form["isShowWay"].ToString());
-            string fvUrl = context.Request.Form["fvUrl"].ToString();
-            int id = context.Request.Form["hid"].ToString() == "" ? 0 : int.Parse(context.Request.Form["hid"].ToString());
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-            sqlparams.Add("@projectId", projectId);
-            sqlparams.Add("@brandName", bName);
-            sqlparams.Add("@brandImg", bImg);
-            sqlparams.Add("@brandDesc", bDesc);
-            sqlparams.Add("@brandLogo", bLogo);
-            sqlparams.Add("@brandVideo", bVideo);
-            sqlparams.Add("@brandOrder", bOrder);
-            sqlparams.Add("@brandTypeId", brandTypeID);
-            sqlparams.Add("@brandTypeName", bTypeName);
-            sqlparams.Add("@isShow", isShow);
-            sqlparams.Add("@isStar", isStar);
-            sqlparams.Add("@isShowWay", isShowWay);
-            sqlparams.Add("@fvUrl", fvUrl);
-            string sql = "";
-            if (id == 0)
-                sql = "insert into fv_projectBrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,brandOrder,brandTypeId,brandTypeName,projectId,isShow,isStar,isShowWay,fvUrl,createTime,lastChangeTime) values(@brandName,@brandImg,@brandDesc,@brandLogo,@brandVideo,@brandOrder,@brandTypeId,@brandTypeName,@projectId,@isShow,@isStar,@isShowWay,@fvUrl,now(),now())";
-            else
-                sql = "update fv_projectBrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandLogo=@brandLogo,brandVideo=@brandVideo,brandOrder=@brandOrder,brandTypeId=@brandTypeId,brandTypeName=@brandTypeName,isShow=@isShow,isStar=@isStar,isShowWay=@isShowWay,fvUrl=@fvUrl,lastChangeTime=NOW() where id=" + id;
+            string sql = "update fv_projectbrand p ,fv_sys_brand v set p.brandLogo=v.sys_logo where p.brandName=v.sys_nane and p.projectid=" + int.Parse(context.Request["id"].ToString());
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)
@@ -122,11 +93,60 @@ namespace sd_order_sys.struts
                 msg = "suc";
             else
                 msg = "数据库连接超时或出现未知错误";
-
             JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
             context.Response.Write(javascriptSerializer.Serialize(msg));
-
         }
+        /// <summary>
+        /// 增更数据库
+        /// </summary>
+        /// <param name="context"></param>
+        //private void RecordAdd(HttpContext context)
+        //{
+        //    string projectId = context.Request.Form["projectId"].ToString();
+        //    string bName = context.Request.Form["txtName"].ToString();
+        //    string bImg = context.Request.Form["txtImg"].ToString();
+        //    string bDesc = context.Request.Form["txtdsc"].ToString();
+        //    string bLogo = context.Request.Form["txtlogo"].ToString();
+        //    string bVideo = context.Request.Form["txtvideo"].ToString();
+        //    string bOrder = context.Request.Form["brandOrder"].ToString();
+        //    int brandTypeID = int.Parse(context.Request.Form["projectBtId"].ToString());
+        //    string bTypeName = context.Request.Form["projectBtName"].ToString();
+        //    int isShow = int.Parse(context.Request.Form["isShow"].ToString());
+        //    int isStar = int.Parse(context.Request.Form["isStar"].ToString());
+        //    int isShowWay = int.Parse(context.Request.Form["isShowWay"].ToString());
+        //    string fvUrl = context.Request.Form["fvUrl"].ToString();
+        //    int id = context.Request.Form["hid"].ToString() == "" ? 0 : int.Parse(context.Request.Form["hid"].ToString());
+        //    Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+        //    sqlparams.Add("@projectId", projectId);
+        //    sqlparams.Add("@brandName", bName);
+        //    sqlparams.Add("@brandImg", bImg);
+        //    sqlparams.Add("@brandDesc", bDesc);
+        //    sqlparams.Add("@brandLogo", bLogo);
+        //    sqlparams.Add("@brandVideo", bVideo);
+        //    sqlparams.Add("@brandOrder", bOrder);
+        //    sqlparams.Add("@brandTypeId", brandTypeID);
+        //    sqlparams.Add("@brandTypeName", bTypeName);
+        //    sqlparams.Add("@isShow", isShow);
+        //    sqlparams.Add("@isStar", isStar);
+        //    sqlparams.Add("@isShowWay", isShowWay);
+        //    sqlparams.Add("@fvUrl", fvUrl);
+        //    string sql = "";
+        //    if (id == 0)
+        //        sql = "insert into fv_projectBrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,brandOrder,brandTypeId,brandTypeName,projectId,isShow,isStar,isShowWay,fvUrl,createTime,lastChangeTime) values(@brandName,@brandImg,@brandDesc,@brandLogo,@brandVideo,@brandOrder,@brandTypeId,@brandTypeName,@projectId,@isShow,@isStar,@isShowWay,@fvUrl,now(),now())";
+        //    else
+        //        sql = "update fv_projectBrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandLogo=@brandLogo,brandVideo=@brandVideo,brandOrder=@brandOrder,brandTypeId=@brandTypeId,brandTypeName=@brandTypeName,isShow=@isShow,isStar=@isStar,isShowWay=@isShowWay,fvUrl=@fvUrl,lastChangeTime=NOW() where id=" + id;
+        //    bool w = SqlManage.OpRecord(sql, sqlparams);
+        //    string msg = "";
+        //    if (w)
+
+        //        msg = "suc";
+        //    else
+        //        msg = "数据库连接超时或出现未知错误";
+
+        //    JavaScriptSerializer javascriptSerializer = new JavaScriptSerializer();
+        //    context.Response.Write(javascriptSerializer.Serialize(msg));
+
+        //}
         /// <summary>
         /// 删除数据库记录
         /// </summary>

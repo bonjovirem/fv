@@ -10,7 +10,7 @@
 namespace sd_order_sys.files {
     
     
-    public partial class editProjectBrand {
+    public partial class editProjectType {
         
         /// <summary>
         /// form1 控件。
@@ -40,103 +40,31 @@ namespace sd_order_sys.files {
         protected global::System.Web.UI.WebControls.FileUpload txtlogo;
         
         /// <summary>
-        /// txtdesc 控件。
+        /// btOrder 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtdesc;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText btOrder;
         
         /// <summary>
-        /// txtvideo 控件。
+        /// Label1 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload txtvideo;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// brandOrder 控件。
+        /// Label2 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText brandOrder;
-        
-        /// <summary>
-        /// ddltype 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddltype;
-        
-        /// <summary>
-        /// lblpro 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblpro;
-        
-        /// <summary>
-        /// ddlisShow 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlisShow;
-        
-        /// <summary>
-        /// ddlisStar 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlisStar;
-        
-        /// <summary>
-        /// fvUrl 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText fvUrl;
-        
-        /// <summary>
-        /// Text1 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text1;
-        
-        /// <summary>
-        /// telephone 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText telephone;
-        
-        /// <summary>
-        /// address 控件。
-        /// </summary>
-        /// <remarks>
-        /// 自动生成的字段。
-        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText address;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
         /// lblmsg 控件。
