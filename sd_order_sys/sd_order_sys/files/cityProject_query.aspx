@@ -65,23 +65,24 @@
                 { field: 'projectImg', title: '项目图片', align: 'center' },
                 { field: 'projectVideo', title: '项目video', align: 'center' },
                 { field: 'projectCity', title: '项目城市', align: 'center' },
-                { field: 'projectFirstShow', title: '项目video', align: 'center' },
+                //{ field: 'projectFirstShow', title: '项目video', align: 'center' },
                 { field: 'createTime', title: '创建时间', align: 'center' },
                 { field: 'lastChangeTime', title: '最后修改时间', align: 'center' }
             ]], toolbar: [{
                 text: '添加',
                 iconCls: 'icon-add',
                 handler: function () {
-                    $("#dlg").dialog().parent().appendTo("#personform");
-                    $("#txtName").attr("value", '');
-                    $("#txtImg").attr("value", '');
-                    $("#txtdsc").attr("value", '');
-                    $("#txtvideo").attr("value", '');
-                    $("#txtlogo").attr("value", '');
-                    $("#txtcity").attr("value", '');
-                    $("#txtfirst").attr("value", '');
-                    $("#hid").attr("value", '');
-                    $('#dlg').dialog('open');
+                    //$("#dlg").dialog().parent().appendTo("#personform");
+                    //$("#txtName").attr("value", '');
+                    //$("#txtImg").attr("value", '');
+                    //$("#txtdsc").attr("value", '');
+                    //$("#txtvideo").attr("value", '');
+                    //$("#txtlogo").attr("value", '');
+                    //$("#txtcity").attr("value", '');
+                    //$("#txtfirst").attr("value", '');
+                    //$("#hid").attr("value", '');
+                    //$('#dlg').dialog('open');
+                    window.location = "editProject.aspx";
                 }
             },
             {
@@ -125,7 +126,7 @@
     }
     function formatUploadFile(val, row, index) {
         if (val) {
-            return '<a href="' + val + '" title="下载文件" >下载文件</a>';
+            return '<a href="' + val + '" title="查看文件" target="_blank">下载文件</a>';
         }
         else
             return "";
@@ -135,23 +136,23 @@
         $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
-            $("#dlg").dialog().parent().appendTo("#personform");
-            $("#txtName").attr("value", selectedRow["projectName"]);
-            $("#txtImg").attr("value", selectedRow["projectImg"]);
-            $("#txtdsc").attr("value", selectedRow["projectDesc"]);
-            $("#txtvideo").attr("value", selectedRow["projectVideo"]);
-            $("#txtlogo").attr("value", selectedRow["projectLogo"]);
-            $("#txtcity").attr("value", selectedRow["projectCity"]);
-            $("#txtfirst").attr("value", selectedRow["projectFirstShow"]);
-            $("#hid").attr("value", selectedRow["id"]);
-            $('#dlg').dialog('open');
-            //window.location = "replylist.aspx?id=" + selectedRow["id"];
+            //$("#dlg").dialog().parent().appendTo("#personform");
+            //$("#txtName").attr("value", selectedRow["projectName"]);
+            //$("#txtImg").attr("value", selectedRow["projectImg"]);
+            //$("#txtdsc").attr("value", selectedRow["projectDesc"]);
+            //$("#txtvideo").attr("value", selectedRow["projectVideo"]);
+            //$("#txtlogo").attr("value", selectedRow["projectLogo"]);
+            //$("#txtcity").attr("value", selectedRow["projectCity"]);
+            //$("#txtfirst").attr("value", selectedRow["projectFirstShow"]);
+            //$("#hid").attr("value", selectedRow["id"]);
+            //$('#dlg').dialog('open');
+            window.location = "editProject.aspx?id=" + selectedRow["id"];
         } else {
             $.messager.alert('提示', '请选中一条记录');
         }
     }
     function DelRecord() {
-        $.messager.confirm('确认', '是否确认删除所选记录', function(row) {
+        $.messager.confirm('确认', '是否确认删除所选记录', function (row) {
             if (row) {
                 var selectedRow = $('#persontable').datagrid('getSelections'); //获取选中行
                 if (selectedRow.length == 0) {
@@ -167,7 +168,7 @@
                     }
                     $.ajax({
                         url: '/struts/city.ashx?action=rRecord&id=' + num,
-                        success: function(data) {
+                        success: function (data) {
                             var comment = $.parseJSON(data);
                             if (comment != "suc") {
                                 $.messager.alert("提示", "操作失败，请联系管理员");
@@ -176,7 +177,7 @@
                                 $('#persontable').datagrid('reload');
                             }
                         },
-                        error: function() {
+                        error: function () {
                             $.messager.alert("提示", "网络错误，请联系管理员");
                         }
                     });
@@ -186,14 +187,14 @@
     }
 
     function SetFloor() {
-       // $('#persontable').datagrid('selectRow', index);
+        // $('#persontable').datagrid('selectRow', index);
         var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
         if (selectedRow) {
             //$("#hid").attr("value", selectedRow["id"]);
             //$.messager.alert('提示', '1');
             top.topManager.openPage({
                 id: 'sbs',
-                href:  '/files/setFloor.aspx?projectId=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
+                href: '/files/setFloor.aspx?projectId=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"],
                 title: '楼层设置'
             });
             //window.location = 'setFloor.aspx?projectid=' + selectedRow["id"] + "&projectName=" + selectedRow["projectName"];
@@ -276,7 +277,7 @@
                 <th field="id" width="100" hidden="true">序号</th>
             </tr>
         </table>
-        <div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="系统品类信息">
+     <%--   <div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="系统品类信息">
             <div class="ftitle">
             </div>
             <div class="fitem">
@@ -310,7 +311,7 @@
         <div id="dlg-buttons">
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="ValidateForm()" iconcls="icon-save">保存</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" onclick="javascript:$('#dlg').dialog('close')" iconcls="icon-cancel">取消</a>
-        </div>
+        </div>--%>
     </form>
     <script>
         function searchbtn() {
@@ -324,33 +325,33 @@
             $('#persontable').datagrid('options').url = "/struts/city.ashx?action=query";
             $('#persontable').datagrid('load');
         }
-        function ValidateForm() {
-            if ($("#txtName").val() == "") {
-                $.messager.alert("提示", "品类名称不能为空");
-                return;
-            }
-            else {
-                $.ajax({
-                    type: "POST",
-                    url: "/struts/city.ashx?action=opt",
-                    data: $('#personform').serialize(),
-                    datatype: "json",
-                    success: function (data) {
-                        var comment = $.parseJSON(data);
-                        if (comment != "suc") {
-                            $.messager.alert(comment.msg);
-                        } else {
-                            $('#dlg').dialog('close');
-                            $('#persontable').datagrid('load');
-                        }
-                    },
-                    //调用出错执行的函数
-                    error: function () {
-                        $.messager.alert("提示", "网络错误，请联系管理员");
-                    }
-                });
-            }
-        }
+        //function ValidateForm() {
+        //    if ($("#txtName").val() == "") {
+        //        $.messager.alert("提示", "品类名称不能为空");
+        //        return;
+        //    }
+        //    else {
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/struts/city.ashx?action=opt",
+        //            data: $('#personform').serialize(),
+        //            datatype: "json",
+        //            success: function (data) {
+        //                var comment = $.parseJSON(data);
+        //                if (comment != "suc") {
+        //                    $.messager.alert(comment.msg);
+        //                } else {
+        //                    $('#dlg').dialog('close');
+        //                    $('#persontable').datagrid('load');
+        //                }
+        //            },
+        //            //调用出错执行的函数
+        //            error: function () {
+        //                $.messager.alert("提示", "网络错误，请联系管理员");
+        //            }
+        //        });
+        //    }
+        //}
     </script>
 </body>
 </html>

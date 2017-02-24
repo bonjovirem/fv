@@ -191,6 +191,12 @@
     <Content Include="files\DrawPoint2.aspx" />
     <Content Include="files\DrawPointClient.aspx" />
     <Content Include="files\DrawPointPath.aspx" />
+    <Content Include="files\editBrandInfo.aspx" />
+    <Content Include="files\editProject.aspx" />
+    <Content Include="files\editProjectBrand.aspx" />
+    <Content Include="files\editProjectFloor.aspx" />
+    <Content Include="files\editProjectType.aspx" />
+    <Content Include="files\editSysBrandInfo.aspx" />
     <Content Include="files\FloorForm.aspx" />
     <Content Include="files\projectBrandType_query.aspx" />
     <Content Include="files\projectExport.aspx" />
@@ -1042,6 +1048,48 @@
     </Compile>
     <Compile Include="files\DrawPointPath.aspx.designer.cs">
       <DependentUpon>DrawPointPath.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\editBrandInfo.aspx.cs">
+      <DependentUpon>editBrandInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\editBrandInfo.aspx.designer.cs">
+      <DependentUpon>editBrandInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\editProject.aspx.cs">
+      <DependentUpon>editProject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\editProject.aspx.designer.cs">
+      <DependentUpon>editProject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\editProjectBrand.aspx.cs">
+      <DependentUpon>editProjectBrand.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\editProjectBrand.aspx.designer.cs">
+      <DependentUpon>editProjectBrand.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\editProjectFloor.aspx.cs">
+      <DependentUpon>editProjectFloor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\editProjectFloor.aspx.designer.cs">
+      <DependentUpon>editProjectFloor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\editProjectType.aspx.cs">
+      <DependentUpon>editProjectType.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\editProjectType.aspx.designer.cs">
+      <DependentUpon>editProjectType.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="files\editSysBrandInfo.aspx.cs">
+      <DependentUpon>editSysBrandInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\editSysBrandInfo.aspx.designer.cs">
+      <DependentUpon>editSysBrandInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="files\FloorForm.aspx.cs">
       <DependentUpon>FloorForm.aspx</DependentUpon>

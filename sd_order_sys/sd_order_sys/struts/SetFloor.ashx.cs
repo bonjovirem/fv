@@ -81,20 +81,42 @@ namespace sd_order_sys.struts
         /// <param name="context"></param>
         private void RecordAdd(HttpContext context)
         {
-            HttpPostedFile _upfile = context.Request.Files["File1"];
-            _upfile.SaveAs(HttpContext.Current.Server.MapPath("~/images/logo.jpg")); //保存图片       
-            string floorLevel = context.Request.Form["floorLevel"].ToString();   //楼层是第几层
-            string hidProId = context.Request.Form["hidProId"].ToString();   //隐藏的projectID 项目ID
+            string img = "";
+            string projectid = context.Request.Form["hidpro"].ToString();
+            if (context.Request.Files["floorImg"] != null)
+            {
+                HttpPostedFile _upfile = context.Request.Files["floorImg"];
+                if (!System.IO.Directory.Exists(context.Server.MapPath("~/" + projectid + "/floors")))//创建项目楼层图片目录
+                {
+                    System.IO.Directory.CreateDirectory(context.Server.MapPath("~/" + projectid + "/floors"));
+                }
+                _upfile.SaveAs(HttpContext.Current.Server.MapPath("~/images/logo.jpg")); //保存图片 
+                img = context.Server.MapPath("~/" + projectid + "/floors") + "/" + _upfile.FileName;
+            }
+            else
+                img = "";
+            string floorLevel = context.Request.Form["floorLevel"].ToString();
+            string hidProId = context.Request.Form["hidProId"].ToString();
+            //HttpPostedFile _upfile = context.Request.Files["File1"];
+           // _upfile.SaveAs(HttpContext.Current.Server.MapPath("~/images/logo.jpg")); //保存图片       
+            //string floorLevel = context.Request.Form["floorLevel"].ToString();   //楼层是第几层
+            //string hidProId = context.Request.Form["hidProId"].ToString();   //隐藏的projectID 项目ID
             int id = context.Request.Form["hid"].ToString() == "" ? 0 : int.Parse(context.Request.Form["hid"].ToString());
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             sqlparams.Add("@floorLevel", floorLevel);
             sqlparams.Add("@hidProId", hidProId);
-            sqlparams.Add("@floorImg", "f" + floorLevel);
+            sqlparams.Add("@floorImg", "f" + img);
             string sql = "";
             if (id == 0)  //用来标识是添加还是修改，如果有ID，则是修改（根据ID修改），如果为0则是添加
                 sql = "insert into fv_floor (projectId,floorLevel,floorImg,createTime,lastChangeTime) values(@hidProId,@floorLevel,@floorImg,now(),now())";
             else
-                sql = "update fv_floor set projectId=@hidProId,floorLevel=@floorLevel,floorImg=@floorImg,lastChangeTime=now() where id=" + id;
+                if (img != "")
+                    sql = "update fv_floor set projectId=@hidProId,floorLevel=@floorLevel,floorImg=@floorImg,lastChangeTime=now() where id=" + id;
+                else
+                {
+                    sqlparams.Remove("@floorImg");
+                    sql = "update fv_floor set projectId=@hidProId,floorLevel=@floorLevel,lastChangeTime=now() where id=" + id;
+                }
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)

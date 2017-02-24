@@ -64,7 +64,7 @@ namespace sd_order_sys.struts
                 total = SqlManage.Query(@"select * from fv_sys_brand " + where, sqlparams).Tables[0].Rows.Count;
                 builder.Append(" where " + where);
             }
-            builder.Append(" LIMIT " + (page - 1) + "," + size);
+            builder.Append(" ORDER BY lastChangeTime desc LIMIT " + (page - 1) + "," + size);
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             //List<SOA.MODEL.DocumentModel> list = docmanage.DataTableToList(dt);
@@ -134,7 +134,7 @@ namespace sd_order_sys.struts
                 msg = "数据库网络延迟";
             else
             {
-                sql = "delete from fv_sysbrand where id in (" + where + ")";
+                sql = "delete from fv_sys_brand where id in (" + where + ")";
                 w = SqlManage.OpRecord(sql, sqlparams);
             }
             if (w)
