@@ -1,0 +1,280 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <script src="resources/scripts/jquery-1.7.1.min.js"></script>
+    <script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
+    <style type="text/css">
+        body {
+            background-image: url(images/bak.jpg);
+        }
+
+        #apDiv1 {
+            position: absolute;
+            left: 8px;
+            top: 9px;
+            width: 454px;
+            height: 156px;
+            z-index: 1;
+        }
+
+        #apDiv2 {
+            position: absolute;
+            left: 811px;
+            top: 23px;
+            width: 1028px;
+            height: 150px;
+            z-index: 7;
+        }
+
+        #apDiv3 {
+            position: absolute;
+            left: 71px;
+            top: 799px;
+            width: 159px;
+            height: 119px;
+            z-index: 8;
+        }
+
+        #apDiv4 {
+            position: absolute;
+            left: 71px;
+            top: 637px;
+            width: 159px;
+            height: 119px;
+            z-index: 9;
+        }
+
+        #apDiv5 {
+            position: absolute;
+            left: 71px;
+            top: 475px;
+            width: 159px;
+            height: 119px;
+            z-index: 10;
+        }
+
+        #apDiv6 {
+            position: absolute;
+            left: 71px;
+            top: 313px;
+            width: 159px;
+            height: 119px;
+            z-index: 11;
+        }
+
+        #apDiv7 {
+            position: absolute;
+            left: 264px;
+            top: 224px;
+            width: 1300px;
+            height: 824px;
+            z-index: 12;
+        }
+
+        #apDiv8 {
+            position: absolute;
+            left: 1271px;
+            top: 942px;
+            width: 163px;
+            height: 62px;
+            z-index: 13;
+        }
+
+        #apDiv9 {
+            position: absolute;
+            left: 1592px;
+            top: 296px;
+            width: 298px;
+            height: 663px;
+            z-index: 14;
+        }
+    </style>
+    <style>
+        #divForShow {
+            left: 960px;
+            top: 540px;
+            height: 768px;
+            width: 1422px;
+            margin: 0px auto;
+            background-color: #FFF;
+            z-index: 100;
+            position: fixed;
+            margin-top: -384px;
+            margin-left: -741px;
+            box-shadow: 3px 6px 9px #000;
+            border-radius: 30px 0px 30px 30px;
+        }
+
+        #imgX {
+            position: absolute;
+            left: 1390px;
+            top: -20px;
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 35px 35px;
+            box-shadow: 4px 0px 12px #000;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <input type="hidden" id="hidBrandId" />
+    <div id="divForShow" style="display:none;">
+        <div id="imgX" onclick="hidePanel();">
+            <img src="images/x.png" style="margin-top:10px;margin-left:10px;" />
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0" style="background-color:white;width:1392px;margin-left:15px;height:738px;margin-top:15px;">
+            <tr>
+                <td rowspan="4" width="1080" height="700"><div id="divfv" style="width:100%;height:100%;">divfv</div></td>
+                <td height="130"><div id="divlogo" style="text-align:center;">divlogo</div></td>
+            </tr>
+            <tr>
+                <td height="270" style="text-align:left; vertical-align:top;padding:0px 10px 0px 25px;font-size:16px;"><div id="divDesc" style="height:260px;overflow:scroll;">divDesc</div></td>
+            </tr>
+            <tr>
+                <td height="200"><div id="divImg" style="text-align:center;">divImg</div></td>
+            </tr>
+            <tr>
+                <td height="130" align="right">
+                    <div style="float:left;margin:50px 0 0 30px;cursor:pointer;"><img src="images/tel.png" width="163" height="62" onclick="showPhonePath();" /></div>
+                    <div style="cursor:pointer;" onclick="showPath();"><img style="height:120px;" src="images/way.gif" /></div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+    <div id="apDiv1"><img src="images/logo.png" width="659" height="198" /></div>
+    <div id="apDiv2">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td width="150" height="150" align="center" valign="middle"><a href="index.html"><img src="images/home.png" width="120" height="120" /></a></td>
+                <td width="150" height="150" align="center" valign="middle"><a href="brand.html"><img src="images/brand.png" width="120" height="120" /></a></td>
+                <td width="150" height="150" align="center" valign="middle"><a href="vr.html"><img src="images/vr.png" width="120" height="120" /></a></td>
+                <td align="center" valign="middle"><a href="online.html"><img src="images/online.png" width="120" height="120" /></a></td>
+                <td width="150" height="150" align="center" valign="middle"><a href="promotions.html"><img src="images/promotions.png" width="120" height="120" /></a></td>
+                <td width="150" height="150" align="center" valign="middle"><a href="commodity.html"><img src="images/commodity.png" width="120" height="120" /></a></td>
+                <td width="150" height="150" align="center" valign="middle"><a href="about.html"><img src="images/about.png" width="120" height="120" /></a></td>
+            </tr>
+        </table>
+    </div>
+    <div id="apDiv3"><img src="images/floornum*f1.png" width="159" height="119" /></div>
+    <div id="apDiv4"><img src="images/floornum*f2.png" width="159" height="119" /></div>
+    <div id="apDiv5"><img src="images/floornum*f3.png" width="159" height="119" /></div>
+    <div id="apDiv6"><img src="images/floornum*f1.png" width="159" height="119" /></div>
+    <div id="apDiv7">
+        <iframe id="frame1" src='' width="1300" height="824" allowtransparency="true" style="background-color:transparent" frameborder="0" scrolling="no"></iframe>
+        <img id="floorImg" src="images/*floorLevelF.png" width="1300" height="824" usemap="#newbook" />
+        <map name="newbook" id="newbook"></map>
+    </div>
+    <div id="apDiv8"><img src="images/tel.png" width="163" height="62" /></div>
+    <div id="apDiv9">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td colspan="2" align="center" valign="middle"><img src="images/brand/00.png" width="200" height="50" /></td>
+            </tr>
+            <tr>
+                <td height="110" align="center" valign="middle"><img src="images/brand/01.png" width="116" height="93" /></td>
+                <td height="110" align="center" valign="middle"><img src="images/brand/02.png" width="116" height="93" /></td>
+            </tr>
+            <tr>
+                <td height="110" align="center" valign="middle"><img src="images/brand/03.png" width="116" height="93" /></td>
+                <td height="110" align="center" valign="middle"><img src="images/brand/04.png" width="116" height="93" /></td>
+            </tr>
+            <tr>
+                <td height="110" align="center" valign="middle"><img src="images/brand/05.png" width="116" height="93" /></td>
+                <td height="110" align="center" valign="middle"><img src="images/brand/06.png" width="116" height="93" /></td>
+            </tr>
+            <tr>
+                <td height="110" align="center" valign="middle"><img src="images/brand/07.png" width="116" height="93" /></td>
+                <td height="110" align="center" valign="middle"><img src="images/brand/08.png" width="116" height="93" /></td>
+            </tr>
+            <tr>
+                <td height="110" align="center" valign="middle"><img src="images/brand/09.png" width="116" height="93" /></td>
+                <td height="110" align="center" valign="middle"><img src="images/brand/10.png" width="116" height="93" /></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script language="javascript" type="text/javascript">
+    var pageFloorLevel =*floorLevel ;   //本页显示第几层
+    var thisClientFloorLevel =//*thisClientFloorLevel ;   //当前客户端是在第几层
+    function showPanel() {
+        $('#divForShow').fadeIn(500);  //浮层面板
+    }
+    function hidePanel() {
+        document.getElementById('divfv').innerHTML = ""; //清除全景声音
+        $('#divForShow').fadeOut(500);
+    }
+    function showPath() {
+        $('#divForShow').fadeOut(200);
+        if (pageFloorLevel==thisClientFloorLevel) { //直达
+            $('#frame1').attr("src", "f*floorLevel.html?brandId=" + document.getElementById('hidBrandId').value+"_1");
+            $('#floorImg').hide();
+            setTimeout("rollback()", 4100);
+        }else{
+            $('#frame1').attr("src", "f"+thisClientFloorLevel+".html?brandId=CTOL"); //本层先到电梯
+            $('#floorImg').hide();
+            setTimeout("OhterFloorRun()", 4100);//再从另一层电梯到品牌店
+        }
+    }
+    function showPhonePath() {
+        window.open('PhonePath.html?pageFloorLevel=' + pageFloorLevel + '&brandId=' + document.getElementById('hidBrandId').value,'_blank');
+    }
+    function OhterFloorRun() {//再从目标层电梯到品牌店
+        $('#frame1').attr("src", "f"+pageFloorLevel+".html?brandId=" + document.getElementById('hidBrandId').value+"_0");
+        setTimeout("rollback()", 4100);
+    }
+    function rollback() {
+        $('#floorImg').show();
+        $('#frame1').attr("src", "");
+        //$('#showPanel').show();   //自带浮层
+        $('#divForShow').fadeIn(500);
+    }
+    $('#divForShow').hide();
+
+    function loadPanelDesc(brandId) {
+        var Arrayfv = new Array();
+        var ArrayDesc = new Array();
+        //*fvString
+        //*descString
+        //*telephoneString
+        //*addressString
+        document.getElementById('hidBrandId').value = brandId;
+        //Arrayfv["11"] = "http://www.vrssd.com/case/jiaju/hxmkl/zibo/2f/nuobeier/";
+        //Arrayfv["22"] = "222222";
+        //ArrayDesc["11"] = "&nbsp;&nbsp;&nbsp;&nbsp;杭州诺贝尔集团有限公司创立于1992年，是注重多元化选择、价值实现、服务体验的中国消费者和工程客户首选的磁砖生产与销售公司。<br />&nbsp;&nbsp;&nbsp;&nbsp;目前，诺贝尔旗下拥有瓷抛砖、微晶玻璃陶瓷复合砖、陶质釉面墙地砖、瓷质釉面墙地砖、完全玻化抛光砖、欧式复古砖、亚光砖、瓷片系列及各种装饰配件，并演绎出多种全新的装饰设计理念，为中国和全球客户提供完美产品与服务。";
+        //ArrayDesc["22"] = "222222";
+        document.getElementById('divfv').innerHTML = "<iframe id='iffv' width='100%' height='100%' data-label='quanjing' scrolling='no' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen='' src='" + Arrayfv[brandId] + "'></iframe>";
+        document.getElementById('divlogo').innerHTML = " <img src='brandImg/logo" + brandId + ".jpg' style='padding:3px;height:120px;'/>";
+        document.getElementById('divDesc').innerHTML = ArrayDesc[brandId];
+        document.getElementById('divImg').innerHTML = '';
+        document.getElementById('divImg').innerHTML = " <img src='brandImg/2Code" + brandId +".png' style='padding:0px 10px;height:190px;'  />";
+    }
+
+    function loadArea() {
+        document.getElementById('newbook').innerHTML = "//*areaString";
+        //"  <area shape='rect' coords='56,69,78,139' style=' background:red;' href='urlall.htm' target='_blank' alt='这里收集十万多个网址。' title='这里收集十万多个网址。'>" +
+        //   " <area shape='rect' coords='82,70,103,136' href='siteall.htm' target='_blank' alt='网站设计师的启蒙读本。' title='网站设计师的启蒙读本。'>" +
+        //    "<area shape='rect' coords='106,68,128,136' href='pageall.htm' target='_blank' alt='网页制作者不可不读的书。' title='网页制作者不可不读的书。'>";
+    }
+    loadArea();
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return -1;
+    }
+    function loadProjectId() {
+        var projectId = getQueryString("projectId");
+        if (projectId != -1) {
+            loadPanelDesc(projectId); showPanel();
+        }
+    }
+    loadProjectId();
+
+</script>

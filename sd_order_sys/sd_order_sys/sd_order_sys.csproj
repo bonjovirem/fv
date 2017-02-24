@@ -191,10 +191,14 @@
     <Content Include="files\DrawPoint2.aspx" />
     <Content Include="files\DrawPointClient.aspx" />
     <Content Include="files\DrawPointPath.aspx" />
+<<<<<<< HEAD
     <Content Include="files\editBrandInfo.aspx" />
     <Content Include="files\editProjectBrand.aspx" />
     <Content Include="files\editProjectFloor.aspx" />
     <Content Include="files\editSysBrandInfo.aspx" />
+=======
+    <Content Include="files\FloorForm.aspx" />
+>>>>>>> refs/remotes/wh344972164/master
     <Content Include="files\projectBrandType_query.aspx" />
     <Content Include="files\projectExport.aspx" />
     <Content Include="files\projectTypeExport.aspx" />
@@ -591,6 +595,156 @@
     <Content Include="themes\theme-pic1.jpg" />
     <Content Include="themes\theme-pic2.jpg" />
     <Content Include="Web.config" />
+    <Content Include="WebTemp2\about.html" />
+    <Content Include="WebTemp2\brand.html" />
+    <Content Include="WebTemp2\commodity.html" />
+    <Content Include="WebTemp2\f.html" />
+    <Content Include="WebTemp2\floor.html" />
+    <Content Include="WebTemp2\floorImg\f1.png" />
+    <Content Include="WebTemp2\floorImg\f2.png" />
+    <Content Include="WebTemp2\floorImg\f3.png" />
+    <Content Include="WebTemp2\floorImg\f4.png" />
+    <Content Include="WebTemp2\floorImg\logof1.png" />
+    <Content Include="WebTemp2\floorImg\logof1s.png" />
+    <Content Include="WebTemp2\floorImg\logof2.png" />
+    <Content Include="WebTemp2\floorImg\logof2s.png" />
+    <Content Include="WebTemp2\floorImg\logof3.png" />
+    <Content Include="WebTemp2\floorImg\logof3s.png" />
+    <Content Include="WebTemp2\floorImg\logof4.png" />
+    <Content Include="WebTemp2\floorImg\logof4s.png" />
+    <Content Include="WebTemp2\FullScreenShow.exe" />
+    <Content Include="WebTemp2\images\1F.png" />
+    <Content Include="WebTemp2\images\about.png" />
+    <Content Include="WebTemp2\images\bak.jpg" />
+    <Content Include="WebTemp2\images\brand.png" />
+    <Content Include="WebTemp2\images\brandlogo.png" />
+    <Content Include="WebTemp2\images\brand\00.png" />
+    <Content Include="WebTemp2\images\brand\01.png" />
+    <Content Include="WebTemp2\images\brand\02.png" />
+    <Content Include="WebTemp2\images\brand\03.png" />
+    <Content Include="WebTemp2\images\brand\04.png" />
+    <Content Include="WebTemp2\images\brand\05.png" />
+    <Content Include="WebTemp2\images\brand\06.png" />
+    <Content Include="WebTemp2\images\brand\07.png" />
+    <Content Include="WebTemp2\images\brand\08.png" />
+    <Content Include="WebTemp2\images\brand\09.png" />
+    <Content Include="WebTemp2\images\brand\10.png" />
+    <Content Include="WebTemp2\images\c1.png" />
+    <Content Include="WebTemp2\images\commodity.png" />
+    <Content Include="WebTemp2\images\er.png" />
+    <Content Include="WebTemp2\images\fenye.png" />
+    <Content Include="WebTemp2\images\floor1.png" />
+    <Content Include="WebTemp2\images\floor2.png" />
+    <Content Include="WebTemp2\images\floor3.png" />
+    <Content Include="WebTemp2\images\floor4.png" />
+    <Content Include="WebTemp2\images\floornum1_1.png" />
+    <Content Include="WebTemp2\images\floornum1_2.png" />
+    <Content Include="WebTemp2\images\floornum2_1.png" />
+    <Content Include="WebTemp2\images\floornum2_2.png" />
+    <Content Include="WebTemp2\images\floornum3_1.png" />
+    <Content Include="WebTemp2\images\floornum3_2.png" />
+    <Content Include="WebTemp2\images\floornum4_1.png" />
+    <Content Include="WebTemp2\images\floornum4_2.png" />
+    <Content Include="WebTemp2\images\home.png" />
+    <Content Include="WebTemp2\images\logo.png" />
+    <Content Include="WebTemp2\images\online.png" />
+    <Content Include="WebTemp2\images\pinlei\01.png" />
+    <Content Include="WebTemp2\images\pinlei\02.png" />
+    <Content Include="WebTemp2\images\pinlei\03.png" />
+    <Content Include="WebTemp2\images\pinlei\04.png" />
+    <Content Include="WebTemp2\images\pinlei\05.png" />
+    <Content Include="WebTemp2\images\pinlei\06.png" />
+    <Content Include="WebTemp2\images\pinlei\07.png" />
+    <Content Include="WebTemp2\images\pinlei\08.png" />
+    <Content Include="WebTemp2\images\pinlei\09.png" />
+    <Content Include="WebTemp2\images\pinlei\10.png" />
+    <Content Include="WebTemp2\images\pinlei\11.png" />
+    <Content Include="WebTemp2\images\pinlei\12.png" />
+    <Content Include="WebTemp2\images\pinlei\13.png" />
+    <Content Include="WebTemp2\images\pinlei\14.png" />
+    <Content Include="WebTemp2\images\pinlei\15.png" />
+    <Content Include="WebTemp2\images\pinlei\16.png" />
+    <Content Include="WebTemp2\images\pinlei\17.png" />
+    <Content Include="WebTemp2\images\pinlei\18.png" />
+    <Content Include="WebTemp2\images\pinlei\19.png" />
+    <Content Include="WebTemp2\images\pinlei\20.png" />
+    <Content Include="WebTemp2\images\pinlei\21.png" />
+    <Content Include="WebTemp2\images\pinlei\22.png" />
+    <Content Include="WebTemp2\images\pinlei\23.png" />
+    <Content Include="WebTemp2\images\pinlei\24.png" />
+    <Content Include="WebTemp2\images\pinlei\25.png" />
+    <Content Include="WebTemp2\images\pinlei\26.png" />
+    <Content Include="WebTemp2\images\pinlei\27.png" />
+    <Content Include="WebTemp2\images\pinlei\28.png" />
+    <Content Include="WebTemp2\images\promotions.png" />
+    <Content Include="WebTemp2\images\redX.png" />
+    <Content Include="WebTemp2\images\tel.png" />
+    <Content Include="WebTemp2\images\video.jpg" />
+    <Content Include="WebTemp2\images\vr.png" />
+    <Content Include="WebTemp2\images\way.gif" />
+    <Content Include="WebTemp2\images\x.png" />
+    <Content Include="WebTemp2\index.html" />
+    <Content Include="WebTemp2\online.html" />
+    <Content Include="WebTemp2\PhonePath.html" />
+    <Content Include="WebTemp2\promotions.html" />
+    <Content Include="WebTemp2\resources\chrome\allow_access.gif" />
+    <Content Include="WebTemp2\resources\chrome\axure_logo.gif" />
+    <Content Include="WebTemp2\resources\chrome\axure_logo.png" />
+    <Content Include="WebTemp2\resources\chrome\chrome.html" />
+    <Content Include="WebTemp2\resources\chrome\extensions_menu.gif" />
+    <Content Include="WebTemp2\resources\chrome\splitter.gif" />
+    <Content Include="WebTemp2\resources\chrome\splitter.png" />
+    <Content Include="WebTemp2\resources\css\axure_rp_page.css" />
+    <Content Include="WebTemp2\resources\css\default.css" />
+    <Content Include="WebTemp2\resources\css\images\images.html" />
+    <Content Include="WebTemp2\resources\css\images\newwindow.gif" />
+    <Content Include="WebTemp2\resources\css\images\note.gif" />
+    <Content Include="WebTemp2\resources\css\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-bg_glass_75_ffffff_1x400.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-bg_inset-soft_95_fef1ec_1x100.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-icons_222222_256x240.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-icons_454545_256x240.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-icons_888888_256x240.png" />
+    <Content Include="WebTemp2\resources\css\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="WebTemp2\resources\css\jquery-ui-themes.css" />
+    <Content Include="WebTemp2\resources\css\reset.css" />
+    <Content Include="WebTemp2\resources\expand.html" />
+    <Content Include="WebTemp2\resources\images\259_close_12rollover1.png" />
+    <Content Include="WebTemp2\resources\images\259_close_12rollover2.png" />
+    <Content Include="WebTemp2\resources\images\260_collapse_12rollover1.png" />
+    <Content Include="WebTemp2\resources\images\260_collapse_12rollover2.png" />
+    <Content Include="WebTemp2\resources\images\261_expand_12rollover1.png" />
+    <Content Include="WebTemp2\resources\images\261_expand_12rollover2.png" />
+    <Content Include="WebTemp2\resources\images\close.png" />
+    <Content Include="WebTemp2\resources\images\close.svg" />
+    <Content Include="WebTemp2\resources\images\close_hover.png" />
+    <Content Include="WebTemp2\resources\images\close_hover.svg" />
+    <Content Include="WebTemp2\resources\images\divider.png" />
+    <Content Include="WebTemp2\resources\images\divider.svg" />
+    <Content Include="WebTemp2\resources\images\expand.png" />
+    <Content Include="WebTemp2\resources\images\expand.svg" />
+    <Content Include="WebTemp2\resources\images\expand_hover.png" />
+    <Content Include="WebTemp2\resources\images\expand_hover.svg" />
+    <Content Include="WebTemp2\resources\images\images.html" />
+    <Content Include="WebTemp2\resources\images\transparent.gif" />
+    <Content Include="WebTemp2\resources\Other.html" />
+    <Content Include="WebTemp2\resources\reload.html" />
+    <Content Include="WebTemp2\resources\scripts\jquery-1.7.1.min.js" />
+    <Content Include="WebTemp2\resources\scripts\jquery-ui-1.8.10.custom.min.js" />
+    <Content Include="WebTemp2\resources\scripts\messagecenter.js" />
+    <Content Include="WebTemp2\resources\scripts\player\axplayer.js" />
+    <Content Include="WebTemp2\resources\scripts\player\splitter.js" />
+    <Content Include="WebTemp2\resources\scripts\prototypePost.js" />
+    <Content Include="WebTemp2\resources\scripts\prototypePre.js" />
+    <Content Include="WebTemp2\resources\scripts\startPost.js" />
+    <Content Include="WebTemp2\resources\scripts\startPre.js" />
+    <Content Include="WebTemp2\vr.html" />
     <Content Include="WebTemp\about.html" />
     <Content Include="WebTemp\bootstrap\bootstrap-theme.min.css" />
     <Content Include="WebTemp\bootstrap\bootstrap.min.css" />
@@ -837,6 +991,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="WebTemp\resources\chrome\axure-chrome-extension.crx" />
+    <Content Include="WebTemp2\debug.log" />
+    <Content Include="WebTemp2\FullScreenShow.exe.config" />
+    <Content Include="WebTemp2\FullScreenShow.vshost.exe.config" />
+    <Content Include="WebTemp2\images\pinlei\00.psd" />
+    <Content Include="WebTemp2\images\pinlei\000.psd" />
+    <Content Include="WebTemp2\resources\chrome\axure-chrome-extension.crx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -890,6 +1050,7 @@
     <Compile Include="files\DrawPointPath.aspx.designer.cs">
       <DependentUpon>DrawPointPath.aspx</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="files\editBrandInfo.aspx.cs">
       <DependentUpon>editBrandInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -917,6 +1078,14 @@
     </Compile>
     <Compile Include="files\editSysBrandInfo.aspx.designer.cs">
       <DependentUpon>editSysBrandInfo.aspx</DependentUpon>
+=======
+    <Compile Include="files\FloorForm.aspx.cs">
+      <DependentUpon>FloorForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="files\FloorForm.aspx.designer.cs">
+      <DependentUpon>FloorForm.aspx</DependentUpon>
+>>>>>>> refs/remotes/wh344972164/master
     </Compile>
     <Compile Include="files\projectBrandType_query.aspx.cs">
       <DependentUpon>projectBrandType_query.aspx</DependentUpon>
