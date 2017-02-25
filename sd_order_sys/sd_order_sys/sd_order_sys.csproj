@@ -38,6 +38,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gma.QrCodeNet.Encoding.Net45, Version=0.4.0.0, Culture=neutral, PublicKeyToken=e8a75d24b142be49, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\Gma.QrCodeNet.Encoding.Net45.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -110,6 +114,10 @@
     <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.0\lib\net40\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
     </Reference>
+    <Reference Include="ThoughtWorks.QRCode, Version=1.0.4778.30637, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\bootstrap.css" />
@@ -181,6 +189,9 @@
     <Content Include="css\iconfont.css" />
     <Content Include="css\login.css" />
     <Content Include="css\style.css" />
+    <Content Include="dll\Gma.QrCodeNet.Encoding.Net45.dll" />
+    <Content Include="dll\Gma.QrCodeNet.Encoding.Net45.xml" />
+    <Content Include="dll\ThoughtWorks.QRCode.dll" />
     <Content Include="error.html" />
     <Content Include="favicon.ico" />
     <Content Include="files\cityProject_query.aspx" />
