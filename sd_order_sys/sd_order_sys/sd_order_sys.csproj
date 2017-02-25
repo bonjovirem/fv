@@ -265,7 +265,6 @@
     <Content Include="npoi\NPOI.OpenXmlFormats.dll" />
     <Content Include="packages.config" />
     <Content Include="assets\img\未标题-2.psd" />
-    <Content Include="plugins\themes\black\images\Thumbs.db" />
     <Content Include="plugins\themes\bootstrap\images\Thumbs.db" />
     <Content Include="plugins\themes\default\images\Thumbs.db" />
     <Content Include="plugins\themes\gray\images\Thumbs.db" />
@@ -995,6 +994,7 @@
     <Content Include="struts\DrawCtoLift.ashx" />
     <Content Include="struts\DrawLift.ashx" />
     <Content Include="struts\DrawLiftPath.ashx" />
+    <None Include="Properties\PublishProfiles\fv_publish.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
