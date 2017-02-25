@@ -23,6 +23,7 @@ namespace sd_order_sys.files
             projectId = Request.QueryString["projectId"];
             projectBrandId = Request.QueryString["projectBrandId"];
             floorLevel = Request.QueryString["floorLevel"];
+         
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
 
             //客户端的点 b.isClient=1
@@ -38,7 +39,7 @@ namespace sd_order_sys.files
             }
             else
             {
-                Response.Write("<script>alert('请先设置该楼层客户端位置！');window.close();</script>");
+                Response.Write("<script>alert('请先设置该楼层客户端位置和该品牌区域信息！');window.close();</script>");
             }
 
             //路径的点
