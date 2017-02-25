@@ -406,9 +406,9 @@ namespace sd_order_sys.struts
                     sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName,a.telephone,a.address,a.isStar,a.brandLogo,a.qrCode from fv_projectbrand a " +
                            " where a.projectid=" + id + " and a.floorLevel is not null;";
                     //品类展示   1
-                    sql += "select id,brandTypeName from fv_projectbrandtype where projectId=" + id + " limit 24 ;";
+                    sql += "select id,brandTypeName,brandTypeImg from fv_projectbrandtype where projectId=" + id + " and isShow =1  ;";
                     //品牌展示   2
-                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel from fv_projectbrand where isShowWay=1 and projectId=" + id + "  limit 12 ;";
+                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel,brandLogo,brandTypeId from fv_projectbrand where isShowWay=1 and projectId=" + id + " ;";
                     //取全景展示的品牌   3
                     sql += "select id,brandName,fvUrl,brandDesc,floorlevel from fv_projectbrand where fvUrl<>'' and fvUrl is not null and floorLevel is not null and projectId=" + id + "  limit 48 ;";
                     //取到品牌的路径 for f.html  4
@@ -434,7 +434,7 @@ namespace sd_order_sys.struts
                             //替换左侧显示信息
                             for (int j = 1; j < 5; j++)
                             {
-                                code = code.Replace("*f" + j, (j.ToString() == floorLevel ? "f" + j + "s" : "f" + j));
+                                code = code.Replace("*f" + j, (j.ToString() == floorLevel ? j + "_2" : j + "_1"));
                             }
                             //替换全景路径
                             string areaString = "";
@@ -462,14 +462,14 @@ namespace sd_order_sys.struts
                                 {
                                     strIsStar += @"<tr>";
                                 }
-                                if (drIndex >= drIsStar.Length - 1)
+                                if (drIndex >= drIsStar.Length)
                                 {
                                     strIsStar += @" <td height='110' align='center' valign='middle'></td>";
                                 }
                                 else
                                 {
                                     strIsStar += @" <td height='110' align='center' valign='middle'><img src='" +
-                                        drIsStar[drIndex]["brandLogo"].ToString() + "' width='116' height='93' /></td>";
+                                        drIsStar[drIndex]["brandLogo"].ToString() + "' onclick='loadPanelDesc(" + drIsStar[drIndex]["id"].ToString() + ");showPanel();' width='116' height='93' /></td>";
                                 }
                                 if (drIndex % 2 == 1)
                                 {
@@ -561,59 +561,74 @@ namespace sd_order_sys.struts
 
 
 
-                            //#region 处理brand.html页面
+                            #region 处理brand.html页面
 
-                            //string brandGuide1_6 = "";
-                            //string brandGuide7_12 = "";
-                            //string brandTypeGuide1_12 = "";
-                            //string brandTypeGuide13_24 = "";
-                            ////*brandWalkway
-                            //oldFile = toPath + "brand.html";
-                            //code = readFile(oldFile);
-                            //DataTable dt3 = ds.Tables[1];
-                            //if (dt3 != null && dt3.Rows.Count > 0)
-                            //{
-                            //    if (dt3.Rows.Count < 12)
-                            //    {
-                            //        brandTypeGuide13_24 = "<div class='col-md-1'><a class='btn' href='#' role='button'>&nbsp;</a></div>"; //加内容占一行
-                            //    }
-                            //    for (int k = 0; k < dt3.Rows.Count; k++)
-                            //    {
-                            //        if (k < 12)
-                            //        {
-                            //            brandTypeGuide1_12 += string.Format("<div class='col-md-1'><a class='btn btn-success' href='#' role='button'>{0}</a></div>", dt3.Rows[k]["brandTypeName"].ToString());
-                            //        }
-                            //        else
-                            //        {
-                            //            brandTypeGuide13_24 += string.Format("<div class='col-md-1'><a class='btn btn-success' href='#' role='button'>{0}</a></div>", dt3.Rows[k]["brandTypeName"].ToString());
-                            //        }
+                            string strBrandType = "";
+                            string strBrand = "";
 
-                            //    }
-                            //}
-                            //DataTable dt4 = ds.Tables[2];
-                            //if (dt4 != null && dt4.Rows.Count > 0)
-                            //{
+                            oldFile = toPath + "brand.html";
+                            code = readFile(oldFile);
 
-                            //    for (int k = 0; k < dt4.Rows.Count; k++)
-                            //    {
-                            //        if (k < 6)
-                            //        {
-                            //            brandGuide1_6 += string.Format("<div class='col-md-2'><img onclick=\"window.location='floor{1}.html?projectId={0}';\"  style='width:190px;height:190px;' src='brandImg/logo{0}.jpg' alt='...' class='img-circle'></div>", dt4.Rows[k]["id"].ToString(), dt4.Rows[k]["floorlevel"].ToString());
-                            //        }
-                            //        else
-                            //        {
-                            //            brandGuide7_12 += string.Format("<div class='col-md-2'><img onclick=\"window.location='floor{1}.html?projectId={0}';\"  style='width:190px;height:190px;' src='brandImg/logo{0}.jpg' alt='...' class='img-circle'></div>", dt4.Rows[k]["id"].ToString(), dt4.Rows[k]["floorlevel"].ToString());
-                            //        }
+                            DataTable dt3 = ds.Tables[1];
+                            if (dt3 != null && dt3.Rows.Count > 0)
+                            {
+                                int rowCount = 10;  //默认一行10列
+                                int btTemp = dt3.Rows.Count % rowCount;
+                                int Count = btTemp == 0 ? dt3.Rows.Count / rowCount : (dt3.Rows.Count / rowCount) + 1;
+                                for (int j = 0; j < Count * rowCount; j++)
+                                {
+                                    if (j % rowCount == 0)
+                                    {
+                                        strBrandType += @"<tr>";
+                                    }
+                                    if (j >= dt3.Rows.Count)
+                                    {
+                                        strBrandType += string.Format(@" <td width='90' height='90' align='center' valign='middle'><img src='' width='100' height='45' /></td>");
+                                    }
+                                    else
+                                    {
+                                        strBrandType += string.Format(@" <td width='90' height='90' align='center' valign='middle'><img src='{0}' width='100' height='45' onclick='showThis({1});' /></td>",
+                                             dt3.Rows[j]["brandTypeImg"].ToString(), dt3.Rows[j]["id"].ToString());
+                                    }
+                                    if (j % rowCount == rowCount - 1)
+                                    {
+                                        strBrandType += @"</tr>";
+                                    }
+                                }
+                            }
+                            DataTable dt4 = ds.Tables[2];
+                            if (dt4 != null && dt4.Rows.Count > 0)
+                            {
+                                int rowCount = 7;  //默认一行10列
+                                int btTemp = dt4.Rows.Count % rowCount;
+                                int Count = btTemp == 0 ? (dt4.Rows.Count / rowCount) : (dt4.Rows.Count / rowCount) + 1;
+                                for (int j = 0; j < Count * rowCount; j++)
+                                {
+                                    if (j % rowCount == 0)
+                                    {
+                                        strBrand += @"<tr>";
+                                    }
+                                    if (j >= dt4.Rows.Count)
+                                    {
+                                        strBrand += string.Format(@"<td width='192' height='192' align='center' valign='middle'><img src='' width='182' height='160' class='box-shadow' /></td>");
+                                    }
+                                    else
+                                    {
+                                        strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' width='182' height='160' class='box-shadow' /></td>"
+                                             , dt4.Rows[j]["brandLogo"].ToString(), dt4.Rows[j]["brandTypeId"].ToString());
+                                    }
+                                    if (j % rowCount == rowCount - 1)
+                                    {
+                                        strBrand += @"</tr>";
+                                    }
+                                }
 
-                            //    }
-                            //}
-                            //code = code.Replace("//*brandGuide1_6", brandGuide1_6);
-                            //code = code.Replace("//*brandGuide7_12", brandGuide7_12);
-                            //code = code.Replace("//*brandTypeGuide1_12", brandTypeGuide1_12);
-                            //code = code.Replace("//*brandTypeGuide13_24", brandTypeGuide13_24);
-                            //writeFile(oldFile, code);
+                            }
+                            code = code.Replace("//*brandType", strBrandType);
+                            code = code.Replace("//*brand", strBrand);
+                            writeFile(oldFile, code);
 
-                            //#endregion
+                            #endregion
 
                             //#region 处理vr.html页面
 

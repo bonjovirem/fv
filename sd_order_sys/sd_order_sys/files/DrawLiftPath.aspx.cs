@@ -24,7 +24,6 @@ namespace sd_order_sys.files
             projectBrandId = Request.QueryString["projectBrandId"];
             floorLevel = Request.QueryString["floorLevel"];
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-
             //电梯的点 b.isClient=0
             string sql = string.Format("select b.id,b.clientPoint,a.floorLevel from fv_projectbrand a,fv_client b " +
             "where a.projectId=b.projectId and a.floorLevel=b.floorLevel and b.isClient=0 and a.id={0}", projectBrandId);
@@ -38,7 +37,7 @@ namespace sd_order_sys.files
             }
             else
             {
-                Response.Write("<script>alert('请先设置该楼层客户端位置！');window.close();</script>");
+                Response.Write("<script>alert('请先设置该楼层客户端位置和该品牌区域信息！');window.close();</script>");
             }
 
             //路径的点
