@@ -84,7 +84,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">所在楼层：</label>
                     <div class="col-sm-10">
-                        <input id="Text1" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" runat="server" /><p></p>
+                        <input id="Text1" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" runat="server" class="form-control"/><p></p>
                     </div>
                 </div>
                 <div class="form-group">

@@ -46,13 +46,27 @@ namespace sd_order_sys.struts
             int size = context.Request["rows"] != "" ? Convert.ToInt32(context.Request.Form["rows"]) : 1;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
             builder.Append(@"SELECT * FROM fv_projectbrandtype where projectId=" + context.Request["projectId"].ToString());
-            builder.Append(" LIMIT " + (page - 1) + "," + size);
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+            int total = 0;
+            if (context.Request["cul"] == null && context.Request["where"] == null)
+            {
+
+                total = SqlManage.Query(@"select * from fv_sys_brand", sqlparams).Tables[0].Rows.Count;
+                //return;
+            }
+            else
+            {
+                string where = context.Request["cul"].ToString() + " LIKE '%" + context.Request["where"].ToString() + "%'";
+                total = SqlManage.Query(@"select * from fv_sys_brand " + where, sqlparams).Tables[0].Rows.Count;
+                builder.Append(" where " + where);
+            }
+            builder.Append(" order by lastChangeTime desc LIMIT " + (page - 1) * size + "," + size);
+
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             //List<SOA.MODEL.DocumentModel> list = docmanage.DataTableToList(dt);
 
-            dictionary.Add("total", dt.Rows.Count);
+            dictionary.Add("total", SqlManage.Query(@"SELECT * FROM fv_projectbrandtype", sqlparams).Tables[0].Rows.Count);
             List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
             foreach (DataRow dr in dt.Rows)//每一行信息，新建一个Dictionary<string,object>,将该行的每列信息加入到字典
             {

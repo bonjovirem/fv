@@ -265,10 +265,6 @@
     <Content Include="npoi\NPOI.OpenXmlFormats.dll" />
     <Content Include="packages.config" />
     <Content Include="assets\img\未标题-2.psd" />
-    <Content Include="plugins\themes\bootstrap\images\Thumbs.db" />
-    <Content Include="plugins\themes\default\images\Thumbs.db" />
-    <Content Include="plugins\themes\gray\images\Thumbs.db" />
-    <Content Include="plugins\themes\metro\images\Thumbs.db" />
     <Content Include="plugins\easyloader.js" />
     <Content Include="plugins\jquery.easyui.min.js" />
     <Content Include="plugins\locale\easyui-lang-af.js" />
@@ -979,8 +975,6 @@
     <Content Include="WebTemp\vr.html" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\gq\Thumbs.db" />
-    <Content Include="images\Thumbs.db" />
     <Content Include="struts\login.ashx" />
     <Content Include="struts\sbrand.ashx" />
     <Content Include="struts\project.ashx" />
@@ -1002,7 +996,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="WebTemp\resources\chrome\axure-chrome-extension.crx" />
-    <Content Include="WebTemp2\debug.log" />
     <Content Include="WebTemp2\FullScreenShow.exe.config" />
     <Content Include="WebTemp2\FullScreenShow.vshost.exe.config" />
     <Content Include="WebTemp2\images\pinlei\00.psd" />

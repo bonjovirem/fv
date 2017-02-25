@@ -80,7 +80,7 @@ namespace sd_order_sys.files
             sqlparams.Add("@qrCode", qrcode);
             if (txtlogo.HasFile)
             {
-                txtlogo.SaveAs(Server.MapPath(@"~/release/" + ViewState["ProId"].ToString() + "/images/" + timeSign + txtlogo.FileName));
+                txtlogo.SaveAs(Server.MapPath(@"~/release/" + ViewState["proId"].ToString() + "/images/" + timeSign + txtlogo.FileName));
             }
 
             //else if (txtvideo.HasFile)
@@ -179,9 +179,9 @@ namespace sd_order_sys.files
 
             //文字生成图片
             System.Drawing.Image image = qrCodeEncoder.Encode(url);
-
-            image.Save(Server.MapPath(@"~/release/" + ViewState["ProId"].ToString() + "/images/" + value + txtName.Value + ".png"), System.Drawing.Imaging.ImageFormat.Png);
-            return Server.MapPath(@"~/release/" + ViewState["ProId"].ToString() + "/images/" + value + txtName.Value + ".png");
+            string path = Server.MapPath(@"~/release/" + ViewState["proId"].ToString() + "/images") + @"/" + value + txtName.Value + ".png";
+            image.Save(path,System.Drawing.Imaging.ImageFormat.Png);
+            return path;
         }
     }
 }

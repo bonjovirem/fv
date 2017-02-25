@@ -172,7 +172,7 @@
                         <li>
                             <select id="selectwhere" class="combo">
 
-                                <option value="brandName">品类名称</option>
+                                <option value="sys_nane">品牌名称</option>
                             </select>
                         </li>
                         <li>
