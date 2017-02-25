@@ -165,7 +165,7 @@ namespace sd_order_sys.struts
 
                 //第一步复制文件  *floorLevel 1,2,3,4当前的楼层  *f1,2,3,4 指左侧导航的标记
                 string sourcePath = context.Server.MapPath("../WebTemp/");
-                string toPath = context.Server.MapPath("../release/"+id+"/f" + thisClientFloorLevel + "/");
+                string toPath = context.Server.MapPath("../release/" + id + "/f" + thisClientFloorLevel + "/");
                 CopyDirectory(sourcePath, toPath);
                 Dictionary<string, object> sqlparams = new Dictionary<string, object>();
                 sql = "select floorLevel from fv_floor where projectid=" + id + " order by floorLevel";
@@ -400,7 +400,7 @@ namespace sd_order_sys.struts
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     //查找需要展示的信息 for  floor.html   0
-                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName,a.telephone,a.address from fv_projectbrand a " +
+                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName,a.telephone,a.address,a.isStar,a.brandLogo,a.qrCode from fv_projectbrand a " +
                            " where a.projectid=" + id + " and a.floorLevel is not null;";
                     //品类展示   1
                     sql += "select id,brandTypeName from fv_projectbrandtype where projectId=" + id + " limit 24 ;";
@@ -420,6 +420,7 @@ namespace sd_order_sys.struts
                         for (int i = 0; i < dt.Rows.Count; i++)
                         {
                             string floorLevel = dt.Rows[i][0].ToString();
+
                             #region 处理floor页面
                             string oldFile = toPath + "floor.html";
                             string newFile = toPath + "floor" + floorLevel + ".html";
@@ -433,19 +434,15 @@ namespace sd_order_sys.struts
                                 code = code.Replace("*f" + j, (j.ToString() == floorLevel ? "f" + j + "s" : "f" + j));
                             }
                             //替换全景路径
-                            string fvString = "";
-                            string descString = "";
-                            string telephoneString = "";
-                            string addressString = "";
                             string areaString = "";
+
                             DataRow[] dr = dt2.Select("floorLevel=" + floorLevel);
                             foreach (DataRow item in dr)
                             {
-                    
-                                fvString += string.Format("Arrayfv['{0}'] = '{1}';", item["id"].ToString(), item["fvUrl"].ToString());
-                                descString += string.Format("ArrayDesc['{0}'] = '{1}';", item["id"].ToString(), item["brandDesc"].ToString().Replace("*空格*", "&nbsp;").Replace("*换行*", "<br/>"));
-                                telephoneString += string.Format("ArrayTele['{0}'] = '{1}';", item["id"].ToString(), item["telephone"].ToString());
-                                addressString += string.Format("ArrayAddress['{0}'] = '{1}';", item["id"].ToString(), item["address"].ToString());
+                                //fvString += string.Format("Arrayfv['{0}'] = '{1}';", item["id"].ToString(), item["fvUrl"].ToString());
+                                //descString += string.Format("ArrayDesc['{0}'] = '{1}';", item["id"].ToString(), item["brandDesc"].ToString().Replace("*空格*", "&nbsp;").Replace("*换行*", "<br/>"));
+                                //telephoneString += string.Format("ArrayTele['{0}'] = '{1}';", item["id"].ToString(), item["telephone"].ToString());
+                                //addressString += string.Format("ArrayAddress['{0}'] = '{1}';", item["id"].ToString(), item["address"].ToString());
                                 string areaCodes = item["areaPoints"].ToString().Replace("(", "").Replace(")", "").Replace(";", ",").Trim();
                                 if (!string.IsNullOrEmpty(areaCodes))
                                 {
@@ -454,16 +451,68 @@ namespace sd_order_sys.struts
                                 }
 
                             }
-                            code = code.Replace("//*fvString", fvString);
-                            code = code.Replace("//*descString", descString);
-                            code = code.Replace("//*telephoneString", fvString);
-                            code = code.Replace("//*addressString", descString);
+                            DataRow[] drIsStar = dt2.Select("floorLevel=" + floorLevel + " and isStar=1");
+                            string strIsStar = "";
+                            for (int drIndex = 0; drIndex < 10; drIndex++)
+                            {
+                                if (drIndex % 2 == 0)
+                                {
+                                    strIsStar += @"<tr>";
+                                }
+                                if (drIndex >= drIsStar.Length - 1)
+                                {
+                                    strIsStar += @" <td height='110' align='center' valign='middle'></td>";
+                                }
+                                else
+                                {
+                                    strIsStar += @" <td height='110' align='center' valign='middle'><img src='" +
+                                        drIsStar[drIndex]["brandLogo"].ToString() + "' width='116' height='93' /></td>";
+                                }
+                                if (drIndex % 2 == 1)
+                                {
+                                    strIsStar += @"</tr>";
+                                }
+                            }
+
+                            //code = code.Replace("//*fvString", fvString);
+                            //code = code.Replace("//*descString", descString);
+                            //code = code.Replace("//*telephoneString", fvString);
+                            //code = code.Replace("//*addressString", descString);
+                            code = code.Replace(" //*IsStar", strIsStar);
                             code = code.Replace("//*areaString", areaString);
                             code = code.Replace("//*thisClientFloorLevel", thisClientFloorLevel);
-                           
-                            
+
+
 
                             writeFile(newFile, code);
+                            #endregion
+
+                            #region 处理data.js页面
+                            oldFile = toPath + "/js/data.js";
+                            code = readFile(oldFile);
+                            //替换基础信息
+                            string fvString = "";
+                            string descString = "";
+                            string telephoneString = "";
+                            string addressString = "";
+                            string brandLogo = "";
+                            string brandQrCode = "";
+                            foreach (DataRow item in dt2.Rows)
+                            {
+                                fvString += string.Format("Arrayfv['{0}'] = '{1}';", item["id"].ToString(), item["fvUrl"].ToString());
+                                descString += string.Format("ArrayDesc['{0}'] = '{1}';", item["id"].ToString(), item["brandDesc"].ToString().Replace("*空格*", "&nbsp;").Replace("*换行*", "<br/>"));
+                                telephoneString += string.Format("ArrayTele['{0}'] = '{1}';", item["id"].ToString(), item["telephone"].ToString());
+                                addressString += string.Format("ArrayAddress['{0}'] = '{1}';", item["id"].ToString(), item["address"].ToString());
+                                brandLogo += string.Format("ArrayLogo['{0}'] = '{1}';", item["id"].ToString(), item["brandLogo"].ToString());
+                                brandQrCode += string.Format("ArrayQrCode['{0}'] = '{1}';", item["id"].ToString(), item["qrCode"].ToString());
+                            }
+                            code = code.Replace("//*fvString", fvString);
+                            code = code.Replace("//*descString", descString);
+                            code = code.Replace("//*telephoneString", telephoneString);
+                            code = code.Replace("//*addressString", addressString);
+                            code = code.Replace("//*brandLogo", brandLogo);
+                            code = code.Replace("//*brandQrCode", brandQrCode);
+                            writeFile(oldFile, code);
                             #endregion
 
                             #region 处理f页面

@@ -693,6 +693,7 @@
     <Content Include="WebTemp2\images\way.gif" />
     <Content Include="WebTemp2\images\x.png" />
     <Content Include="WebTemp2\index.html" />
+    <Content Include="WebTemp2\js\data.js" />
     <Content Include="WebTemp2\online.html" />
     <Content Include="WebTemp2\PhonePath.html" />
     <Content Include="WebTemp2\promotions.html" />

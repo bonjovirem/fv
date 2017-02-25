@@ -5,6 +5,7 @@
     <title>无标题文档</title>
     <script src="resources/scripts/jquery-1.7.1.min.js"></script>
     <script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
+    <script src="js/data.js"></script>
     <style type="text/css">
         body {
             background-image: url(images/bak.jpg);
@@ -134,7 +135,11 @@
                 <td height="130"><div id="divlogo" style="text-align:center;">divlogo</div></td>
             </tr>
             <tr>
-                <td height="270" style="text-align:left; vertical-align:top;padding:0px 10px 0px 25px;font-size:16px;"><div id="divDesc" style="height:260px;overflow:scroll;">divDesc</div></td>
+                <td height="270" style="text-align:left; vertical-align:top;padding:0px 10px 0px 25px;font-size:16px;">
+                    <div id="divDesc" style="height:220px;overflow:scroll;">divDesc</div>
+                    <div id="divTele" style="height:20px;overflow:hidden;">divTele</div>
+                    <div id="divAddress" style="height:20px;overflow:hidden;">divAddress</div>
+                </td></td>
             </tr>
             <tr>
                 <td height="200"><div id="divImg" style="text-align:center;">divImg</div></td>
@@ -177,7 +182,8 @@
             <tr>
                 <td colspan="2" align="center" valign="middle"><img src="images/brand/00.png" width="200" height="50" /></td>
             </tr>
-            <tr>
+            //*IsStar
+            <!--<tr>
                 <td height="110" align="center" valign="middle"><img src="images/brand/01.png" width="116" height="93" /></td>
                 <td height="110" align="center" valign="middle"><img src="images/brand/02.png" width="116" height="93" /></td>
             </tr>
@@ -196,7 +202,7 @@
             <tr>
                 <td height="110" align="center" valign="middle"><img src="images/brand/09.png" width="116" height="93" /></td>
                 <td height="110" align="center" valign="middle"><img src="images/brand/10.png" width="116" height="93" /></td>
-            </tr>
+            </tr>-->
         </table>
     </div>
 </body>
@@ -215,10 +221,12 @@
         $('#divForShow').fadeOut(200);
         if (pageFloorLevel==thisClientFloorLevel) { //直达
             $('#frame1').attr("src", "f*floorLevel.html?brandId=" + document.getElementById('hidBrandId').value+"_1");
+            $('#frame1').show();
             $('#floorImg').hide();
             setTimeout("rollback()", 4100);
         }else{
             $('#frame1').attr("src", "f"+thisClientFloorLevel+".html?brandId=CTOL"); //本层先到电梯
+            $('#frame1').show();
             $('#floorImg').hide();
             setTimeout("OhterFloorRun()", 4100);//再从另一层电梯到品牌店
         }
@@ -228,35 +236,18 @@
     }
     function OhterFloorRun() {//再从目标层电梯到品牌店
         $('#frame1').attr("src", "f"+pageFloorLevel+".html?brandId=" + document.getElementById('hidBrandId').value+"_0");
+        $('#frame1').show();
         setTimeout("rollback()", 4100);
     }
     function rollback() {
         $('#floorImg').show();
         $('#frame1').attr("src", "");
+        $('#frame1').hide();
         //$('#showPanel').show();   //自带浮层
         $('#divForShow').fadeIn(500);
     }
     $('#divForShow').hide();
-
-    function loadPanelDesc(brandId) {
-        var Arrayfv = new Array();
-        var ArrayDesc = new Array();
-        //*fvString
-        //*descString
-        //*telephoneString
-        //*addressString
-        document.getElementById('hidBrandId').value = brandId;
-        //Arrayfv["11"] = "http://www.vrssd.com/case/jiaju/hxmkl/zibo/2f/nuobeier/";
-        //Arrayfv["22"] = "222222";
-        //ArrayDesc["11"] = "&nbsp;&nbsp;&nbsp;&nbsp;杭州诺贝尔集团有限公司创立于1992年，是注重多元化选择、价值实现、服务体验的中国消费者和工程客户首选的磁砖生产与销售公司。<br />&nbsp;&nbsp;&nbsp;&nbsp;目前，诺贝尔旗下拥有瓷抛砖、微晶玻璃陶瓷复合砖、陶质釉面墙地砖、瓷质釉面墙地砖、完全玻化抛光砖、欧式复古砖、亚光砖、瓷片系列及各种装饰配件，并演绎出多种全新的装饰设计理念，为中国和全球客户提供完美产品与服务。";
-        //ArrayDesc["22"] = "222222";
-        document.getElementById('divfv').innerHTML = "<iframe id='iffv' width='100%' height='100%' data-label='quanjing' scrolling='no' frameborder='0' webkitallowfullscreen='' mozallowfullscreen='' allowfullscreen='' src='" + Arrayfv[brandId] + "'></iframe>";
-        document.getElementById('divlogo').innerHTML = " <img src='brandImg/logo" + brandId + ".jpg' style='padding:3px;height:120px;'/>";
-        document.getElementById('divDesc').innerHTML = ArrayDesc[brandId];
-        document.getElementById('divImg').innerHTML = '';
-        document.getElementById('divImg').innerHTML = " <img src='brandImg/2Code" + brandId +".png' style='padding:0px 10px;height:190px;'  />";
-    }
-
+    $('#frame1').hide();
     function loadArea() {
         document.getElementById('newbook').innerHTML = "//*areaString";
         //"  <area shape='rect' coords='56,69,78,139' style=' background:red;' href='urlall.htm' target='_blank' alt='这里收集十万多个网址。' title='这里收集十万多个网址。'>" +
