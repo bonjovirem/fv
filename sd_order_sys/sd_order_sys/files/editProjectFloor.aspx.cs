@@ -35,15 +35,15 @@ namespace sd_order_sys.files
 
         protected void btnExport_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(Server.MapPath("~/" + ViewState["proId"].ToString() + "/floors")))//创建项目楼层图片目录
+            if (!Directory.Exists(Server.MapPath("~/release/" + ViewState["proId"].ToString() + "/images")))//创建项目楼层图片目录
             {
-                Directory.CreateDirectory(Server.MapPath("~/" + ViewState["proId"].ToString() + "/floors"));
+                Directory.CreateDirectory(Server.MapPath("~/release/" + ViewState["proId"].ToString() + "/images"));
             }
             string img = "";
             if (floorImg.HasFile)
             {
-                img = @"/" + ViewState["proId"].ToString() + "/floors/" + floorLevel.Value + floorImg.FileName;
-                floorImg.SaveAs(Server.MapPath("~/" + ViewState["proId"].ToString() + "/floors/" + floorLevel.Value + floorImg.FileName));
+                img = @"/release/" + ViewState["proId"].ToString() + "/images/" + floorLevel.Value + "F" + GetExtension(floorImg.FileName);
+                floorImg.SaveAs(Server.MapPath("~/release/" + ViewState["proId"].ToString() + "/images/" + floorLevel.Value + floorImg.FileName));
             }
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             sqlparams.Add("@floorLevel", floorLevel.Value);
@@ -59,12 +59,12 @@ namespace sd_order_sys.files
                 {
                     sqlparams.Remove("@floorImg");
                     sql = "update fv_floor set projectId=@hidProId,floorLevel=@floorLevel,lastChangeTime=now() where id=" + int.Parse(hidpro.Value);
-                }        
+                }
             bool w = SqlManage.OpRecord(sql, sqlparams);
             if (w)
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "success",
-                    "alert('您操作成功！稍后自动跳转到列表页'); window.location='setFloor.aspx?projectId="+ViewState["proId"].ToString()
-                    +"&projectName="+Label1.Text+"'", true);
+                    "alert('您操作成功！稍后自动跳转到列表页'); window.location='setFloor.aspx?projectId=" + ViewState["proId"].ToString()
+                    + "&projectName=" + Label1.Text + "'", true);
             else
                 ScriptManager.RegisterStartupScript(Page, this.GetType(), "error",
      "alert('数据库连接异常！');", true);
@@ -82,6 +82,14 @@ namespace sd_order_sys.files
                 //ddltype.SelectedValue = table.Rows[0]["sys_type"].ToString();
             }
         }
-
+        /// <summary>
+        /// 获取文件后缀名
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private string GetExtension(string value)
+        {
+            return System.IO.Path.GetExtension(value).ToLower();
+        }
     }
 }

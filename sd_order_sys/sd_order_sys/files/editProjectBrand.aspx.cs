@@ -38,14 +38,22 @@ namespace sd_order_sys.files
 
         protected void btnExport_Click(object sender, EventArgs e)
         {
-            //if (!Directory.Exists(Server.MapPath(@"~/brandTemplate")))
-            //{
-            //    Directory.CreateDirectory(Server.MapPath(@"~/" + ViewState["proId"].ToString() + @"/brandTemplate"));
-            //}
+            if (!Directory.Exists(Server.MapPath(@"~/release/" + ViewState["proId"].ToString() + "/images")))
+            {
+                Directory.CreateDirectory(Server.MapPath(@"~/release/" + ViewState["proId"].ToString() + @"/images"));
+            }
             string bName = txtName.Value;
             //string bImg = "";
+            string timeSign = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString()
++ DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
++ DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
+            string qrcode = "";
+            if (fvUrl.Value != "")
+            {
+                qrcode = BuildQrCode(fvUrl.Value, value: timeSign);//生成二维码图片存放
+            }
             string bDesc = txtdesc.Value;
-            string bLogo = txtlogo.FileName;
+            string bLogo = timeSign + txtlogo.FileName;
             string bVideo = txtvideo.FileName;
             int isStar = int.Parse(ddlisStar.SelectedValue);
             int isShow = int.Parse(ddlisShow.SelectedValue);
@@ -69,14 +77,12 @@ namespace sd_order_sys.files
             sqlparams.Add("@fvUrl", url);
             sqlparams.Add("@telephone", tel);
             sqlparams.Add("@address", addr);
+            sqlparams.Add("@qrCode", qrcode);
             if (txtlogo.HasFile)
             {
-                txtlogo.SaveAs(Server.MapPath(@"~/release" + ViewState["ProId"].ToString() + "/images/" + txtlogo.FileName));
+                txtlogo.SaveAs(Server.MapPath(@"~/release/" + ViewState["ProId"].ToString() + "/images/" + timeSign + txtlogo.FileName));
             }
-            if (fvUrl.Value != "")
-            {
-                Build2DimensionalBarCode(fvUrl.Value);//生成二维码图片存放
-            }
+
             //else if (txtvideo.HasFile)
             //{
             //    txtvideo.SaveAs(Server.MapPath(@"~/brandTemplate/" + txtvideo.FileName));
@@ -124,7 +130,13 @@ namespace sd_order_sys.files
             ddltype.DataBind();
             ddltype.SelectedValue = Request.QueryString["projectBtId"];
         }
-        private void Build2DimensionalBarCode(string url)
+        /// <summary>
+        /// 二维码生成
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private string BuildQrCode(string url, string value)
         {
             QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
             string encoding = "Byte";
@@ -168,7 +180,8 @@ namespace sd_order_sys.files
             //文字生成图片
             System.Drawing.Image image = qrCodeEncoder.Encode(url);
 
-            image.Save(Server.MapPath(@"~/release" + ViewState["ProId"].ToString() + "/erweima/" + txtName.Value + ".png"), System.Drawing.Imaging.ImageFormat.Png);
+            image.Save(Server.MapPath(@"~/release/" + ViewState["ProId"].ToString() + "/images/" + value + txtName.Value + ".png"), System.Drawing.Imaging.ImageFormat.Png);
+            return Server.MapPath(@"~/release/" + ViewState["ProId"].ToString() + "/images/" + value + txtName.Value + ".png");
         }
     }
 }

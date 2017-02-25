@@ -408,13 +408,6 @@ namespace SDorder.BLL
 
                             if (row != null)
                             {
-                                //DataTable dt = SqlManage.Query("select max(brandOrder) from fv_projectbrand ", sqlparams).Tables[0];
-                                //int maxOrder = 0;
-                                //if (dt.Rows.Count == 0)
-                                //    maxOrder = 0;
-                                //else
-                                //    maxOrder = int.Parse(dt.Rows[0][0].ToString());
-                                //dt.Dispose();
                                 param.Add("@sys_nane", bName);
                                 param.Add("@sys_logo", @"/brandTemplate/" + logo);
                                 param.Add("@sys_type", order);

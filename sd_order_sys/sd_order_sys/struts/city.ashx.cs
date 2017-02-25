@@ -63,7 +63,7 @@ namespace sd_order_sys.struts
                 string where = context.Request["cul"].ToString() + " LIKE '%" + context.Request["where"].ToString() + "%'";
                 builder.Append(" where " + where);
             }
-            builder.Append(" LIMIT " + (page - 1) + "," + size);
+            builder.Append(" order by lastChangeTime LIMIT " + (page - 1) + "," + size);
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
             Dictionary<string, object> dictionary = new Dictionary<string, object>();

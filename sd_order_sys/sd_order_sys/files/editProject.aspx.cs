@@ -28,17 +28,20 @@ namespace sd_order_sys.files
 
         protected void btnExport_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(Server.MapPath(@"~/release" + txtName.Value)))
-            {
-                Directory.CreateDirectory(Server.MapPath(@"~/release" + txtName.Value));//创建项目根文件夹
-                Directory.CreateDirectory(Server.MapPath(@"~/release" + txtName.Value + "/images"));
-            }
+            //if (!Directory.Exists(Server.MapPath(@"~/release" + txtName.Value)))
+            //{
+            //    Directory.CreateDirectory(Server.MapPath(@"~/release" + txtName.Value));//创建项目根文件夹
+            //    Directory.CreateDirectory(Server.MapPath(@"~/release" + txtName.Value + "/images"));
+            //}
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             string logo = "";
             if (txtlogo.HasFile)
             {
-                logo = @"/release/" + txtName.Value + "/images/" + txtlogo.FileName;
-                txtlogo.SaveAs(Server.MapPath(@"~/" + txtName.Value + "/images/")+txtlogo.FileName);
+                string timeSign = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString()
++ DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
++ DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
+                logo = @"/release/" + hidpro.Value + "/images/" + timeSign + txtlogo.FileName;
+                txtlogo.SaveAs(Server.MapPath(@"~/release/" + hidpro.Value + "/images/") + timeSign + txtlogo.FileName);
             }
             sqlparams.Add("@projectName", txtName.Value);
             sqlparams.Add("@projectLogo", logo);
