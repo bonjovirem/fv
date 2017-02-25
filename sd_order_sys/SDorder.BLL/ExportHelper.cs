@@ -365,7 +365,7 @@ namespace SDorder.BLL
         }
 
         /// <summary>
-        /// 项目品牌导入
+        /// 系统品牌导入
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
@@ -386,11 +386,11 @@ namespace SDorder.BLL
                 {
                     foreach (DataRow dr in table.Rows)
                     {
-                        int order = int.Parse(dr[0].ToString());//品类id
-                        string desc = dr[1].ToString();//品牌描述
+                        //int order = int.Parse(dr[0].ToString());//品类id
+                        //string desc = dr[1].ToString();//品牌描述
                         string logo = dr[2].ToString();
                         string bName = dr[3].ToString();
-                        string typeName = dr[4].ToString();//品类名称
+                        string desc = dr[4].ToString();//品类名称
                         Dictionary<string, object> param = new Dictionary<string, object>();
                         //param.Add("@brandName", bName);
                         string validateSql = "select count(*) from fv_sys_brand where sys_nane='" + bName + "'";
@@ -403,27 +403,27 @@ namespace SDorder.BLL
                         }
                         else //只加入存在于已导入的品类
                         {
-                            var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<int>("id") == order; })
-                                       select p).FirstOrDefault();
+                            //var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<int>("id") == order; })
+                                //       select p).FirstOrDefault();
 
-                            if (row != null)
-                            {
+                           // if (row != null)
+                          //  {
                                 param.Add("@sys_nane", bName);
                                 param.Add("@sys_logo", @"/brandTemplate/" + logo);
-                                param.Add("@sys_type", order);
-                                param.Add("@sys_typeName", typeName);
+                                //param.Add("@sys_type", order);
+                                //param.Add("@sys_typeName", typeName);
                                 param.Add("@sys_desc", desc);
-                                string sql = "insert into fv_sys_brand (sys_nane,sys_logo,sys_type,sys_typeName,createTime,lastChangeTime,sys_desc) values(@sys_nane,@sys_logo,@sys_type,@sys_typeName,now(),now(),@sys_desc) ";
+                                string sql = "insert into fv_sys_brand (sys_nane,sys_logo,createTime,lastChangeTime,sys_desc) values(@sys_nane,@sys_logo,now(),now(),@sys_desc) ";
                                 bool w = SqlManage.OpRecord(sql, param);
                                 if (!w)
                                 {
                                     msg += "品牌名称：" + bName + "的行写入失败，发生数据库阻塞,";
                                 }
-                            }
-                            else
-                            {
-                                msg += "品牌名称：" + bName + "的行写入失败，无对应品类,";
-                            }
+                           // }
+                           // else
+                           // {
+                          //      msg += "品牌名称：" + bName + "的行写入失败，无对应品类,";
+                          //  }
 
                         }
 
