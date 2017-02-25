@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Data;
 using SDorder.BLL;
+using ThoughtWorks.QRCode.Codec;
 
 namespace sd_order_sys.files
 {
@@ -72,15 +73,16 @@ namespace sd_order_sys.files
             {
                 txtlogo.SaveAs(Server.MapPath(@"~/release" + ViewState["ProId"].ToString() + "/images/" + txtlogo.FileName));
             }
+            if (fvUrl.Value != "")
+            {
+                Build2DimensionalBarCode(fvUrl.Value);//生成二维码图片存放
+            }
             //else if (txtvideo.HasFile)
             //{
             //    txtvideo.SaveAs(Server.MapPath(@"~/brandTemplate/" + txtvideo.FileName));
             //}
             string sql = "";
             if (id == 0)
-                //    sql=string.Format("nsert into fv_projectBrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,brandOrder,brandTypeId,brandTypeName,projectId,isShow,isStar,isShowWay,fvUrl,createTime,lastChangeTime,telephone,address) values('{0}','{1}','{2}','{3}','{4}',{5},{6},'{7}',{8},{9},{10},{11},'{12}',now(),now(),'{13}','{14}')",
-                //bName,
-                //        );
                 sql = "insert into fv_projectBrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,brandOrder,brandTypeId,brandTypeName,projectId,isShow,isStar,isShowWay,fvUrl,createTime,lastChangeTime,telephone,address) values(@brandName,@brandImg,@brandDesc,@brandLogo,@brandVideo,@brandOrder,@brandTypeId,@brandTypeName,@projectId,@isShow,@isStar,@isShowWay,@fvUrl,now(),now(),@telephone,@address)";
             else
                 sql = "update fv_projectBrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandLogo=@brandLogo,brandVideo=@brandVideo,brandOrder=@brandOrder,brandTypeId=@brandTypeId,brandTypeName=@brandTypeName,isShow=@isShow,isStar=@isStar,fvUrl=@fvUrl,lastChangeTime=NOW(),telephone=@telephone,address=@address where id=" + id;
@@ -121,6 +123,52 @@ namespace sd_order_sys.files
             ddltype.DataValueField = "id";
             ddltype.DataBind();
             ddltype.SelectedValue = Request.QueryString["projectBtId"];
+        }
+        private void Build2DimensionalBarCode(string url)
+        {
+            QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
+            string encoding = "Byte";
+            switch (encoding)
+            {
+                case "Byte":
+                    qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+                    break;
+                case "AlphaNumeric":
+                    qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.ALPHA_NUMERIC;
+                    break;
+                case "Numeric":
+                    qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.NUMERIC;
+                    break;
+                default:
+                    qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+                    break;
+            }
+
+            qrCodeEncoder.QRCodeScale = 3;
+            qrCodeEncoder.QRCodeVersion = 0;
+
+            string level = "H";
+
+            switch (level)
+            {
+                case "L":
+                    qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.L;
+                    break;
+                case "M":
+                    qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.M;
+                    break;
+                case "Q":
+                    qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.Q;
+                    break;
+                default:
+                    qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.H;
+                    break;
+            }
+
+            //文字生成图片
+            System.Drawing.Image image = qrCodeEncoder.Encode(url);
+
+            image.Save(Server.MapPath(@"~/release" + ViewState["ProId"].ToString() + "/erweima/" + txtName.Value + ".png"), System.Drawing.Imaging.ImageFormat.Png);
         }
     }
 }
