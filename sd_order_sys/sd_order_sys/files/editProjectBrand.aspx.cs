@@ -66,7 +66,7 @@ namespace sd_order_sys.files
             sqlparams.Add("@brandName", bName);
             sqlparams.Add("@brandImg", "");
             sqlparams.Add("@brandDesc", bDesc);
-            sqlparams.Add("@brandLogo", bLogo);
+            //sqlparams.Add("@brandLogo", bLogo);
             sqlparams.Add("@brandVideo", bVideo);
             sqlparams.Add("@brandOrder", int.Parse(brandOrder.Value));
             sqlparams.Add("@brandTypeId", int.Parse(ddltype.SelectedValue));
@@ -80,6 +80,8 @@ namespace sd_order_sys.files
             sqlparams.Add("@qrCode", qrcode);
             if (txtlogo.HasFile)
             {
+                bLogo = "/release/" + ViewState["proId"].ToString() + "/images/" + timeSign + txtlogo.FileName;
+                sqlparams.Add("@brandLogo", bLogo);
                 txtlogo.SaveAs(Server.MapPath(@"~/release/" + ViewState["proId"].ToString() + "/images/" + timeSign + txtlogo.FileName));
             }
 
