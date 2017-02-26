@@ -578,6 +578,7 @@ namespace sd_order_sys.struts
 
                             string strBrandType = "";
                             string strBrand = "";
+                            string btIndex = "";
 
                             oldFile = toPath + "brand.html";
                             code = readFile(oldFile);
@@ -586,13 +587,36 @@ namespace sd_order_sys.struts
                             if (dt3 != null && dt3.Rows.Count > 0)
                             {
                                 int rowCount = 10;  //默认一行10列
+                                int liCount = 3;
                                 int btTemp = dt3.Rows.Count % rowCount;
                                 int Count = btTemp == 0 ? dt3.Rows.Count / rowCount : (dt3.Rows.Count / rowCount) + 1;
+                                while (Count % liCount != 0)
+                                {
+                                    Count++;
+                                }
                                 for (int j = 0; j < Count * rowCount; j++)
                                 {
+
+                                    if (j % (liCount * rowCount) == 0)
+                                    {
+                                        if (j == 0)
+                                        {
+                                            btIndex += " <li class='current'><em>1</em></li>";
+                                        }
+                                        else
+                                        {
+                                            btIndex += " <li><em>" + ((j / (liCount * rowCount)) + 1) + "</em></li>";
+                                        }
+                                    }
+
+
                                     if (j % rowCount == 0)
                                     {
-                                        strBrandType += @"<li><table  width='100%' border='0' cellspacing='0' cellpadding='0'><tr>";
+                                        if ((j / rowCount) % liCount == 0)
+                                        {
+                                            strBrandType += @"<li style='width:1660px;'><table align='center'  width='95%' border='0' cellspacing='0' cellpadding='0'>";
+                                        }
+                                        strBrandType += @"<tr>";
                                     }
                                     if (j >= dt3.Rows.Count)
                                     {
@@ -609,50 +633,63 @@ namespace sd_order_sys.struts
                                     }
                                     if (j % rowCount == rowCount - 1)
                                     {
-                                        strBrandType += @"</tr></table></li>";
+                                        strBrandType += @"</tr>";
+                                        if ((j / rowCount) % liCount == liCount - 1)
+                                        {
+                                            strBrandType += @"</table></li>";
+                                        }
                                     }
                                 }
                             }
                             DataTable dt4 = ds.Tables[2];
                             if (dt4 != null && dt4.Rows.Count > 0)
                             {
-                                int rowCount = 7;  //默认一行10列
-                                int btTemp = dt4.Rows.Count % rowCount;
-                                int Count = btTemp == 0 ? (dt4.Rows.Count / rowCount) : (dt4.Rows.Count / rowCount) + 1;
-                                for (int j = 0; j < Count * rowCount; j++)
+                                for (int j = 0; j < dt4.Rows.Count; j++)
                                 {
-                                    if (j % rowCount == 0)
-                                    {
-                                        strBrand += @"<li><table  width='100%' border='0' cellspacing='0' cellpadding='0'><tr>";
-                                    }
-                                    if (j >= dt4.Rows.Count)
-                                    {
-                                        strBrand += string.Format(@"<td width='192' height='192' align='center' valign='middle'></td>");
-                                    }
-                                    else
-                                    {
-                                        string fTemp = dt4.Rows[j]["brandLogo"].ToString();
-                                        int fIndex = fTemp.LastIndexOf('/');
-                                        string fName = fTemp.Substring(fIndex + 1);
-                                        strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></td>"
-                                             , "../images/" + fName, dt4.Rows[j]["brandTypeId"].ToString(), dt4.Rows[j]["id"].ToString());
-
-                                        //复制品牌图片文件,此处复制的全
-                                        string fOld = context.Server.MapPath(@"../brandTemplate/" + fName).Replace(@"\", "/");
-                                        string fNew = context.Server.MapPath(@"../release/" + id + "/images/" + fName).Replace(@"\", "/");
-                                        if (File.Exists(fOld))
-                                        {
-                                            File.Copy(fOld, fNew, true);
-                                        }
-
-                                    }
-                                    if (j % rowCount == rowCount - 1)
-                                    {
-                                        strBrand += @"</tr></table></li>";
-                                    }
+                                    string fTemp = dt4.Rows[j]["brandLogo"].ToString();
+                                    int fIndex = fTemp.LastIndexOf('/');
+                                    string fName = fTemp.Substring(fIndex + 1);
+                                    strBrand += string.Format(@"<div style='float:left' width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></div>"
+                                          , "../images/" + fName, dt4.Rows[j]["brandTypeId"].ToString(), dt4.Rows[j]["id"].ToString());
                                 }
+                                //int rowCount = 7;  //默认一行10列
+                                //int btTemp = dt4.Rows.Count % rowCount;
+                                //int Count = btTemp == 0 ? (dt4.Rows.Count / rowCount) : (dt4.Rows.Count / rowCount) + 1;
+                                //for (int j = 0; j < Count * rowCount; j++)
+                                //{
+                                //    if (j % rowCount == 0)
+                                //    {
+                                //        strBrand += @"<tr>";
+                                //    }
+                                //    if (j >= dt4.Rows.Count)
+                                //    {
+                                //        strBrand += string.Format(@"<td width='192' height='192' align='center' valign='middle'></td>");
+                                //    }
+                                //    else
+                                //    {
+                                //        string fTemp = dt4.Rows[j]["brandLogo"].ToString();
+                                //        int fIndex = fTemp.LastIndexOf('/');
+                                //        string fName = fTemp.Substring(fIndex + 1);
+                                //        strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></td>"
+                                //             , "../images/" + fName, dt4.Rows[j]["brandTypeId"].ToString(), dt4.Rows[j]["id"].ToString());
+
+                                //        //复制品牌图片文件,此处复制的全
+                                //        string fOld = context.Server.MapPath(@"../brandTemplate/" + fName).Replace(@"\", "/");
+                                //        string fNew = context.Server.MapPath(@"../release/" + id + "/images/" + fName).Replace(@"\", "/");
+                                //        if (File.Exists(fOld))
+                                //        {
+                                //            File.Copy(fOld, fNew, true);
+                                //        }
+
+                                //    }
+                                //    if (j % rowCount == rowCount - 1)
+                                //    {
+                                //        strBrand += @"</tr>";
+                                //    }
+                                //}
 
                             }
+                            code = code.Replace("*btIndex", btIndex);
                             code = code.Replace("*floorLevel", floorLevel);
                             code = code.Replace("//*brandType", strBrandType);
                             code = code.Replace("//*brand", strBrand);
