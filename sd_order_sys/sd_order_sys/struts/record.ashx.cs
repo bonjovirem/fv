@@ -64,7 +64,7 @@ namespace sd_order_sys.struts
                 total = SqlManage.Query(@"select * from fv_sys_brand " + where, sqlparams).Tables[0].Rows.Count;
                 builder.Append(" where " + where);
             }
-            builder.Append(" ORDER BY lastChangeTime desc LIMIT " + (page - 1) + "," + size);
+            builder.Append(" ORDER BY lastChangeTime desc LIMIT " + (page - 1)*size + "," + size);
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             //List<SOA.MODEL.DocumentModel> list = docmanage.DataTableToList(dt);

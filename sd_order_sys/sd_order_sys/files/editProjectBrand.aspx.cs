@@ -20,6 +20,12 @@ namespace sd_order_sys.files
             if (!IsPostBack)
             {
 
+                if (Request["projectId"] != null)
+                {
+                    ViewState["proId"] = Request["projectId"].ToString();
+                    LoadControl(int.Parse(Request["projectId"].ToString()));
+                    lblpro.Text = Request.QueryString["projectName"];
+                }
                 if (Request["id"] == null)
                     hidpro.Value = "0";//表示插入数据
                 else
@@ -27,12 +33,7 @@ namespace sd_order_sys.files
                     hidpro.Value = Request["id"].ToString();
                     LoadInfo(id: int.Parse(hidpro.Value));
                 }
-                if (Request["projectId"] != null)
-                {
-                    ViewState["proId"] = Request["projectId"].ToString();
-                    LoadControl(int.Parse(Request["projectId"].ToString()));
-                    lblpro.Text = Request.QueryString["projectName"];
-                }
+
             }
         }
 
@@ -48,12 +49,12 @@ namespace sd_order_sys.files
 + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
 + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
             string qrcode = "";
-            if (fvUrl.Value != "")
+            if (fvUrl.Value != hidurl.Value && fvUrl.Value != "")
             {
                 qrcode = BuildQrCode(fvUrl.Value, value: timeSign);//生成二维码图片存放
             }
             string bDesc = txtdesc.Value;
-            string bLogo = timeSign + txtlogo.FileName;
+            string bLogo = "";
             string bVideo = txtvideo.FileName;
             int isStar = int.Parse(ddlisStar.SelectedValue);
             int isShow = int.Parse(ddlisShow.SelectedValue);
@@ -66,7 +67,7 @@ namespace sd_order_sys.files
             sqlparams.Add("@brandName", bName);
             sqlparams.Add("@brandImg", "");
             sqlparams.Add("@brandDesc", bDesc);
-            sqlparams.Add("@brandLogo", bLogo);
+            //sqlparams.Add("@brandLogo", bLogo);
             sqlparams.Add("@brandVideo", bVideo);
             sqlparams.Add("@brandOrder", int.Parse(brandOrder.Value));
             sqlparams.Add("@brandTypeId", int.Parse(ddltype.SelectedValue));
@@ -80,7 +81,9 @@ namespace sd_order_sys.files
             sqlparams.Add("@qrCode", qrcode);
             if (txtlogo.HasFile)
             {
-                txtlogo.SaveAs(Server.MapPath(@"~/release/" + ViewState["ProId"].ToString() + "/images/" + timeSign + txtlogo.FileName));
+                bLogo = "../images/" + timeSign + txtlogo.FileName;
+                sqlparams.Add("@brandLogo", bLogo);
+                txtlogo.SaveAs(Server.MapPath(@"~/release/" + ViewState["proId"].ToString() + "/images/" + timeSign + txtlogo.FileName));
             }
 
             //else if (txtvideo.HasFile)
@@ -91,7 +94,10 @@ namespace sd_order_sys.files
             if (id == 0)
                 sql = "insert into fv_projectBrand (brandName,brandImg,brandDesc,brandLogo,brandVideo,brandOrder,brandTypeId,brandTypeName,projectId,isShow,isStar,isShowWay,fvUrl,createTime,lastChangeTime,telephone,address) values(@brandName,@brandImg,@brandDesc,@brandLogo,@brandVideo,@brandOrder,@brandTypeId,@brandTypeName,@projectId,@isShow,@isStar,@isShowWay,@fvUrl,now(),now(),@telephone,@address)";
             else
-                sql = "update fv_projectBrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandLogo=@brandLogo,brandVideo=@brandVideo,brandOrder=@brandOrder,brandTypeId=@brandTypeId,brandTypeName=@brandTypeName,isShow=@isShow,isStar=@isStar,fvUrl=@fvUrl,lastChangeTime=NOW(),telephone=@telephone,address=@address where id=" + id;
+                if (bLogo != "")
+                    sql = "update fv_projectBrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandLogo=@brandLogo,brandVideo=@brandVideo,brandOrder=@brandOrder,brandTypeId=@brandTypeId,brandTypeName=@brandTypeName,isShow=@isShow,isStar=@isStar,fvUrl=@fvUrl,lastChangeTime=NOW(),telephone=@telephone,address=@address,qrcode=@qrcode where id=" + id;
+                else
+                    sql = "update fv_projectBrand set brandName=@brandName,brandImg=@brandImg,brandDesc=@brandDesc,brandVideo=@brandVideo,brandOrder=@brandOrder,brandTypeId=@brandTypeId,brandTypeName=@brandTypeName,isShow=@isShow,isStar=@isStar,fvUrl=@fvUrl,lastChangeTime=NOW(),telephone=@telephone,address=@address,qrcode=@qrcode where id=" + id;
             bool w = SqlManage.OpRecord(sql, sqlparams);
             if (w)
                 //                projectId = Request.QueryString["projectId"];
@@ -116,6 +122,27 @@ namespace sd_order_sys.files
                 txtName.Value = table.Rows[0]["brandName"].ToString();
                 txtdesc.Value = table.Rows[0]["brandDesc"].ToString();
                 ddltype.SelectedValue = table.Rows[0]["brandTypeId"].ToString();
+                hidurl.Value = table.Rows[0]["fvUrl"].ToString();
+                fvUrl.Value = table.Rows[0]["fvUrl"].ToString();
+                string imgUrl = table.Rows[0]["brandLogo"].ToString();
+                if (imgUrl.Contains(".."))
+                {
+                    ImageLogo.ImageUrl = Server.MapPath(@"~/release/" + ViewState["proId"].ToString())
+                        + @"/" + imgUrl.Substring(2);
+                }
+                else
+
+                    ImageLogo.ImageUrl = table.Rows[0]["brandLogo"].ToString();
+                string qrcodeUrl = table.Rows[0]["qrcode"].ToString();
+                if (qrcodeUrl.Contains(".."))
+                {
+
+                    ImageQrcode.ImageUrl = @"~/release/" + ViewState["proId"].ToString()
+                        + @"/" + qrcodeUrl.Substring(2);
+                }
+                else
+
+                    ImageQrcode.ImageUrl = table.Rows[0]["qrcode"].ToString();
             }
         }
         private void LoadControl(int pid)
@@ -179,9 +206,16 @@ namespace sd_order_sys.files
 
             //文字生成图片
             System.Drawing.Image image = qrCodeEncoder.Encode(url);
+            string path = Server.MapPath(@"~/release/" + ViewState["proId"].ToString() + "/images") + @"/" + value + txtName.Value + ".png";
+            image.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+            return "../images" + @"/" + value + txtName.Value + ".png";
+        }
 
-            image.Save(Server.MapPath(@"~/release/" + ViewState["ProId"].ToString() + "/images/" + value + txtName.Value + ".png"), System.Drawing.Imaging.ImageFormat.Png);
-            return Server.MapPath(@"~/release/" + ViewState["ProId"].ToString() + "/images/" + value + txtName.Value + ".png");
+        protected void btnReturn_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "success",
+                   "window.location='project_query.aspx?projectId=" +
+                   ViewState["proId"].ToString() + "&projectName=" + lblpro.Text + "&projectBtId=" + ddltype.SelectedValue + "&projectBtName=" + ddltype.SelectedItem.Text + "'", true);
         }
     }
 }

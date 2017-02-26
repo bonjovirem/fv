@@ -43,7 +43,7 @@ namespace sd_order_sys.files
                 string timeSign = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString()
                     + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
                     + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
-                logo = @"/release/" + Label2.Text + "/images/" + timeSign + txtlogo.FileName;
+                logo = "../images/" + timeSign + txtlogo.FileName;
                 txtlogo.SaveAs(Server.MapPath(@"~/release/" + Label2.Text + "/images/") + timeSign + txtlogo.FileName);
             }
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
@@ -85,6 +85,12 @@ namespace sd_order_sys.files
                 // txtcity.Value = table.Rows[0]["projectCity"].ToString();
                 // ddltype.SelectedValue = table.Rows[0]["sys_type"].ToString();
             }
+        }
+        protected void btnReturn_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "success",
+                               " window.location='projectBrandType_query.aspx?projectId=" 
+                               + Label2.Text + "&projectName=" + Label1.Text + "'", true);
         }
     }
 }

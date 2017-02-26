@@ -53,16 +53,34 @@ namespace sd_order_sys.struts
             int size = context.Request["rows"] != "" ? Convert.ToInt32(context.Request.Form["rows"]) : 1;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
             builder.Append(@"SELECT a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints,isnull(a.areaPoints) as hasArea,sum( case isnull(b.walkWay) when 0 then 1 else 0 end) as hasPath "
-                + " FROM fv_projectBrand a left join fv_walkway b on a.id=b.projectBrandId where a.brandTypeId= " + context.Request["projectBtId"].ToString()
-   + " GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ");
-
-            builder.Append(" order by lastChangeTime desc LIMIT " + (page - 1) + "," + size);
+                + " FROM fv_projectBrand a left join fv_walkway b on a.id=b.projectBrandId where a.brandTypeId= "
+                + context.Request["projectBtId"].ToString());
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+            int total = 0;
+            if (context.Request["cul"] == null && context.Request["where"] == null)
+            {
+
+                total = SqlManage.Query(@"SELECT a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints,isnull(a.areaPoints) as hasArea,sum( case isnull(b.walkWay) when 0 then 1 else 0 end) as hasPath "
+                + " FROM fv_projectBrand a left join fv_walkway b on a.id=b.projectBrandId where a.brandTypeId= " + context.Request["projectBtId"].ToString()
+   + " GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ", sqlparams).Tables[0].Rows.Count;
+                //return;
+            }
+            else
+            {
+                string where = context.Request["cul"].ToString() + " LIKE '%" + context.Request["where"].ToString() + "%'";
+                total = SqlManage.Query(@"SELECT a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints,isnull(a.areaPoints) as hasArea,sum( case isnull(b.walkWay) when 0 then 1 else 0 end) as hasPath "
+              + " FROM fv_projectBrand a left join fv_walkway b on a.id=b.projectBrandId where a.brandTypeId= " + context.Request["projectBtId"].ToString() + " and " + where
+ + " GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ", sqlparams).Tables[0].Rows.Count;
+                builder.Append(" and " + where);
+            }
+            builder.Append(" GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ");
+            builder.Append(" order by lastChangeTime desc LIMIT " + (page - 1) * size + "," + size);
+
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             //List<SOA.MODEL.DocumentModel> list = docmanage.DataTableToList(dt);
 
-            dictionary.Add("total", dt.Rows.Count);
+            dictionary.Add("total", total);
             List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
             foreach (DataRow dr in dt.Rows)//每一行信息，新建一个Dictionary<string,object>,将该行的每列信息加入到字典
             {
@@ -85,7 +103,7 @@ namespace sd_order_sys.struts
         private void UpdateFromBase(HttpContext context)
         {
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-            string sql = "update fv_projectbrand p ,fv_sys_brand v set p.brandLogo=v.sys_logo where p.brandName=v.sys_nane and p.projectid=" + int.Parse(context.Request["id"].ToString());
+            string sql = "update fv_projectbrand p ,fv_sys_brand v set p.brandLogo=v.sys_logo,p.brandDesc=v.sys_desc where p.brandName=v.sys_nane and p.lastChangeTime=p.createTime and  p.projectid=" + int.Parse(context.Request["id"].ToString());
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)
