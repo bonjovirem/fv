@@ -410,7 +410,7 @@ namespace sd_order_sys.struts
                     //品牌展示   2
                     sql += "select id,brandName,fvUrl,brandDesc,floorlevel,brandLogo,brandTypeId from fv_projectbrand where isShowWay=1 and projectId=" + id + " ;";
                     //取全景展示的品牌   3
-                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel from fv_projectbrand where fvUrl<>'' and fvUrl is not null and floorLevel is not null and projectId=" + id + "  limit 48 ;";
+                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel,brandLogo,brandTypeId from fv_projectbrand where fvUrl<>'' and fvUrl is not null and floorLevel is not null and projectId=" + id + ";";
                     //取到品牌的路径 for f.html  4
                     sql += "select b.projectBrandId,b.walkWay,a.IsClient,a.floorLevel from fv_client a,fv_walkway b where a.id=b.fromClientId and a.projectId=" + id + "; ";
                     //取C to lift 路径 for f.html  5
@@ -508,6 +508,14 @@ namespace sd_order_sys.struts
                                 addressString += string.Format("ArrayAddress['{0}'] = '{1}';", item["id"].ToString(), item["address"].ToString());
                                 brandLogo += string.Format("ArrayLogo['{0}'] = '{1}';", item["id"].ToString(), item["brandLogo"].ToString());
                                 brandQrCode += string.Format("ArrayQrCode['{0}'] = '{1}';", item["id"].ToString(), item["qrCode"].ToString());
+
+                                //复制品牌图片文件
+                                string fTemp = item["brandLogo"].ToString();
+                                int fIndex = fTemp.LastIndexOf('/');
+                                string fName = fTemp.Substring(fIndex + 1);
+                                string fOld = context.Server.MapPath("../brandTemplate/" + fName);
+                                string fNew = context.Server.MapPath("../release/" + id + "/images/" + fName);
+                                File.Copy(fOld, fNew, true);
                             }
                             code = code.Replace("//*fvString", fvString);
                             code = code.Replace("//*descString", descString);
@@ -583,12 +591,12 @@ namespace sd_order_sys.struts
                                     }
                                     if (j >= dt3.Rows.Count)
                                     {
-                                        strBrandType += string.Format(@" <td width='90' height='90' align='center' valign='middle'><img src='' width='100' height='45' /></td>");
+                                        strBrandType += string.Format(@" <td width='90' height='90' align='center' valign='middle'></td>");
                                     }
                                     else
                                     {
                                         strBrandType += string.Format(@" <td width='90' height='90' align='center' valign='middle'><img src='{0}' width='100' height='45' onclick='showThis({1});' /></td>",
-                                             dt3.Rows[j]["brandTypeImg"].ToString(), dt3.Rows[j]["id"].ToString());
+                                             dt3.Rows[j]["brandTypeImg"].ToString(), dt3.Rows[j]["id"].ToString());                      
                                     }
                                     if (j % rowCount == rowCount - 1)
                                     {
@@ -610,7 +618,7 @@ namespace sd_order_sys.struts
                                     }
                                     if (j >= dt4.Rows.Count)
                                     {
-                                        strBrand += string.Format(@"<td width='192' height='192' align='center' valign='middle'><img src='' width='182' height='160' class='box-shadow' /></td>");
+                                        strBrand += string.Format(@"<td width='192' height='192' align='center' valign='middle'></td>");
                                     }
                                     else
                                     {
@@ -632,37 +640,77 @@ namespace sd_order_sys.struts
 
                             #endregion
 
-                            //#region 处理vr.html页面
+                            #region 处理vr.html页面
 
-                            //string vrString = "";
-                            ////*brandWalkway
-                            //oldFile = toPath + "vr.html";
-                            //code = readFile(oldFile);
-                            //DataTable dt5 = ds.Tables[3];
-                            //if (dt5 != null && dt5.Rows.Count > 0)
-                            //{
-                            //    for (int l = 0; l < dt5.Rows.Count; l++)
-                            //    {
-                            //        if (l % 6 == 0 && l > 0)
-                            //        {
-                            //            //空一行
-                            //            vrString += "<div class='row'><div class='col-md-1'>&nbsp;</div><div class='col-md-1'>&nbsp;</div> <div class='col-md-1'>&nbsp;</div><div class='col-md-1'>&nbsp;</div><div class='col-md-1'>&nbsp;</div> <div class='col-md-1'>&nbsp;</div>  <div class='col-md-1'>&nbsp;</div>   <div class='col-md-1'>&nbsp;</div> <div class='col-md-1'>&nbsp;</div>  <div class='col-md-1'>&nbsp;</div>div class='col-md-1'>&nbsp;</div>   <div class='col-md-1'>&nbsp;</div>    </div>";
-                            //        }
-                            //        if (l % 6 == 0)
-                            //        {
-                            //            vrString += "<div class='row'>";
-                            //        }
-                            //        vrString += string.Format("<div class='col-md-2'><img onclick=\"window.location='floor{1}.html?projectId={0}';\"  style='width:190px;height:190px;' src='brandImg/logo{0}.jpg' alt='...' class='img-circle'></div>", dt5.Rows[l]["id"].ToString(), dt5.Rows[l]["floorlevel"].ToString());
-                            //        if (l % 6 == 5 || l == dt5.Rows.Count - 1)
-                            //        {
-                            //            vrString += "</div>";
-                            //        }
+                            string vrString = "";
+                            //*brandWalkway
+                            oldFile = toPath + "vr.html";
+                            code = readFile(oldFile);
+                            strBrandType = "";
+                            strBrand = "";
 
-                            //    }
-                            //}
-                            //code = code.Replace("//*vrString", vrString);
-                            //writeFile(oldFile, code);
-                            //#endregion
+
+                            dt3 = ds.Tables[1];
+                            if (dt3 != null && dt3.Rows.Count > 0)
+                            {
+                                int rowCount = 4;  //默认一行10列
+                                int btTemp = dt3.Rows.Count % rowCount;
+                                int Count = btTemp == 0 ? dt3.Rows.Count / rowCount : (dt3.Rows.Count / rowCount) + 1;
+                                for (int j = 0; j < Count * rowCount; j++)
+                                {
+                                    if (j % rowCount == 0)
+                                    {
+                                        strBrandType += @"<tr>";
+                                    }
+                                    if (j >= dt3.Rows.Count)
+                                    {
+                                        strBrandType += string.Format(@" <td width='90' height='90' align='center' valign='middle'></td>");
+                                    }
+                                    else
+                                    {
+                                        strBrandType += string.Format(@" <td width='90' height='90' align='center' valign='middle'><img src='{0}' width='100' height='45' onclick='showThis({1});' /></td>",
+                                             dt3.Rows[j]["brandTypeImg"].ToString(), dt3.Rows[j]["id"].ToString());
+                                    }
+                                    if (j % rowCount == rowCount - 1)
+                                    {
+                                        strBrandType += @"</tr>";
+                                    }
+                                }
+                            }
+                            DataTable dt5 = ds.Tables[3];
+                            if (dt5 != null && dt5.Rows.Count > 0)
+                            {
+                                int rowCount = 5;  //默认一行10列
+                                int btTemp = dt5.Rows.Count % rowCount;
+                                int Count = btTemp == 0 ? (dt5.Rows.Count / rowCount) : (dt5.Rows.Count / rowCount) + 1;
+                                for (int j = 0; j < Count * rowCount; j++)
+                                {
+                                    if (j % rowCount == 0)
+                                    {
+                                        strBrand += @"<tr>";
+                                    }
+                                    if (j >= dt5.Rows.Count)
+                                    {
+                                        strBrand += string.Format(@"<td width='192' height='192' align='center' valign='middle'></td>");
+                                    }
+                                    else
+                                    {
+                                        strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></td>"
+                                             , dt5.Rows[j]["brandLogo"].ToString(), dt5.Rows[j]["brandTypeId"].ToString(), dt5.Rows[j]["id"].ToString());
+                                    }
+                                    if (j % rowCount == rowCount - 1)
+                                    {
+                                        strBrand += @"</tr>";
+                                    }
+                                }
+
+                            }
+                            code = code.Replace("*floorLevel", floorLevel);
+                            code = code.Replace("//*brandType", strBrandType);
+                            code = code.Replace("//*brand", strBrand);
+                            code = code.Replace("//*thisClientFloorLevel", thisClientFloorLevel);
+                            writeFile(oldFile, code);
+                            #endregion
                         }
                     }
                 }
