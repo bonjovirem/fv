@@ -76,9 +76,85 @@
             border-radius: 10px; /*opera或ie9*/
         }
     </style>
+    <style>
+        #divForShow {
+            left: 960px;
+            top: 540px;
+            height: 768px;
+            width: 1422px;
+            margin: 0px auto;
+            background-color: #FFF;
+            z-index: 100;
+            position: fixed;
+            margin-top: -384px;
+            margin-left: -741px;
+            box-shadow: 3px 6px 9px #000;
+            border-radius: 30px 0px 30px 30px;
+        }
+
+       #divForShow2 {
+            left: 1030px;
+            top: 500px;
+            height: 828px;
+            width: 1300px;
+            margin: 0px auto;
+            background-color: #FFF;
+            z-index: 100;
+            position: fixed;
+            margin-top: -384px;
+            margin-left: -741px;
+            box-shadow: 3px 6px 9px #000;
+            border-radius: 30px 30px 30px 30px;
+        }
+
+        #imgX {
+            position: absolute;
+            left: 1390px;
+            top: -20px;
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 35px 35px;
+            box-shadow: 4px 0px 12px #000;
+            cursor: pointer;
+        }
+    </style>
+
 </head>
 
 <body>
+    <input type="hidden" id="hidBrandId" />
+    <div id="divForShow2" style="display:none;">
+        <iframe id="frame1" src='' width="1300" height="824" allowtransparency="true" style="background-color:transparent" frameborder="0" scrolling="no"></iframe>
+    </div>
+    <div id="divForShow" style="display:none;">
+        <div id="imgX" onclick="hidePanel();">
+            <img src="images/x.png" style="margin-top:10px;margin-left:10px;" />
+        </div>
+        <table cellpadding="0" cellspacing="0" border="0" style="background-color:white;width:1392px;margin-left:15px;height:738px;margin-top:15px;">
+            <tr>
+                <td rowspan="4" width="1080" height="700"><div id="divfv" style="width:100%;height:100%;">divfv</div></td>
+                <td height="130"><div id="divlogo" style="text-align:center;">divlogo</div></td>
+            </tr>
+            <tr>
+                <td height="270" style="text-align:left; vertical-align:top;padding:0px 10px 0px 25px;font-size:16px;">
+                    <div id="divDesc" style="height:220px;overflow:scroll;">divDesc</div>
+                    <div id="divTele" style="height:20px;overflow:hidden;">divTele</div>
+                    <div id="divAddress" style="height:20px;overflow:hidden;">divAddress</div>
+                </td></td>
+            </tr>
+            <tr>
+                <td height="200"><div id="divImg" style="text-align:center;">divImg</div></td>
+            </tr>
+            <tr>
+                <td height="130" align="right">
+                    <div style="float:left;margin:50px 0 0 30px;cursor:pointer;"><img src="images/tel.png" width="163" height="62" onclick="showPhonePath();" /></div>
+                    <div style="cursor:pointer;" onclick="showPath();"><img style="height:120px;" src="images/way.gif" /></div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
     <div id="apDiv1"><img src="images/logo.png" width="659" height="198" /></div>
     <div id="apDiv2">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -158,10 +234,70 @@
         </table>
     </div>
     <div id="apDiv6"><img src="images/fenye.png" width="130" height="10" /></div>
+    </div>
 </body>
 </html>
 <script language="javascript" type="text/javascript">
     function showThis(btId) {
         $('.allType.type' + btId).show();
-        $('.allType').not('type' + btId).hide();
-    }</script>
+        $('.allType').not('.type' + btId).hide();
+    }
+</script>
+<script language="javascript" type="text/javascript">
+    var pageFloorLevel =*floorLevel ;   //本页显示第几层
+    var thisClientFloorLevel =//*thisClientFloorLevel ;   //当前客户端是在第几层
+    function showPanel() {
+        $('#divForShow').fadeIn(500);  //浮层面板
+    }
+    function hidePanel() {
+        document.getElementById('divfv').innerHTML = ""; //清除全景声音
+        $('#divForShow').fadeOut(500);
+    }
+    function showPath() {
+        $('#divForShow2').show();
+        $('#divForShow').fadeOut(200);
+        if (pageFloorLevel==thisClientFloorLevel) { //直达
+            $('#frame1').attr("src", "f*floorLevel.html?brandId=" + document.getElementById('hidBrandId').value+"_1");
+            $('#frame1').show();
+            $('#floorImg').hide();
+            setTimeout("rollback()", 4100);
+        }else{
+            $('#frame1').attr("src", "f"+thisClientFloorLevel+".html?brandId=CTOL"); //本层先到电梯
+            $('#frame1').show();
+            $('#floorImg').hide();
+            setTimeout("OhterFloorRun()", 4100);//再从另一层电梯到品牌店
+        }
+    }
+    function showPhonePath() {
+        window.open('PhonePath.html?pageFloorLevel=' + pageFloorLevel + '&brandId=' + document.getElementById('hidBrandId').value,'_blank');
+    }
+    function OhterFloorRun() {//再从目标层电梯到品牌店
+        $('#frame1').attr("src", "f"+pageFloorLevel+".html?brandId=" + document.getElementById('hidBrandId').value+"_0");
+        $('#frame1').show();
+        setTimeout("rollback()", 4100);
+    }
+    function rollback() {
+        $('#floorImg').show();
+        $('#frame1').attr("src", "");
+        $('#frame1').hide();
+        //$('#showPanel').show();   //自带浮层
+        $('#divForShow').fadeIn(500);
+        $('#divForShow2').hide();
+    }
+    $('#divForShow').hide();
+    $('#frame1').hide();
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return -1;
+    }
+    function loadProjectId() {
+        var projectId = getQueryString("projectId");
+        if (projectId != -1) {
+            loadPanelDesc(projectId); showPanel();
+        }
+    }
+    loadProjectId();
+
+</script>
