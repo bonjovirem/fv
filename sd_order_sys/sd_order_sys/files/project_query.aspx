@@ -63,6 +63,7 @@
             loadMsg: '数据加载中请稍后……',
             pagination: true,
             rownumbers: true,
+            title:'<%=projectName%>品牌设置',
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
                 { field: 'id', title: '品牌ID', align: 'center' },
@@ -279,10 +280,10 @@ function setArea(index) {
     var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
     if (selectedRow) {
         window.open('drawpoint.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>');
-    } else {
-        $.messager.alert('提示', '请选中一条记录');
-    }
-        //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
+} else {
+    $.messager.alert('提示', '请选中一条记录');
+}
+    //self.location = 'drawpoint.aspx?projectId=' + selectedRow["id"] + '&hidFloorId=2';
 }
 
 function setPath(index) {
@@ -299,9 +300,9 @@ function setLiftPath(index) {
     var selectedRow = $('#persontable').datagrid('getSelected');  //获取选中行
     if (selectedRow) {
         window.open('drawLiftPath.aspx?projectBrandId=' + selectedRow["id"] + '&projectId=<%=projectId %>' + '&floorLevel=' + selectedRow["floorLevel"]);
-    } else {
-        $.messager.alert('提示', '请选中一条记录');
-    }
+} else {
+    $.messager.alert('提示', '请选中一条记录');
+}
 }
 
 
@@ -314,15 +315,24 @@ function setLiftPath(index) {
                     <ul>
                         <li>
                             <img src="../images/ico07.gif" /></li>
-                        <li></li>
                         <li>
-                            <span style="font-size: 16px;"><b><%=projectName %>(<%=projectId %>) -- <%=projectBtName %>(<%=projectBtId %>) </b></span>
+                            <select id="selectwhere" class="combo">
+
+                                <option value="brandName">品类名称</option>
+                            </select>
+                        </li>
+                        <li>
+                            <input id="txtwhere" type="text" />
                         </li>
                         <%--                        <li>
                             <select id="lywhere" style="display: none;" runat="server" name="lywhere">
                             </select>
                         </li>--%>
-                        <li></li>
+                        <li><a href="javascript:void(0);" onclick="searchbtn()">
+                            <img src="../images/queren.jpg" border="0" /></a>
+                            <a href="javascript:void(0);" onclick="reloaddate()">
+                                <img src="../images/clear.jpg" border="0" /></a>
+                        </li>
                     </ul>
                 </td>
             </tr>
@@ -332,7 +342,7 @@ function setLiftPath(index) {
                 <th field="id" width="100" hidden="true">序号</th>
             </tr>
         </table>
- <%--       <div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="系统品类信息">
+        <%--       <div id="dlg" class="easyui-dialog" style="width: 600px; height: auto; padding: 10px 20px;" closed="true" buttons="#dlg-buttons" title="系统品类信息">
             <div class="ftitle">
             </div>
             <div class="fitem">
@@ -393,7 +403,7 @@ function setLiftPath(index) {
         function searchbtn() {
             var where = $("#txtwhere").val();
             var cul = $('#selectwhere').val();
-            $('#persontable').datagrid('options').url = "/struts/project.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where);
+            $('#persontable').datagrid('options').url = "/struts/project.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where)+"&projectBtId="+<%=projectBtId %>;
             $('#persontable').datagrid('load');
         }
         function reloaddate() {

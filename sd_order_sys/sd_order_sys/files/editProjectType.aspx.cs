@@ -43,7 +43,7 @@ namespace sd_order_sys.files
                 string timeSign = DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString()
                     + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
                     + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
-                logo = @"/release/" + Label2.Text + "/images/" + timeSign + txtlogo.FileName;
+                logo = "../images/" + timeSign + txtlogo.FileName;
                 txtlogo.SaveAs(Server.MapPath(@"~/release/" + Label2.Text + "/images/") + timeSign + txtlogo.FileName);
             }
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();

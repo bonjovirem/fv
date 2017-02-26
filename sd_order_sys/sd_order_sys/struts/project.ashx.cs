@@ -53,8 +53,8 @@ namespace sd_order_sys.struts
             int size = context.Request["rows"] != "" ? Convert.ToInt32(context.Request.Form["rows"]) : 1;
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
             builder.Append(@"SELECT a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints,isnull(a.areaPoints) as hasArea,sum( case isnull(b.walkWay) when 0 then 1 else 0 end) as hasPath "
-                + " FROM fv_projectBrand a left join fv_walkway b on a.id=b.projectBrandId where a.brandTypeId= " + context.Request["projectBtId"].ToString()
-   + " GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ");
+                + " FROM fv_projectBrand a left join fv_walkway b on a.id=b.projectBrandId where a.brandTypeId= "
+                + context.Request["projectBtId"].ToString());
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
             int total = 0;
             if (context.Request["cul"] == null && context.Request["where"] == null)
@@ -68,9 +68,12 @@ namespace sd_order_sys.struts
             else
             {
                 string where = context.Request["cul"].ToString() + " LIKE '%" + context.Request["where"].ToString() + "%'";
-                total = SqlManage.Query(@"select * from fv_sys_brand " + where, sqlparams).Tables[0].Rows.Count;
-                builder.Append(" where " + where);
+                total = SqlManage.Query(@"SELECT a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints,isnull(a.areaPoints) as hasArea,sum( case isnull(b.walkWay) when 0 then 1 else 0 end) as hasPath "
+              + " FROM fv_projectBrand a left join fv_walkway b on a.id=b.projectBrandId where a.brandTypeId= " + context.Request["projectBtId"].ToString() + " and " + where
+ + " GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ", sqlparams).Tables[0].Rows.Count;
+                builder.Append(" and " + where);
             }
+            builder.Append(" GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ");
             builder.Append(" order by lastChangeTime desc LIMIT " + (page - 1) * size + "," + size);
 
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];

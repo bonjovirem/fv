@@ -80,7 +80,7 @@ namespace sd_order_sys.files
             sqlparams.Add("@qrCode", qrcode);
             if (txtlogo.HasFile)
             {
-                bLogo = "/release/" + ViewState["proId"].ToString() + "/images/" + timeSign + txtlogo.FileName;
+                bLogo =  "../images/" + timeSign + txtlogo.FileName;
                 sqlparams.Add("@brandLogo", bLogo);
                 txtlogo.SaveAs(Server.MapPath(@"~/release/" + ViewState["proId"].ToString() + "/images/" + timeSign + txtlogo.FileName));
             }
