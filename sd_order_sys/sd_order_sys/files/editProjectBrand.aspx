@@ -22,6 +22,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">logo展示：</label>
+                    <div class="col-sm-10">
+                        <asp:Image ID="ImageLogo" runat="server" Width="150" Height="150"/>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-2 control-label">品牌logo：</label>
                     <div class="col-sm-10">
                         <asp:FileUpload ID="txtlogo" runat="server" CssClass="form-control" />
@@ -42,7 +48,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">品牌顺序：</label>
                     <div class="col-sm-10">
-                        <input id="brandOrder" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" runat="server" class="form-control" value="0"/>
+                        <input id="brandOrder" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" runat="server" class="form-control" value="0" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -78,13 +84,19 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">全景地址：</label>
                     <div class="col-sm-10">
-                        <input id="fvUrl" type="text" name="fvUrl" class="form-control" runat="server" /><input id="hidurl" type="hidden" runat="server"/>
+                        <input id="fvUrl" type="text" name="fvUrl" class="form-control" runat="server" /><input id="hidurl" type="hidden" runat="server" />
+                    </div>
+                </div>
+                                <div class="form-group">
+                    <label class="col-sm-2 control-label">全景二维码：</label>
+                    <div class="col-sm-10">
+                        <asp:Image ID="ImageQrcode" runat="server" class="form-control" Width="76px" Height="76px"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">所在楼层：</label>
                     <div class="col-sm-10">
-                        <input id="Text1" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" runat="server" class="form-control"/><p></p>
+                        <input id="Text1" type="text" name="brandOrder" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" runat="server" class="form-control" /><p></p>
                     </div>
                 </div>
                 <div class="form-group">
@@ -104,6 +116,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
+                        <asp:Button ID="btnReturn" runat="server" Text=" 返 回 " CssClass="btn btn-success" OnClick="btnReturn_Click"/>
                         <asp:Button ID="btnExport" runat="server" Text=" 保 存 " CssClass="btn btn-primary" OnClick="btnExport_Click" />
                     </div>
                 </div>

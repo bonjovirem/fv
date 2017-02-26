@@ -86,5 +86,11 @@ namespace sd_order_sys.files
                 // ddltype.SelectedValue = table.Rows[0]["sys_type"].ToString();
             }
         }
+        protected void btnReturn_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "success",
+                               " window.location='projectBrandType_query.aspx?projectId=" 
+                               + Label2.Text + "&projectName=" + Label1.Text + "'", true);
+        }
     }
 }

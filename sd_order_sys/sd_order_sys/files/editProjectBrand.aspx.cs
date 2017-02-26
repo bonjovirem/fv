@@ -20,6 +20,12 @@ namespace sd_order_sys.files
             if (!IsPostBack)
             {
 
+                if (Request["projectId"] != null)
+                {
+                    ViewState["proId"] = Request["projectId"].ToString();
+                    LoadControl(int.Parse(Request["projectId"].ToString()));
+                    lblpro.Text = Request.QueryString["projectName"];
+                }
                 if (Request["id"] == null)
                     hidpro.Value = "0";//表示插入数据
                 else
@@ -27,12 +33,7 @@ namespace sd_order_sys.files
                     hidpro.Value = Request["id"].ToString();
                     LoadInfo(id: int.Parse(hidpro.Value));
                 }
-                if (Request["projectId"] != null)
-                {
-                    ViewState["proId"] = Request["projectId"].ToString();
-                    LoadControl(int.Parse(Request["projectId"].ToString()));
-                    lblpro.Text = Request.QueryString["projectName"];
-                }
+
             }
         }
 
@@ -123,6 +124,25 @@ namespace sd_order_sys.files
                 ddltype.SelectedValue = table.Rows[0]["brandTypeId"].ToString();
                 hidurl.Value = table.Rows[0]["fvUrl"].ToString();
                 fvUrl.Value = table.Rows[0]["fvUrl"].ToString();
+                string imgUrl = table.Rows[0]["brandLogo"].ToString();
+                if (imgUrl.Contains(".."))
+                {
+                    ImageLogo.ImageUrl = Server.MapPath(@"~/release/" + ViewState["proId"].ToString())
+                        + @"/" + imgUrl.Substring(2);
+                }
+                else
+
+                    ImageLogo.ImageUrl = table.Rows[0]["brandLogo"].ToString();
+                string qrcodeUrl = table.Rows[0]["qrcode"].ToString();
+                if (qrcodeUrl.Contains(".."))
+                {
+
+                    ImageQrcode.ImageUrl = @"~/release/" + ViewState["proId"].ToString()
+                        + @"/" + qrcodeUrl.Substring(2);
+                }
+                else
+
+                    ImageQrcode.ImageUrl = table.Rows[0]["qrcode"].ToString();
             }
         }
         private void LoadControl(int pid)
@@ -189,6 +209,13 @@ namespace sd_order_sys.files
             string path = Server.MapPath(@"~/release/" + ViewState["proId"].ToString() + "/images") + @"/" + value + txtName.Value + ".png";
             image.Save(path, System.Drawing.Imaging.ImageFormat.Png);
             return "../images" + @"/" + value + txtName.Value + ".png";
+        }
+
+        protected void btnReturn_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(Page, this.GetType(), "success",
+                   "window.location='project_query.aspx?projectId=" +
+                   ViewState["proId"].ToString() + "&projectName=" + lblpro.Text + "&projectBtId=" + ddltype.SelectedValue + "&projectBtName=" + ddltype.SelectedItem.Text + "'", true);
         }
     }
 }

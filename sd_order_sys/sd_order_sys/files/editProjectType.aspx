@@ -43,6 +43,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
+                                                <asp:Button ID="btnReturn" runat="server" Text=" 返 回 " CssClass="btn btn-success" OnClick="btnReturn_Click"/>
                         <asp:Button ID="btnExport" runat="server" Text=" 保 存 " CssClass="btn btn-primary" OnClick="btnExport_Click" />
                     </div>
                 </div>
