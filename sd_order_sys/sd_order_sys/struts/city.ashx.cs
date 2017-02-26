@@ -408,7 +408,7 @@ namespace sd_order_sys.struts
                     //品类展示   1
                     sql += "select id,brandTypeName,brandTypeImg from fv_projectbrandtype where projectId=" + id + " and isShow =1  ;";
                     //品牌展示   2
-                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel,brandLogo,brandTypeId from fv_projectbrand where isShowWay=1 and projectId=" + id + " ;";
+                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel,brandLogo,brandTypeId from fv_projectbrand where projectId=" + id + " ;";
                     //取全景展示的品牌   3
                     sql += "select id,brandName,fvUrl,brandDesc,floorlevel,brandLogo,brandTypeId from fv_projectbrand where fvUrl<>'' and fvUrl is not null and floorLevel is not null and projectId=" + id + ";";
                     //取到品牌的路径 for f.html  4
@@ -468,8 +468,11 @@ namespace sd_order_sys.struts
                                 }
                                 else
                                 {
-                                    strIsStar += @" <td height='110' align='center' valign='middle'><img src='" +
-                                        drIsStar[drIndex]["brandLogo"].ToString() + "' onclick='loadPanelDesc(" + drIsStar[drIndex]["id"].ToString() + ");showPanel();' width='116' height='93' /></td>";
+                                    string fTemp = drIsStar[drIndex]["brandLogo"].ToString();
+                                    int fIndex = fTemp.LastIndexOf('/');
+                                    string fName = fTemp.Substring(fIndex + 1);
+                                    strIsStar += @" <td height='110' align='center' valign='middle'><img src='../images/" +
+                                        fName + "' onclick='loadPanelDesc(" + drIsStar[drIndex]["id"].ToString() + ");showPanel();' width='116' height='93' /></td>";
                                 }
                                 if (drIndex % 2 == 1)
                                 {
@@ -506,16 +509,14 @@ namespace sd_order_sys.struts
                                 descString += string.Format("ArrayDesc['{0}'] = '{1}';", item["id"].ToString(), item["brandDesc"].ToString().Replace("*空格*", "&nbsp;").Replace("*换行*", "<br/>"));
                                 telephoneString += string.Format("ArrayTele['{0}'] = '{1}';", item["id"].ToString(), item["telephone"].ToString());
                                 addressString += string.Format("ArrayAddress['{0}'] = '{1}';", item["id"].ToString(), item["address"].ToString());
-                                brandLogo += string.Format("ArrayLogo['{0}'] = '{1}';", item["id"].ToString(), item["brandLogo"].ToString());
                                 brandQrCode += string.Format("ArrayQrCode['{0}'] = '{1}';", item["id"].ToString(), item["qrCode"].ToString());
 
                                 //复制品牌图片文件
                                 string fTemp = item["brandLogo"].ToString();
                                 int fIndex = fTemp.LastIndexOf('/');
                                 string fName = fTemp.Substring(fIndex + 1);
-                                string fOld = context.Server.MapPath("../brandTemplate/" + fName);
-                                string fNew = context.Server.MapPath("../release/" + id + "/images/" + fName);
-                                File.Copy(fOld, fNew, true);
+
+                                brandLogo += string.Format("ArrayLogo['{0}'] = '{1}';", item["id"].ToString(), "../images/" + fName);
                             }
                             code = code.Replace("//*fvString", fvString);
                             code = code.Replace("//*descString", descString);
@@ -595,8 +596,12 @@ namespace sd_order_sys.struts
                                     }
                                     else
                                     {
+                                        string fTemp = dt3.Rows[j]["brandTypeImg"].ToString();
+                                        int fIndex = fTemp.LastIndexOf('/');
+                                        string fName = fTemp.Substring(fIndex + 1);
                                         strBrandType += string.Format(@" <td width='90' height='90' align='center' valign='middle'><img src='{0}' width='100' height='45' onclick='showThis({1});' /></td>",
-                                             dt3.Rows[j]["brandTypeImg"].ToString(), dt3.Rows[j]["id"].ToString());                      
+                                            "../images/" + fName, dt3.Rows[j]["id"].ToString());
+
                                     }
                                     if (j % rowCount == rowCount - 1)
                                     {
@@ -622,8 +627,20 @@ namespace sd_order_sys.struts
                                     }
                                     else
                                     {
+                                        string fTemp = dt4.Rows[j]["brandLogo"].ToString();
+                                        int fIndex = fTemp.LastIndexOf('/');
+                                        string fName = fTemp.Substring(fIndex + 1);
                                         strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></td>"
-                                             , dt4.Rows[j]["brandLogo"].ToString(), dt4.Rows[j]["brandTypeId"].ToString(), dt4.Rows[j]["id"].ToString());
+                                             , "../images/" + fName, dt4.Rows[j]["brandTypeId"].ToString(), dt4.Rows[j]["id"].ToString());
+
+                                        //复制品牌图片文件,此处复制的全
+                                        string fOld = context.Server.MapPath(@"../brandTemplate/" + fName).Replace(@"\", "/");
+                                        string fNew = context.Server.MapPath(@"../release/" + id + "/images/" + fName).Replace(@"\", "/");
+                                        if (File.Exists(fOld))
+                                        {
+                                            File.Copy(fOld, fNew, true);
+                                        }
+
                                     }
                                     if (j % rowCount == rowCount - 1)
                                     {
@@ -668,8 +685,11 @@ namespace sd_order_sys.struts
                                     }
                                     else
                                     {
+                                        string fTemp = dt3.Rows[j]["brandTypeImg"].ToString();
+                                        int fIndex = fTemp.LastIndexOf('/');
+                                        string fName = fTemp.Substring(fIndex + 1);
                                         strBrandType += string.Format(@" <td width='90' height='90' align='center' valign='middle'><img src='{0}' width='100' height='45' onclick='showThis({1});' /></td>",
-                                             dt3.Rows[j]["brandTypeImg"].ToString(), dt3.Rows[j]["id"].ToString());
+                                             "../images/" + fName, dt3.Rows[j]["id"].ToString());
                                     }
                                     if (j % rowCount == rowCount - 1)
                                     {
@@ -695,8 +715,11 @@ namespace sd_order_sys.struts
                                     }
                                     else
                                     {
+                                        string fTemp = dt5.Rows[j]["brandLogo"].ToString();
+                                        int fIndex = fTemp.LastIndexOf('/');
+                                        string fName = fTemp.Substring(fIndex + 1);
                                         strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></td>"
-                                             , dt5.Rows[j]["brandLogo"].ToString(), dt5.Rows[j]["brandTypeId"].ToString(), dt5.Rows[j]["id"].ToString());
+                                             , "../images/" + fName, dt5.Rows[j]["brandTypeId"].ToString(), dt5.Rows[j]["id"].ToString());
                                     }
                                     if (j % rowCount == rowCount - 1)
                                     {
