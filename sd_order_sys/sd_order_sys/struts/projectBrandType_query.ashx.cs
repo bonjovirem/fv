@@ -61,7 +61,7 @@ namespace sd_order_sys.struts
                     where + " and projectId=" + context.Request["projectId"].ToString(), sqlparams).Tables[0].Rows.Count;
                 builder.Append(" and " + where);
             }
-            builder.Append(" order by lastChangeTime desc LIMIT " + (page - 1) * size + "," + size);
+            builder.Append(" order by brandTypeOrder LIMIT " + (page - 1) * size + "," + size);
 
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
             Dictionary<string, object> dictionary = new Dictionary<string, object>();

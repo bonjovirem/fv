@@ -57,6 +57,7 @@
             loadMsg: '数据加载中请稍后……',
             pagination: true,
             rownumbers: true,
+            pageSize:50,
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
                 { field: 'projectName', title: '项目名称', align: 'center' },

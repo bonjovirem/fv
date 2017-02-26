@@ -261,11 +261,11 @@ namespace SDorder.BLL
                 //sqlparams.Add("@projectId", projectId);
                 DataTable typeTable = SqlManage.Query("SELECT id,brandTypeName,brandTypeOrder FROM fv_projectbrandtype where projectId=" + projectId, sqlparams).Tables[0];//拉取
                 int order = 0;
-                if (typeTable.Rows.Count != 0)
-                    order = (from p in typeTable.AsEnumerable().Select(p => p.Field<int>("brandTypeOrder")) select p).Max();
+                //if (typeTable.Rows.Count != 0)
+                //    order = (from p in typeTable.AsEnumerable().Select(p => p.Field<int>("brandTypeOrder")) select p).Max();
                 foreach (DataRow dr in table.Rows)
                 {
-                    order = order + int.Parse(dr[0].ToString());//品类排序
+                    order = int.Parse(dr[0].ToString());//品类排序
                     string typeName = dr[1].ToString();//品类名称
                     Dictionary<string, object> param = new Dictionary<string, object>();
                     var row = (from p in typeTable.AsEnumerable().Where(p => { return p.Field<string>("brandTypeName") == typeName; })
