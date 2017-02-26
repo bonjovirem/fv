@@ -78,7 +78,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">全景地址：</label>
                     <div class="col-sm-10">
-                        <input id="fvUrl" type="text" name="fvUrl" class="form-control" runat="server" />
+                        <input id="fvUrl" type="text" name="fvUrl" class="form-control" runat="server" /><input id="hidurl" type="hidden" runat="server"/>
                     </div>
                 </div>
                 <div class="form-group">
