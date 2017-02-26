@@ -396,6 +396,10 @@ namespace sd_order_sys.struts
                 //第一步复制文件  *floorLevel 1,2,3,4当前的楼层  *f1,2,3,4 指左侧导航的标记
                 string sourcePath = context.Server.MapPath("../WebTemp2/");
                 string toPath = context.Server.MapPath("../release/" + id + "/f" + thisClientFloorLevel + "/");
+                if (Directory.Exists(toPath))
+                {
+                    Directory.Delete(toPath,true);
+                }
                 CopyDirectory(sourcePath, toPath);
                 Dictionary<string, object> sqlparams = new Dictionary<string, object>();
                 sql = "select floorLevel from fv_floor where projectid=" + id + " order by floorLevel";
