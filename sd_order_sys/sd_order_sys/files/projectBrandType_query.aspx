@@ -58,6 +58,7 @@
             loadMsg: '数据加载中请稍后……',
             pagination: true,
             rownumbers: true,
+            pageSize:50,
             title: '<%=projectName%>品类设置',
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
