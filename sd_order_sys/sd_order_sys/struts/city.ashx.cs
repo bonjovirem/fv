@@ -614,8 +614,8 @@ namespace sd_order_sys.struts
                                     }
                                     else
                                     {
-                                        strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' width='182' height='160' class='box-shadow' /></td>"
-                                             , dt4.Rows[j]["brandLogo"].ToString(), dt4.Rows[j]["brandTypeId"].ToString());
+                                        strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></td>"
+                                             , dt4.Rows[j]["brandLogo"].ToString(), dt4.Rows[j]["brandTypeId"].ToString(), dt4.Rows[j]["id"].ToString());
                                     }
                                     if (j % rowCount == rowCount - 1)
                                     {
@@ -624,8 +624,10 @@ namespace sd_order_sys.struts
                                 }
 
                             }
+                            code = code.Replace("*floorLevel", floorLevel);
                             code = code.Replace("//*brandType", strBrandType);
                             code = code.Replace("//*brand", strBrand);
+                            code = code.Replace("//*thisClientFloorLevel", thisClientFloorLevel);
                             writeFile(oldFile, code);
 
                             #endregion
