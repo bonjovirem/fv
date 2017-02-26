@@ -51,14 +51,15 @@ namespace sd_order_sys.struts
             if (context.Request["cul"] == null && context.Request["where"] == null)
             {
 
-                total = SqlManage.Query(@"select * from fv_sys_brand", sqlparams).Tables[0].Rows.Count;
+                total = SqlManage.Query(@"select * from fv_projectbrandtype", sqlparams).Tables[0].Rows.Count;
                 //return;
             }
             else
             {
                 string where = context.Request["cul"].ToString() + " LIKE '%" + context.Request["where"].ToString() + "%'";
-                total = SqlManage.Query(@"select * from fv_sys_brand " + where, sqlparams).Tables[0].Rows.Count;
-                builder.Append(" where " + where);
+                total = SqlManage.Query(@"select * from fv_projectbrandtype where " +
+                    where + " and projectId=" + context.Request["projectId"].ToString(), sqlparams).Tables[0].Rows.Count;
+                builder.Append(" and " + where);
             }
             builder.Append(" order by lastChangeTime desc LIMIT " + (page - 1) * size + "," + size);
 
@@ -66,7 +67,7 @@ namespace sd_order_sys.struts
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
             //List<SOA.MODEL.DocumentModel> list = docmanage.DataTableToList(dt);
 
-            dictionary.Add("total", SqlManage.Query(@"SELECT * FROM fv_projectbrandtype", sqlparams).Tables[0].Rows.Count);
+            dictionary.Add("total", total);
             List<Dictionary<string, object>> list = new List<Dictionary<string, object>>();
             foreach (DataRow dr in dt.Rows)//每一行信息，新建一个Dictionary<string,object>,将该行的每列信息加入到字典
             {

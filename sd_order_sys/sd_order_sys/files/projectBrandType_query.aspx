@@ -58,6 +58,7 @@
             loadMsg: '数据加载中请稍后……',
             pagination: true,
             rownumbers: true,
+            title: '<%=projectName%>品类设置',
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
                 { field: 'projectId', title: '项目ID', align: 'center' },
@@ -190,18 +191,18 @@ function SetBrand() {
         top.topManager.openPage({
             id: 'xmppsz',
             href: '/files/project_query.aspx?projectid=<% =projectId %>&projectName=<% =projectName %>' + '&projectBtId=' + selectedRow["id"] + '&projectBtName=' + selectedRow["brandTypeName"],
-                title: '项目品牌设置'
-            });
-        } else {
-            $.messager.alert('提示', '请选中一条记录');
-        }
+            title: '项目品牌设置'
+        });
+    } else {
+        $.messager.alert('提示', '请选中一条记录');
     }
-    function formatString(val, row, index) {
-        if (val == 0)
-            return "否";
-        else
-            return "是";
-    }
+}
+function formatString(val, row, index) {
+    if (val == 0)
+        return "否";
+    else
+        return "是";
+}
 </script>
 <body>
     <form id="personform" runat="server">
@@ -212,13 +213,23 @@ function SetBrand() {
                         <li>
                             <img src="../images/ico07.gif" /></li>
                         <li>
-                            <span style="font-size: 16px;"><b><%=projectName %>(<%=projectId %>)</b></span>
+                            <select id="selectwhere" class="combo">
+
+                                <option value="brandTypeName">品类名称</option>
+                            </select>
+                        </li>
+                        <li>
+                            <input id="txtwhere" type="text" />
                         </li>
                         <%--                        <li>
                             <select id="lywhere" style="display: none;" runat="server" name="lywhere">
                             </select>
                         </li>--%>
-                        <li></li>
+                        <li><a href="javascript:void(0);" onclick="searchbtn()">
+                            <img src="../images/queren.jpg" border="0" /></a>
+                            <a href="javascript:void(0);" onclick="reloaddate()">
+                                <img src="../images/clear.jpg" border="0" /></a>
+                        </li>
                     </ul>
                 </td>
             </tr>
@@ -267,7 +278,7 @@ function SetBrand() {
         function searchbtn() {
             var where = $("#txtwhere").val();
             var cul = $('#selectwhere').val();
-            $('#persontable').datagrid('options').url = "/struts/city.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where);
+            $('#persontable').datagrid('options').url = "/struts/projectBrandType_query.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where)+"&projectId="+<%=projectId %>;
             $('#persontable').datagrid('load');
         }
         function reloaddate() {

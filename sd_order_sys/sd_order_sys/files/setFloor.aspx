@@ -57,6 +57,7 @@
             loadMsg: '数据加载中请稍后……',
             pagination: true,
             rownumbers: true,
+            title:'<%=proName%>楼层设置',
             columns: [[
                 { field: 'ck', checkbox: true, align: 'center' },
                 { field: 'id', title: 'floorId', align: 'center' },
@@ -184,9 +185,9 @@ function SetClientandLift(index) {
     if (selectedRow) {
         //$("#hid").attr("value", selectedRow["id"]);
         window.open( 'DrawCtoLift.aspx?floorId=' + selectedRow["id"] + "&floorLevel=" + selectedRow["floorLevel"]+"&projectId="+<%=proId %>);
-    } else {
-        $.messager.alert('提示', '请选中一条记录');
-    }
+} else {
+    $.messager.alert('提示', '请选中一条记录');
+}
 }
 function buildHTML(index) {
 
@@ -245,7 +246,7 @@ function SetLift(index) {
                         <li>
                             <img src="../images/ico07.gif" /></li>
                         <li>
-                            <span style="font-size: 16px;"><b><%=proName %>(<%=proId %>)</b></span>
+                            <%--<span style="font-size: 16px;"><b><%=proName %>(<%=proId %>)</b></span>--%>
                         </li>
                         <li></li>
                         <%--                        <li>
