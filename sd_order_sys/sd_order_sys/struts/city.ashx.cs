@@ -741,32 +741,42 @@ namespace sd_order_sys.struts
                             DataTable dt5 = ds.Tables[3];
                             if (dt5 != null && dt5.Rows.Count > 0)
                             {
-                                int rowCount = 5;  //默认一行10列
-                                int btTemp = dt5.Rows.Count % rowCount;
-                                int Count = btTemp == 0 ? (dt5.Rows.Count / rowCount) : (dt5.Rows.Count / rowCount) + 1;
-                                for (int j = 0; j < Count * rowCount; j++)
+
+                                for (int j = 0; j < dt5.Rows.Count; j++)
                                 {
-                                    if (j % rowCount == 0)
-                                    {
-                                        strBrand += @"<tr>";
-                                    }
-                                    if (j >= dt5.Rows.Count)
-                                    {
-                                        strBrand += string.Format(@"<td width='192' height='192' align='center' valign='middle'></td>");
-                                    }
-                                    else
-                                    {
-                                        string fTemp = dt5.Rows[j]["brandLogo"].ToString();
-                                        int fIndex = fTemp.LastIndexOf('/');
-                                        string fName = fTemp.Substring(fIndex + 1);
-                                        strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></td>"
-                                             , "../images/" + fName, dt5.Rows[j]["brandTypeId"].ToString(), dt5.Rows[j]["id"].ToString());
-                                    }
-                                    if (j % rowCount == rowCount - 1)
-                                    {
-                                        strBrand += @"</tr>";
-                                    }
+                                    string fTemp = dt5.Rows[j]["brandLogo"].ToString();
+                                    int fIndex = fTemp.LastIndexOf('/');
+                                    string fName = fTemp.Substring(fIndex + 1);
+                                    strBrand += string.Format(@"<div style='float:left' width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></div>"
+                                          , "../images/" + fName, dt5.Rows[j]["brandTypeId"].ToString(), dt5.Rows[j]["id"].ToString());
                                 }
+
+                                //int rowCount = 5;  //默认一行10列
+                                //int btTemp = dt5.Rows.Count % rowCount;
+                                //int Count = btTemp == 0 ? (dt5.Rows.Count / rowCount) : (dt5.Rows.Count / rowCount) + 1;
+                                //for (int j = 0; j < Count * rowCount; j++)
+                                //{
+                                //    if (j % rowCount == 0)
+                                //    {
+                                //        strBrand += @"<tr>";
+                                //    }
+                                //    if (j >= dt5.Rows.Count)
+                                //    {
+                                //        strBrand += string.Format(@"<td width='192' height='192' align='center' valign='middle'></td>");
+                                //    }
+                                //    else
+                                //    {
+                                //        string fTemp = dt5.Rows[j]["brandLogo"].ToString();
+                                //        int fIndex = fTemp.LastIndexOf('/');
+                                //        string fName = fTemp.Substring(fIndex + 1);
+                                //        strBrand += string.Format(@"<td width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></td>"
+                                //             , "../images/" + fName, dt5.Rows[j]["brandTypeId"].ToString(), dt5.Rows[j]["id"].ToString());
+                                //    }
+                                //    if (j % rowCount == rowCount - 1)
+                                //    {
+                                //        strBrand += @"</tr>";
+                                //    }
+                                //}
 
                             }
                             code = code.Replace("*floorLevel", floorLevel);
