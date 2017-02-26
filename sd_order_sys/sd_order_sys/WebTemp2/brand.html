@@ -12,9 +12,11 @@
             background-image: url(images/bak.jpg);
             background-repeat: no-repeat;
         }
-         img {
+
+        img {
             cursor: pointer;
         }
+
         #apDiv1 {
             position: absolute;
             left: 8px;
@@ -68,7 +70,7 @@
             width: 148px;
             height: 18px;
             z-index: 11;
-            display:none;
+            display: none;
         }
 
         .box-shadow {
@@ -96,7 +98,7 @@
             border-radius: 30px 0px 30px 30px;
         }
 
-       #divForShow2 {
+        #divForShow2 {
             left: 1030px;
             top: 500px;
             height: 828px;
@@ -173,7 +175,7 @@
             </tr>
         </table>
     </div>
-    <div id="apDiv3" style="overflow:scroll;">
+    <div id="apDiv3">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             //*brand
             <!--<tr>
@@ -196,49 +198,82 @@
             </tr>-->
         </table>
     </div>
-    <div id="apDiv4" style="overflow:scroll;">
-        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            //*brandType
-            <!--<tr>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/01.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/02.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/03.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/04.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/05.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/06.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/07.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/08.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/09.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/10.png" width="100" height="45" /></td>
-            </tr>
-            <tr>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/11.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/12.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/13.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/14.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/15.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/16.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/17.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/18.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/19.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/20.png" width="100" height="45" /></td>
-            </tr>
-            <tr>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/21.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/22.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/23.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/24.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/25.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/26.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/27.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/28.png" width="100" height="45" /></td>
-                <td width="90" height="90" align="center" valign="middle">&nbsp;</td>
-                <td width="90" height="90" align="center" valign="middle">&nbsp;</td>
-            </tr>-->
-        </table>
+    <div id="apDiv4" style="overflow:scroll:">
+        <link rel="stylesheet" href="css/slide.css" />
+        <style>
+            .ck-slide {
+                width: 700px;
+                height: 320px;
+                margin: 0 auto;
+            }
+
+                .ck-slide ul.ck-slide-wrapper {
+                    height: 320px;
+                }
+        </style>
+        <div class="ck-slide">
+            <ul class="ck-slide-wrapper">
+                //*brandType
+                <!--<tr>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/01.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/02.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/03.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/04.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/05.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/06.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/07.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/08.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/09.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/10.png" width="100" height="45" /></td>
+                </tr>
+                <tr>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/11.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/12.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/13.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/14.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/15.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/16.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/17.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/18.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/19.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/20.png" width="100" height="45" /></td>
+                </tr>
+                <tr>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/21.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/22.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/23.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/24.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/25.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/26.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/27.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/28.png" width="100" height="45" /></td>
+                    <td width="90" height="90" align="center" valign="middle">&nbsp;</td>
+                    <td width="90" height="90" align="center" valign="middle">&nbsp;</td>
+                </tr>-->
+
+            </ul>
+            <a href="javascript:" class="ctrl-slide ck-prev">上一张</a> <a href="javascript:" class="ctrl-slide ck-next">下一张</a>
+            <div class="ck-slidebox">
+                <div class="slideWrap">
+                    <ul class="dot-wrap">
+                        <li class="current"><em>1</em></li>
+                        <li><em>2</em></li>
+                        <li><em>3</em></li>
+                        <li><em>4</em></li>
+                        <li><em>5</em></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- js -->
+        <script src="js/jquery-1.8.3.min.js"></script>
+        <script src="js/slide.js"></script>
+        <script>
+            $('.ck-slide').ckSlide();
+        </script>
+        <!-- Demo end -->
     </div>
     <div id="apDiv6"><img src="images/fenye.png" width="130" height="10" /></div>
-    </div>
 </body>
 </html>
 <script language="javascript" type="text/javascript">

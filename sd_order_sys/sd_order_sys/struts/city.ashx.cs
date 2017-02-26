@@ -398,7 +398,7 @@ namespace sd_order_sys.struts
                 string toPath = context.Server.MapPath("../release/" + id + "/f" + thisClientFloorLevel + "/");
                 if (Directory.Exists(toPath))
                 {
-                    Directory.Delete(toPath,true);
+                    Directory.Delete(toPath, true);
                 }
                 CopyDirectory(sourcePath, toPath);
                 Dictionary<string, object> sqlparams = new Dictionary<string, object>();
@@ -592,7 +592,7 @@ namespace sd_order_sys.struts
                                 {
                                     if (j % rowCount == 0)
                                     {
-                                        strBrandType += @"<tr>";
+                                        strBrandType += @"<li><table  width='100%' border='0' cellspacing='0' cellpadding='0'><tr>";
                                     }
                                     if (j >= dt3.Rows.Count)
                                     {
@@ -609,7 +609,7 @@ namespace sd_order_sys.struts
                                     }
                                     if (j % rowCount == rowCount - 1)
                                     {
-                                        strBrandType += @"</tr>";
+                                        strBrandType += @"</tr></table></li>";
                                     }
                                 }
                             }
@@ -623,7 +623,7 @@ namespace sd_order_sys.struts
                                 {
                                     if (j % rowCount == 0)
                                     {
-                                        strBrand += @"<tr>";
+                                        strBrand += @"<li><table  width='100%' border='0' cellspacing='0' cellpadding='0'><tr>";
                                     }
                                     if (j >= dt4.Rows.Count)
                                     {
@@ -648,7 +648,7 @@ namespace sd_order_sys.struts
                                     }
                                     if (j % rowCount == rowCount - 1)
                                     {
-                                        strBrand += @"</tr>";
+                                        strBrand += @"</tr></table></li>";
                                     }
                                 }
 

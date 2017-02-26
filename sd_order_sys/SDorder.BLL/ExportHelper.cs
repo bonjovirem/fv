@@ -193,7 +193,7 @@ namespace SDorder.BLL
                         string bName = dr[2].ToString();
                         Dictionary<string, object> param = new Dictionary<string, object>();
                         param.Add("@brandName", bName);
-                        string validateSql = "select count(*) from fv_projectbrand where brandName='" + bName + "'";
+                        string validateSql = "select count(*) from fv_projectbrand where brandName='" + bName + "' and projectId="+projectId;
                         object o = SqlManage.Exists(validateSql, sqlparams);
                         if (int.Parse(o.ToString()) > 0)
                         //if(false)

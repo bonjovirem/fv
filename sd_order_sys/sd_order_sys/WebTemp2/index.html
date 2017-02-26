@@ -1,90 +1,130 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>无标题文档</title>
-<style type="text/css">
-#apDiv1 {
-	position: absolute;
-	left: 8px;
-	top: 9px;
-	width: 454px;
-	height: 156px;
-	z-index: 1;
-}
-#apDiv2 {
-	position: absolute;
-	left: 406px;
-	top: 278px;
-	width: 500px;
-	height: 212px;
-	z-index: 3;
-}
-#apDiv3 {
-	position: absolute;
-	left: 1041px;
-	top: 278px;
-	width: 500px;
-	height: 212px;
-	z-index: 4;
-}
-#apDiv4 {
-	position: absolute;
-	left: 406px;
-	top: 576px;
-	width: 500px;
-	height: 212px;
-	z-index: 5;
-}
-#apDiv5 {
-	position: absolute;
-	left: 1041px;
-	top: 576px;
-	width: 500px;
-	height: 212px;
-	z-index: 6;
-}
-body {
-	background-image: url(images/bak.jpg);
-}
-#apDiv6 {
-	position: absolute;
-	left: 409px;
-	top: 854px;
-	width: 1131px;
-	height: 150px;
-	z-index: 7;
-}
-#apDiv7 {
-	position: absolute;
-	left: 805px;
-	top: 186px;
-	width: 434px;
-	height: 53px;
-	z-index: 8;
-	text-align: center;
-}
-</style>
-</head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+    <style type="text/css">
+        #apDiv1 {
+            position: absolute;
+            left: 8px;
+            top: 9px;
+            width: 454px;
+            height: 156px;
+            z-index: 1;
+        }
 
-<body>
-<div id="apDiv1"><img src="images/logo.png" width="779" height="235" /></div>
-<div id="apDiv2"><a href="floor1.html"><img src="images/floor1.png" width="500" height="212" /></a></div>
-<div id="apDiv3"><a href="floor2.html"><img src="images/floor2.png" width="500" height="212" /></a></div>
-<div id="apDiv4"><a href="floor3.html"><img src="images/floor3.png" width="500" height="212" /></a></div>
-<div id="apDiv5"><a href="floor4.html"><img src="images/floor4.png" width="500" height="212" /></a></div>
-<div id="apDiv6">
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td align="center" valign="middle"><a href="brand.html"><img src="images/brand.png" width="150" height="150" /></a></td>
-      <td align="center" valign="middle"><a href="vr.html"><img src="images/vr.png" width="150" height="150" /></a></td>
-      <td align="center" valign="middle"><a href="online.html"><img src="images/online.png" width="150" height="150" /></a></td>
-      <td align="center" valign="middle"><a href="promotions.html"><img src="images/promotions.png" width="150" height="150" /></a></td>
-      <td align="center" valign="middle"><a href="commodity.html"><img src="images/commodity.png" width="150" height="150" /></a></td>
-      <td align="center" valign="middle"><a href="about.html"><img src="images/about.png" width="150" height="150" /></a></td>
-    </tr>
-  </table>
-</div>
-<div id="apDiv7"><iframe allowtransparency="true" frameborder="0" width="385" height="96" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=1&z=1&t=0&v=0&d=3&bd=0&k=&f=&q=1&e=1&a=1&c=54511&w=385&h=96&align=center"></iframe></div>
+        #apDiv2 {
+            position: absolute;
+            left: 406px;
+            top: 278px;
+            width: 500px;
+            height: 212px;
+            z-index: 3;
+        }
+
+        #apDiv3 {
+            position: absolute;
+            left: 1041px;
+            top: 278px;
+            width: 500px;
+            height: 212px;
+            z-index: 4;
+        }
+
+        #apDiv4 {
+            position: absolute;
+            left: 406px;
+            top: 576px;
+            width: 500px;
+            height: 212px;
+            z-index: 5;
+        }
+
+        #apDiv5 {
+            position: absolute;
+            left: 1041px;
+            top: 576px;
+            width: 500px;
+            height: 212px;
+            z-index: 6;
+        }
+
+        body {
+            background-image: url(images/bak.jpg);
+        }
+
+        #apDiv6 {
+            position: absolute;
+            left: 409px;
+            top: 854px;
+            width: 1131px;
+            height: 150px;
+            z-index: 7;
+        }
+
+        #apDiv7 {
+            position: absolute;
+            left: 805px;
+            top: 186px;
+            width: 434px;
+            height: 53px;
+            z-index: 8;
+            text-align: center;
+        }
+    </style>
+</head>
+<script>
+    var myDate = new Date();
+    myDate.getYear();        //获取当前年份(2位)
+    myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+    myDate.getMonth();       //获取当前月份(0-11,0代表1月)
+    myDate.getDate();        //获取当前日(1-31)
+    myDate.getDay();         //获取当前星期X(0-6,0代表星期天)
+    myDate.getTime();        //获取当前时间(从1970.1.1开始的毫秒数)
+    myDate.getHours();       //获取当前小时数(0-23)
+    myDate.getMinutes();     //获取当前分钟数(0-59)
+    myDate.getSeconds();     //获取当前秒数(0-59)
+    myDate.getMilliseconds();    //获取当前毫秒数(0-999)
+    myDate.toLocaleDateString();     //获取当前日期
+    var mytime = myDate.toLocaleTimeString();     //获取当前时间
+    myDate.toLocaleString();        //获取日期与时间
+
+    //获得当前时间,刻度为一千分一秒
+    var initializationTime = (new Date()).getTime();
+    function showLeftTime() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = now.getMonth();
+        var day = now.getDate();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds() ;
+        document.all.show.innerHTML = "" + year + "年" + month + "月" + day + "日 " + hours + ":" + minutes + ":" + seconds + "";
+        //一秒刷新一次显示时间
+        var timeID = setTimeout(showLeftTime, 1000);
+    }
+</script>
+<body onload="showLeftTime()">
+    <div id="apDiv1"><img src="images/logo.png" width="779" height="235" /></div>
+    <div id="apDiv2"><a href="floor1.html"><img src="images/floor1.png" width="500" height="212" /></a></div>
+    <div id="apDiv3"><a href="floor2.html"><img src="images/floor2.png" width="500" height="212" /></a></div>
+    <div id="apDiv4"><a href="floor3.html"><img src="images/floor3.png" width="500" height="212" /></a></div>
+    <div id="apDiv5"><a href="floor4.html"><img src="images/floor4.png" width="500" height="212" /></a></div>
+    <div id="apDiv6">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td align="center" valign="middle"><a href="brand.html"><img src="images/brand.png" width="150" height="150" /></a></td>
+                <td align="center" valign="middle"><a href="vr.html"><img src="images/vr.png" width="150" height="150" /></a></td>
+                <td align="center" valign="middle"><a href="online.html"><img src="images/online.png" width="150" height="150" /></a></td>
+                <td align="center" valign="middle"><a href="promotions.html"><img src="images/promotions.png" width="150" height="150" /></a></td>
+                <td align="center" valign="middle"><a href="commodity.html"><img src="images/commodity.png" width="150" height="150" /></a></td>
+                <td align="center" valign="middle"><a href="about.html"><img src="images/about.png" width="150" height="150" /></a></td>
+            </tr>
+        </table>
+    </div>
+    <div id="apDiv7">
+        <iframe allowtransparency="true" frameborder="0" width="385" height="96" scrolling="no" src="//tianqi.2345.com/plugin/widget/index.htm?s=1&z=1&t=0&v=0&d=3&bd=0&k=&f=&q=1&e=1&a=1&c=54511&w=385&h=96&align=center"></iframe>
+        <label id="show"></label>
+    </div>
 </body>
 </html>

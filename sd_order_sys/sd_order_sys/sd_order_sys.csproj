@@ -603,6 +603,7 @@
     <Content Include="WebTemp2\about.html" />
     <Content Include="WebTemp2\brand.html" />
     <Content Include="WebTemp2\commodity.html" />
+    <Content Include="WebTemp2\css\slide.css" />
     <Content Include="WebTemp2\f.html" />
     <Content Include="WebTemp2\floor.html" />
     <Content Include="WebTemp2\floorImg\f1.png" />
@@ -691,6 +692,9 @@
     <Content Include="WebTemp2\index.html" />
     <Content Include="WebTemp2\js\data.js" />
     <Content Include="WebTemp2\js\goBack.js" />
+    <Content Include="WebTemp2\js\jquery-1.8.3.min.js" />
+    <Content Include="WebTemp2\js\slide.js" />
+    <Content Include="WebTemp2\js\slide.min.js" />
     <Content Include="WebTemp2\online.html" />
     <Content Include="WebTemp2\PhonePath.html" />
     <Content Include="WebTemp2\promotions.html" />
