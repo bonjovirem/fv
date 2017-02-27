@@ -135,7 +135,7 @@
                         }
                     }
                     $.ajax({
-                        url: '/struts/sbrand.ashx?action=rRecord&id=' + num,
+                        url: '/struts/record.ashx?action=rRecord&id=' + num,
                         success: function (data) {
                             var comment = $.parseJSON(data);
                             if (comment != "suc") {
@@ -230,12 +230,12 @@
         function searchbtn() {
             var where = $("#txtwhere").val();
             var cul = $('#selectwhere').val();
-            $('#persontable').datagrid('options').url = "/struts/sbrand.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where);
+            $('#persontable').datagrid('options').url = "/struts/record.ashx?action=query&cul=" + cul + "&where=" + encodeURI(where);
             $('#persontable').datagrid('load');
         }
         function reloaddate() {
             $("#txtwhere").attr("value", "");
-            $('#persontable').datagrid('options').url = "/struts/sbrand.ashx?action=query";
+            $('#persontable').datagrid('options').url = "/struts/record.ashx?action=query";
             $('#persontable').datagrid('load');
         }
         function ValidateForm() {
@@ -246,7 +246,7 @@
             else {
                 $.ajax({
                     type: "POST",
-                    url: "/struts/sbrand.ashx?action=opt",
+                    url: "/struts/record.ashx?action=opt",
                     data: $('#personform').serialize(),
                     datatype: "json",
                     success: function (data) {

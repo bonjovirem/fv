@@ -61,7 +61,7 @@ namespace sd_order_sys.struts
             else
             {
                 string where = context.Request["cul"].ToString() + " LIKE '%" + context.Request["where"].ToString() + "%'";
-                total = SqlManage.Query(@"select * from fv_sys_brand " + where, sqlparams).Tables[0].Rows.Count;
+                total = SqlManage.Query(@"select * from fv_sys_brand where " + where, sqlparams).Tables[0].Rows.Count;
                 builder.Append(" where " + where);
             }
             builder.Append(" ORDER BY lastChangeTime desc LIMIT " + (page - 1)*size + "," + size);
