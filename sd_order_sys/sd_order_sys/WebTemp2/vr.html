@@ -47,11 +47,16 @@
             position: absolute;
             left: 612px;
             top: 281px;
-            width: 1227px;
+            width: 1207px;
             height: 585px;
             z-index: 8;
+             overflow:hidden;
         }
-
+         #apDiv3Hide {
+            width: 1227px;
+            height: 585px;
+            overflow:scroll;
+        }
         #apDiv6 {
             position: absolute;
             left: 533px;
@@ -140,7 +145,7 @@
             </tr>
             <tr>
                 <td height="270" style="text-align:left; vertical-align:top;padding:0px 10px 0px 25px;font-size:16px;">
-                    <div id="divDesc" style="height:220px;overflow:scroll;">divDesc</div>
+                    <div id="divDesc" style="height:210px;overflow:scroll;">divDesc</div>
                     <div id="divTele" style="height:20px;overflow:hidden;">divTele</div>
                     <div id="divAddress" style="height:20px;overflow:hidden;">divAddress</div>
                 </td></td>
@@ -171,33 +176,35 @@
             </tr>
         </table>
     </div>
-    <div id="apDiv3" style="overflow:scroll;">
+    <div id="apDiv3">
         <!--<table width="100%" border="0" cellspacing="0" cellpadding="0">-->
+        <div id="apDiv3Hide">
             //*brand
+            </div>
             <!--<tr>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brand/01.png" width="182" height="160" class="box-shadow" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-            </tr>
-            <tr>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-            </tr>
-            <tr>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-                <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
-            </tr>-->
-        <!--</table>-->
-        <div id="apDiv6"><img src="images/fenye.png" width="130" height="10" /></div>
-    </div>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brand/01.png" width="182" height="160" class="box-shadow" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+        </tr>
+        <tr>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+        </tr>
+        <tr>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+            <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
+        </tr>-->
+            <!--</table>-->
+            <!--<div id="apDiv6"><img src="images/fenye.png" width="130" height="10" /></div>-->
+        </div>
     <div id="apDiv4" style="overflow:scroll;">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             //*brandType
@@ -291,7 +298,7 @@
         $('#frame1').attr("src", "");
         $('#frame1').hide();
         //$('#showPanel').show();   //自带浮层
-        $('#divForShow').fadeIn(500);
+        //$('#divForShow').fadeIn(500);
         $('#divForShow2').hide();
     }
     $('#divForShow').hide();

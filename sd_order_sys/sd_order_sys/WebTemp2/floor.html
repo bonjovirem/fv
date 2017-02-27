@@ -137,7 +137,7 @@
             </tr>
             <tr>
                 <td height="270" style="text-align:left; vertical-align:top;padding:0px 10px 0px 25px;font-size:16px;">
-                    <div id="divDesc" style="height:220px;overflow:scroll;">divDesc</div>
+                    <div id="divDesc" style="height:210px;overflow:scroll;">divDesc</div>
                     <div id="divTele" style="height:20px;overflow:hidden;">divTele</div>
                     <div id="divAddress" style="height:20px;overflow:hidden;">divAddress</div>
                 </td></td>
@@ -177,7 +177,7 @@
         <img id="floorImg" src="../images/*floorLevelF.png" width="1300" height="824" usemap="#newbook" />
         <map name="newbook" id="newbook"></map>
     </div>
-    <div id="apDiv8"><img src="images/tel.png" width="163" height="62" /></div>
+    <div id="apDiv8"><img src="images/tel.png" width="163" height="62" onclick="showPhonePath();" /></div>
     <div id="apDiv9">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
@@ -245,7 +245,7 @@
         $('#frame1').attr("src", "");
         $('#frame1').hide();
         //$('#showPanel').show();   //自带浮层
-        $('#divForShow').fadeIn(500);
+       // $('#divForShow').fadeIn(500);
     }
     $('#divForShow').hide();
     $('#frame1').hide();
