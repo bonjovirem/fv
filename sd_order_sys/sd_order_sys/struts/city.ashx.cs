@@ -407,7 +407,7 @@ namespace sd_order_sys.struts
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     //查找需要展示的信息 for  floor.html   0
-                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName,a.telephone,a.address,a.isShow,a.brandLogo,a.qrCode from fv_projectbrand a " +
+                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName,a.telephone,a.address,a.isShow,a.brandLogo,a.qrCode,a.localvpath,a.sphone from fv_projectbrand a " +
                            " where a.projectid=" + id + " and a.floorLevel is not null;";
                     //品类展示   1
                     sql += "select id,brandTypeName,brandTypeImg from fv_projectbrandtype where projectId=" + id + " and isShow =1  ;";
@@ -507,13 +507,15 @@ namespace sd_order_sys.struts
                             string addressString = "";
                             string brandLogo = "";
                             string brandQrCode = "";
+                            string sendToPhone = "";
                             foreach (DataRow item in dt2.Rows)
                             {
-                                fvString += string.Format("Arrayfv['{0}'] = '{1}';", item["id"].ToString(), item["fvUrl"].ToString());
+                                fvString += string.Format("Arrayfv['{0}'] = '{1}';", item["id"].ToString(), item["localvpath"].ToString());
                                 descString += string.Format("ArrayDesc['{0}'] = '{1}';", item["id"].ToString(), item["brandDesc"].ToString().Replace("*空格*", "&nbsp;").Replace("*换行*", "<br/>"));
                                 telephoneString += string.Format("ArrayTele['{0}'] = '{1}';", item["id"].ToString(), item["telephone"].ToString());
                                 addressString += string.Format("ArrayAddress['{0}'] = '{1}';", item["id"].ToString(), item["address"].ToString());
                                 brandQrCode += string.Format("ArrayQrCode['{0}'] = '{1}';", item["id"].ToString(), item["qrCode"].ToString());
+                                sendToPhone += string.Format("ArraySendToPhone['{0}'] = '{1}';", item["id"].ToString(), item["sPhone"].ToString());
 
                                 //复制品牌图片文件
                                 string fTemp = item["brandLogo"].ToString();
@@ -528,6 +530,7 @@ namespace sd_order_sys.struts
                             code = code.Replace("//*addressString", addressString);
                             code = code.Replace("//*brandLogo", brandLogo);
                             code = code.Replace("//*brandQrCode", brandQrCode);
+                            code = code.Replace("//*sendToPhone", sendToPhone);
                             writeFile(oldFile, code);
                             #endregion
 
