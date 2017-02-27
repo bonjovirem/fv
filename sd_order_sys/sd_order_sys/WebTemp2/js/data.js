@@ -19,8 +19,12 @@
     document.getElementById('divTele').innerHTML = '电话：' + ArrayTele[brandId];
     document.getElementById('divTele').style.padding = '5px 0 2px 0';
     document.getElementById('divTele').style.fontFamily = 'Microsoft YaHei';
+    document.getElementById('divTele').style.color = '#FF8000';
+    
     document.getElementById('divAddress').innerHTML = '地址：' + ArrayAddress[brandId];
     document.getElementById('divAddress').style.padding = '2px 0 5px 0';
     document.getElementById('divAddress').style.fontFamily = 'Microsoft YaHei';
+    document.getElementById('divAddress').style.color = '#FF8000';
+
     document.getElementById('divImg').innerHTML = " <img src='" + ArrayQrCode[brandId] + "' style='padding:0px 10px;height:190px;'  />";
 }
