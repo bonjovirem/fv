@@ -130,6 +130,15 @@ namespace sd_order_sys.files {
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidurl;
         
         /// <summary>
+        /// localpath 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText localpath;
+        
+        /// <summary>
         /// ImageQrcode 控件。
         /// </summary>
         /// <remarks>
@@ -137,6 +146,24 @@ namespace sd_order_sys.files {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image ImageQrcode;
+        
+        /// <summary>
+        /// Text2 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText Text2;
+        
+        /// <summary>
+        /// hidPhone 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPhone;
         
         /// <summary>
         /// Text1 控件。

@@ -24,7 +24,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">logo展示：</label>
                     <div class="col-sm-10">
-                        <asp:Image ID="ImageLogo" runat="server" Width="150" Height="150"/>
+                        <asp:Image ID="ImageLogo" runat="server" Width="150" Height="150" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -87,10 +87,22 @@
                         <input id="fvUrl" type="text" name="fvUrl" class="form-control" runat="server" /><input id="hidurl" type="hidden" runat="server" />
                     </div>
                 </div>
-                                <div class="form-group">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">本地地址：</label>
+                    <div class="col-sm-10">
+                        <input id="localpath" type="text" name="localpath" class="form-control" runat="server" />
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-2 control-label">全景二维码：</label>
                     <div class="col-sm-10">
-                        <asp:Image ID="ImageQrcode" runat="server" class="form-control" Width="76px" Height="76px"/>
+                        <asp:Image ID="ImageQrcode" runat="server" class="form-control" Width="76px" Height="76px" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">推送到手机：</label>
+                    <div class="col-sm-10">
+                        <input id="Text2" type="text" name="localpath" class="form-control" runat="server" /><input id="hidPhone" type="hidden" runat="server" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -116,7 +128,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <asp:Button ID="btnReturn" runat="server" Text=" 返 回 " CssClass="btn btn-success" OnClick="btnReturn_Click"/>
+                        <asp:Button ID="btnReturn" runat="server" Text=" 返 回 " CssClass="btn btn-success" OnClick="btnReturn_Click" />
                         <asp:Button ID="btnExport" runat="server" Text=" 保 存 " CssClass="btn btn-primary" OnClick="btnExport_Click" />
                     </div>
                 </div>
