@@ -407,7 +407,7 @@ namespace sd_order_sys.struts
                 if (dt != null && dt.Rows.Count > 0)
                 {
                     //查找需要展示的信息 for  floor.html   0
-                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName,a.telephone,a.address,a.isStar,a.brandLogo,a.qrCode from fv_projectbrand a " +
+                    sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName,a.telephone,a.address,a.isShow,a.brandLogo,a.qrCode from fv_projectbrand a " +
                            " where a.projectid=" + id + " and a.floorLevel is not null;";
                     //品类展示   1
                     sql += "select id,brandTypeName,brandTypeImg from fv_projectbrandtype where projectId=" + id + " and isShow =1  ;";
@@ -458,29 +458,29 @@ namespace sd_order_sys.struts
                                 }
 
                             }
-                            DataRow[] drIsStar = dt2.Select("floorLevel=" + floorLevel + " and isStar=1");
-                            string strIsStar = "";
+                            DataRow[] drIsShow = dt2.Select("floorLevel=" + floorLevel + " and isShow=1");
+                            string strIsShow = "";
                             for (int drIndex = 0; drIndex < 10; drIndex++)
                             {
                                 if (drIndex % 2 == 0)
                                 {
-                                    strIsStar += @"<tr>";
+                                    strIsShow += @"<tr>";
                                 }
-                                if (drIndex >= drIsStar.Length)
+                                if (drIndex >= drIsShow.Length)
                                 {
-                                    strIsStar += @" <td height='110' align='center' valign='middle'></td>";
+                                    strIsShow += @" <td height='110' align='center' valign='middle'></td>";
                                 }
                                 else
                                 {
-                                    string fTemp = drIsStar[drIndex]["brandLogo"].ToString();
+                                    string fTemp = drIsShow[drIndex]["brandLogo"].ToString();
                                     int fIndex = fTemp.LastIndexOf('/');
                                     string fName = fTemp.Substring(fIndex + 1);
-                                    strIsStar += @" <td height='110' align='center' valign='middle'><img src='../images/" +
-                                        fName + "' onclick='loadPanelDesc(" + drIsStar[drIndex]["id"].ToString() + ");showPanel();' width='116' height='93' /></td>";
+                                    strIsShow += @" <td height='110' align='center' valign='middle'><img src='../images/" +
+                                        fName + "' onclick='loadPanelDesc(" + drIsShow[drIndex]["id"].ToString() + ");showPanel();' width='116' height='93' /></td>";
                                 }
                                 if (drIndex % 2 == 1)
                                 {
-                                    strIsStar += @"</tr>";
+                                    strIsShow += @"</tr>";
                                 }
                             }
 
@@ -488,7 +488,7 @@ namespace sd_order_sys.struts
                             //code = code.Replace("//*descString", descString);
                             //code = code.Replace("//*telephoneString", fvString);
                             //code = code.Replace("//*addressString", descString);
-                            code = code.Replace(" //*IsStar", strIsStar);
+                            code = code.Replace("//*isShow", strIsShow);
                             code = code.Replace("//*areaString", areaString);
                             code = code.Replace("//*thisClientFloorLevel", thisClientFloorLevel);
 

@@ -31,25 +31,30 @@
     <script language="javascript" type="text/javascript">
         var arrPoints = new Array();
         var l = arrPoints.length;
-        function drawPt3(x, y) {
-            var div = drawDot(x, y, "red", 30, 1);
+        function drawPt3(x, y, b) {
+            var div = drawDot(x, y, "red", 30, b);
             //document.body.div.innerHTML += div;
             document.getElementById('div').innerHTML += div;
 
         }
-        function drawPt2() {
-            var x = event.offsetX;
-            var y = event.offsetY;
-            drawPt3(x, y);
+        //function drawPt2() {
+        //    var x = event.offsetX;
+        //    var y = event.offsetY;
+        //    drawPt3(x, y,1);
 
-        }
-        function drawDot(x, y, color, size, index) {
+        //}
+        function drawDot(x, y, color, size, b) {
             var p = new Point(x, y);
             arrPoints.push(p);
             l = arrPoints.length;
             //新建一个div
             var div = "<div id='dlist" + l + "' style='position:absolute; border:0;left:" + (x - 15) + "px; top:" + (y - 15) +
             "px; background-size: cover;cursor:pointer;background-image:url(images/redX.png)" + ";width:" + size + "px;height:" + size + "px;line-height:30px;text-align:center;'" + "" + "></div>";
+
+            if (!b) {
+                div = "";
+            }
+
             return div;
         }
     </script>
@@ -98,7 +103,7 @@
     function drawLine() {
         context.strokeStyle = "red";
         context.fillStyle = "blue";
-        context.lineWidth = 2;
+        context.lineWidth = 7;
         // document.getElementById('div').style.display = 'none';
         //  document.getElementById('ldsun').style.display = ' ';
         context.beginPath();
@@ -124,7 +129,7 @@
     var faqus = 0;
     function drawBall() {
         faqus = 200 / arrPoints.length;
-        context.clearRect(0, 0, 1300,824);
+        context.clearRect(0, 0, 1300, 824);
         drawLine();
         p1 = arrPoints[indexS];
         p2 = arrPoints[indexS + 1];
@@ -141,7 +146,7 @@
         context.fill();
         if (Math.abs(p1.x + lx - p2.x) < Math.abs(stepX * 1.2) || Math.abs(p1.y + ly - p2.y) < Math.abs(1.2 * stepY)) { //判断当前线的位置，控制在区域内
             if (indexS >= arrPoints.length - 2) {
-                context.clearRect(0, 0, 1300,824);
+                context.clearRect(0, 0, 1300, 824);
                 drawLine();
                 context.strokeStyle = "blue";
                 context.fillStyle = "blue";
@@ -198,7 +203,9 @@
         for (var i = 0; i < s1.length; i++) {
             var s2p = s1[i].replace(/\(/, "").replace(/\)/, "");
             var s2 = s2p.split(',')
-            drawPt3(parseFloat(s2[0]), parseFloat(s2[1]));
+            var bBorE = false;
+            bBorE = (i == 0) || (i == s1.length - 1);
+            drawPt3(parseFloat(s2[0]), parseFloat(s2[1]), bBorE);
         }
     }
     function getQueryString(name) {
