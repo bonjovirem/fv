@@ -148,13 +148,13 @@ namespace sd_order_sys.files {
         protected global::System.Web.UI.WebControls.Image ImageQrcode;
         
         /// <summary>
-        /// Text2 控件。
+        /// sphoneurl 控件。
         /// </summary>
         /// <remarks>
         /// 自动生成的字段。
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText sphoneurl;
         
         /// <summary>
         /// hidPhone 控件。
@@ -164,6 +164,15 @@ namespace sd_order_sys.files {
         /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden hidPhone;
+        
+        /// <summary>
+        /// Image1 控件。
+        /// </summary>
+        /// <remarks>
+        /// 自动生成的字段。
+        /// 若要进行修改，请将字段声明从设计器文件移到代码隐藏文件。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image Image1;
         
         /// <summary>
         /// Text1 控件。

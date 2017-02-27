@@ -102,7 +102,13 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">推送到手机：</label>
                     <div class="col-sm-10">
-                        <input id="Text2" type="text" name="localpath" class="form-control" runat="server" /><input id="hidPhone" type="hidden" runat="server" />
+                        <input id="sphoneurl" type="text" name="sphone" class="form-control" runat="server" /><input id="hidPhone" type="hidden" runat="server" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">推送手机二维码：</label>
+                    <div class="col-sm-10">
+                        <asp:Image ID="Image1" runat="server" class="form-control" Width="76px" Height="76px" />
                     </div>
                 </div>
                 <div class="form-group">
