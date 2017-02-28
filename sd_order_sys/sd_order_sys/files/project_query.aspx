@@ -165,6 +165,40 @@
                         }
                     });
                 }
+            }, {
+                text: '多条同步库',
+                iconCls: 'icon-ok',
+                handler: function () {
+
+                    var selectedRow = $('#persontable').datagrid('getSelections');  //获取选中行
+                    if (selectedRow.length == 0) {
+                        $.messager.alert('提示', '请选中一条记录');
+                    } else{
+                        var num = "";
+                        for (var i = 0; i < selectedRow.length; i++) {
+                            if (i == selectedRow.length - 1) {
+                                num = num + selectedRow[i].id + "";
+                            } else {
+                                num = num + selectedRow[i].id + ",";
+                            }
+                        }
+                        $.ajax({
+                            url: '/struts/project.ashx?action=redo&id=<%=projectId %>&num='+num,
+                            success: function (data) {
+                                var comment = $.parseJSON(data);
+                                if (comment != "suc") {
+                                    $.messager.alert("提示", "操作失败，请联系管理员");
+                                } else {
+                                    $.messager.alert("提示", "您同步成功");
+                                    $('#persontable').datagrid('reload');
+                                }
+                            },
+                            error: function () {
+                                $.messager.alert("提示", "网络错误，请联系管理员");
+                            }
+                        });
+                    }
+                }
             }]
         });
     }

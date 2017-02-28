@@ -103,7 +103,12 @@ namespace sd_order_sys.struts
         private void UpdateFromBase(HttpContext context)
         {
             Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-            string sql = "update fv_projectbrand p ,fv_sys_brand v set p.brandLogo=v.sys_logo,p.brandDesc=v.sys_desc where p.brandName=v.sys_nane and p.lastChangeTime=p.createTime and  p.projectid=" + int.Parse(context.Request["id"].ToString());
+            string sql = "";
+            string where = context.Request["num"] == null ? "" : context.Request["num"].ToString();
+            if (where == "")
+                sql = "update fv_projectbrand p ,fv_sys_brand v set p.brandLogo=v.sys_logo,p.brandDesc=v.sys_desc where p.brandName=v.sys_nane and p.lastChangeTime=p.createTime and  p.projectid=" + int.Parse(context.Request["id"].ToString());
+            else
+                sql = "update fv_projectbrand p ,fv_sys_brand v set p.brandLogo=v.sys_logo,p.brandDesc=v.sys_desc where p.brandName=v.sys_nane and  p.projectid=" + int.Parse(context.Request["id"].ToString()) + " and p.id in (" + where + ")";
             bool w = SqlManage.OpRecord(sql, sqlparams);
             string msg = "";
             if (w)

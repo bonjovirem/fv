@@ -135,6 +135,18 @@
             box-shadow: 4px 0px 12px #000;
             cursor: pointer;
         }
+
+                #imgX1{
+            position: absolute;
+            left: 1090px;
+            top: -20px;
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 35px 35px;
+            box-shadow: 4px 0px 12px #000;
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -144,6 +156,9 @@
     <div id="divForShow2" style="display:none;" onclick="showPhonePath();"><img id="imgSendToPhone" src="" style="margin-top:10px;margin-left:10px;" /></div>
     <div id="divForShow" style="display:none;">
         <div id="imgX" onclick="hidePanel();">
+            <img src="images/x.png" style="margin-top:10px;margin-left:10px;" />
+        </div>
+        <div id="imgX1" onclick="hidePanel1();">
             <img src="images/x.png" style="margin-top:10px;margin-left:10px;" />
         </div>
         <table cellpadding="0" cellspacing="0" border="0" style="background-color:white;width:1392px;margin-left:15px;height:738px;margin-top:15px;">
@@ -232,6 +247,11 @@
     }
     function hidePanel() {
         document.getElementById('divfv').innerHTML = ""; //清除全景声音
+        $('#divForShow').fadeOut(500);
+    }
+    function hidePanel1() {
+        $("#apDiv8").hide();
+        //document.getElementById('divfv').innerHTML = ""; //清除全景声音
         $('#divForShow').fadeOut(500);
     }
     function showPath() {
