@@ -163,7 +163,7 @@
             </tr>
             <tr>
                 <td height="130" align="right">
-                    <div style="float:left;margin:50px 0 0 30px;cursor:pointer;"><img src="images/tel.png" width="163" height="62" style="display:none;" onclick="showPhonePath();" /></div>
+                    <div style="float:left;margin:50px 0 0 30px;cursor:pointer;"><img src="images/tel.png" width="163" height="62" onclick="showPhonePath();" /></div>
                     <div style="cursor:pointer;" onclick="showPath();"><img style="height:120px;" src="images/way.gif" /></div>
                 </td>
             </tr>
@@ -193,7 +193,7 @@
         <img id="floorImg" src="../images/*floorLevelF.png" width="1300" height="824" usemap="#newbook" />
         <map name="newbook" id="newbook"></map>
     </div>
-    <div id="apDiv8"><img src="images/tel.png" width="163" height="62" onclick="showPhonePath();" /></div>
+    <div id="apDiv8"><img src="images/tel.png" style="display:none;" width="163" height="62" onclick="showPhonePath();" /></div>
     <div id="apDiv9">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
@@ -253,9 +253,6 @@
         if ($('#imgSendToPhone').attr('src')!="") {
             $('#divForShow2').toggle();
         }
-      
-
-
     }
     function OhterFloorRun() {//再从目标层电梯到品牌店
         $('#frame1').attr("src", "f"+pageFloorLevel+".html?brandId=" + document.getElementById('hidBrandId').value+"_0");
@@ -267,7 +264,7 @@
         $('#frame1').attr("src", "");
         $('#frame1').hide();
         //$('#showPanel').show();   //自带浮层
-        // $('#divForShow').fadeIn(500);
+        $('#divForShow').fadeIn(500);
     }
     $('#divForShow').hide();
     $('#frame1').hide();
