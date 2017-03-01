@@ -23,7 +23,7 @@ namespace sd_order_sys.files
                     hidpro.Value = Request["id"].ToString();
                     LoadInfo(id: int.Parse(hidpro.Value));
                 }
-                LoadControl();
+                //LoadControl();
             }
         }
 
@@ -45,8 +45,8 @@ namespace sd_order_sys.files
             sqlparams.Add("@sys_desc", bDesc);
             sqlparams.Add("@sys_logo", @"/brandTemplate/" + bLogo);
             sqlparams.Add("@sys_video", bVideo);
-            sqlparams.Add("@sys_type", ddltype.SelectedValue);
-            sqlparams.Add("@sys_typeName", ddltype.SelectedItem.Text);
+            sqlparams.Add("@sys_type", "");
+            sqlparams.Add("@sys_typeName", "");
             if (txtlogo.HasFile)
             {
                 txtlogo.SaveAs(Server.MapPath(@"~/brandTemplate/" + txtlogo.FileName));
@@ -78,19 +78,20 @@ namespace sd_order_sys.files
             {
                 txtName.Value = table.Rows[0]["sys_nane"].ToString();
                 txtdesc.Value = table.Rows[0]["sys_desc"].ToString();
-                ddltype.SelectedValue = table.Rows[0]["sys_type"].ToString();
+                //ddltype.SelectedValue = table.Rows[0]["sys_type"].ToString();
+                logoImg.Src = table.Rows[0]["sys_logo"].ToString();
             }
         }
-        private void LoadControl()
-        {
-            string sql = "select id,brandName from fv_sysbrand ";
-            Dictionary<string, object> sqlparams = new Dictionary<string, object>();
-            //sqlparams.Add("@id", id);
-            DataTable table = SqlManage.Query(sql, sqlparams).Tables[0];
-            ddltype.DataSource = table;
-            ddltype.DataTextField = "brandName";
-            ddltype.DataValueField = "id";
-            ddltype.DataBind();
-        }
+        //private void LoadControl()
+        //{
+        //    string sql = "select id,brandName from fv_sysbrand ";
+        //    Dictionary<string, object> sqlparams = new Dictionary<string, object>();
+        //    //sqlparams.Add("@id", id);
+        //    DataTable table = SqlManage.Query(sql, sqlparams).Tables[0];
+        //    ddltype.DataSource = table;
+        //    ddltype.DataTextField = "brandName";
+        //    ddltype.DataValueField = "id";
+        //    ddltype.DataBind();
+        //}
     }
 }

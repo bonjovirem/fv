@@ -135,17 +135,35 @@
             box-shadow: 4px 0px 12px #000;
             cursor: pointer;
         }
+
+        #imgX1 {
+            position: absolute;
+            left: 1000px;
+            top: -30px;
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 35px 35px;
+            box-shadow: 4px 0px 12px #000;
+            cursor: pointer;
+        }
     </style>
 
 </head>
 
 <body>
     <input type="hidden" id="hidBrandId" />
-    <div id="divForShow2" style="display:none;" onclick="showPhonePath();"><img id="imgSendToPhone" src="" style="margin-top:10px;margin-left:10px;" /></div>
+    <div id="divForShow2" style="display:none;" onclick="showPhonePath();">
+        <div id="imgX1" onclick="hidePanel1();">
+            <img src="images/x.png" style="margin-top:10px;margin-left:10px;" />
+        </div>
+        <img id="imgSendToPhone" src="" style="margin-top:10px;margin-left:10px;" />
+    </div>
     <div id="divForShow" style="display:none;">
         <div id="imgX" onclick="hidePanel();">
             <img src="images/x.png" style="margin-top:10px;margin-left:10px;" />
         </div>
+
         <table cellpadding="0" cellspacing="0" border="0" style="background-color:white;width:1392px;margin-left:15px;height:738px;margin-top:15px;">
             <tr>
                 <td rowspan="4" width="1080" height="700"><div id="divfv" style="width:100%;height:100%;">divfv</div></td>
@@ -193,7 +211,9 @@
         <img id="floorImg" src="../images/*floorLevelF.png" width="1300" height="824" usemap="#newbook" />
         <map name="newbook" id="newbook"></map>
     </div>
+
     <div id="apDiv8"><img src="images/tel.png" style="display:none;" width="163" height="62" onclick="showPhonePath();" /></div>
+
     <div id="apDiv9">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
@@ -234,6 +254,11 @@
         document.getElementById('divfv').innerHTML = ""; //清除全景声音
         $('#divForShow').fadeOut(500);
     }
+    function hidePanel1() {
+        //$("#divForShow2").hide();
+        //document.getElementById('divfv').innerHTML = ""; //清除全景声音
+        $('#divForShow2').fadeOut(500);
+    }
     function showPath() {
         $('#divForShow').fadeOut(200);
         if (pageFloorLevel==thisClientFloorLevel) { //直达
@@ -252,6 +277,7 @@
         // window.open('PhonePath.html?pageFloorLevel=' + pageFloorLevel + '&brandId=' + document.getElementById('hidBrandId').value,'_blank');
         if ($('#imgSendToPhone').attr('src')!="") {
             $('#divForShow2').toggle();
+
         }
     }
     function OhterFloorRun() {//再从目标层电梯到品牌店

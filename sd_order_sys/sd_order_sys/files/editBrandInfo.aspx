@@ -28,6 +28,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">logo展示：</label>
+                    <div class="col-sm-10">
+                        <img alt="" src="" runat="server" id="logoImg" width="150" height="150"/>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-2 control-label">品牌描述：</label>
                     <div class="col-sm-10">
                         <textarea id="txtdesc" cols="50" rows="3" class="form-control" runat="server"></textarea>
@@ -39,12 +45,12 @@
                         <asp:FileUpload ID="txtvideo" runat="server" CssClass="form-control" />
                     </div>
                 </div>
-                <div class="form-group">
+<%--                <div class="form-group">
                     <label class="col-sm-2 control-label">所属品类：</label>
                     <div class="col-sm-10">
                         <asp:DropDownList ID="ddltype" runat="server" CssClass="form-control"></asp:DropDownList>
                     </div>
-                </div>
+                </div>--%>
                 <div class="form-group">
                     <asp:Label ID="lblmsg" runat="server" Text="" ForeColor="Red" CssClass="col-sm-6 control-label"></asp:Label>
                 </div>

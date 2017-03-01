@@ -10,7 +10,7 @@
 <body>
     <div class="panel panel-default">
         <div class="panel-heading">
-            项目基本信息
+            项目基本信息 
         </div>
         <div class="panel-body">
             <form id="form1" runat="server" class="form-horizontal">

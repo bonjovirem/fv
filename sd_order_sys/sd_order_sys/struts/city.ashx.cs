@@ -600,24 +600,24 @@ namespace sd_order_sys.struts
                                 for (int j = 0; j < Count * rowCount; j++)
                                 {
 
-                                    if (j % (liCount * rowCount) == 0)
-                                    {
-                                        if (j == 0)
-                                        {
-                                            btIndex += " <li class='current'><em>1</em></li>";
-                                        }
-                                        else
-                                        {
-                                            btIndex += " <li><em>" + ((j / (liCount * rowCount)) + 1) + "</em></li>";
-                                        }
-                                    }
+                                    //if (j % (liCount * rowCount) == 0)
+                                    //{
+                                    //    if (j == 0)
+                                    //    {
+                                    //        btIndex += " <li class='current'><em>1</em></li>";
+                                    //    }
+                                    //    else
+                                    //    {
+                                    //        btIndex += " <li><em>" + ((j / (liCount * rowCount)) + 1) + "</em></li>";
+                                    //    }
+                                    //}
 
 
                                     if (j % rowCount == 0)
                                     {
                                         if ((j / rowCount) % liCount == 0)
                                         {
-                                            strBrandType += @"<li style='width:1660px;'><table align='center'  width='95%' border='0' cellspacing='0' cellpadding='0'>";
+                                            strBrandType += @"<table align='center'  width='95%' border='0' cellspacing='0' cellpadding='0'>";
                                         }
                                         strBrandType += @"<tr>";
                                     }
@@ -639,7 +639,7 @@ namespace sd_order_sys.struts
                                         strBrandType += @"</tr>";
                                         if ((j / rowCount) % liCount == liCount - 1)
                                         {
-                                            strBrandType += @"</table></li>";
+                                            strBrandType += @"</table>";
                                         }
                                     }
                                 }
