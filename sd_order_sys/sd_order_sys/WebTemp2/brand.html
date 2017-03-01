@@ -124,7 +124,20 @@
             box-shadow: 3px 6px 9px #000;
             border-radius: 30px 30px 30px 30px;
         }
-
+        #divForShow3 {
+            left: 1160px;
+            top: 540px;
+            height: 768px;
+            width: 1022px;
+            margin: 0px auto;
+            background-color: #FFF;
+            z-index: 100;
+            position: fixed;
+            margin-top: -384px;
+            margin-left: -741px;
+            box-shadow: 3px 6px 9px #000;
+            border-radius: 30px 30px 30px 30px;
+        }
         #imgX {
             position: absolute;
             left: 1390px;
@@ -142,6 +155,7 @@
 
 <body>
     <input type="hidden" id="hidBrandId" />
+    <div id="divForShow3" style="display:none;" onclick="showPhonePath();"><img id="imgSendToPhone" src="" style="margin-top:10px;margin-left:10px;" /></div>
     <div id="divForShow2" style="display:none;">
         <iframe id="frame1" src='' width="1300" height="824" allowtransparency="true" style="background-color:transparent" frameborder="0" scrolling="no"></iframe>
     </div>
@@ -365,20 +379,27 @@
             setTimeout("OhterFloorRun()", 4100);//再从另一层电梯到品牌店
         }
     }
-    function showPhonePath() {
-        window.open('PhonePath.html?pageFloorLevel=' + pageFloorLevel + '&brandId=' + document.getElementById('hidBrandId').value,'_blank');
-    }
+    //function showPhonePath() {
+    //    window.open('PhonePath.html?pageFloorLevel=' + pageFloorLevel + '&brandId=' + document.getElementById('hidBrandId').value,'_blank');
+    //}
     function OhterFloorRun() {//再从目标层电梯到品牌店
         $('#frame1').attr("src", "f"+pageFloorLevel+".html?brandId=" + document.getElementById('hidBrandId').value+"_0");
         $('#frame1').show();
         setTimeout("rollback()", 4100);
+    }
+
+    function showPhonePath() {
+        // window.open('PhonePath.html?pageFloorLevel=' + pageFloorLevel + '&brandId=' + document.getElementById('hidBrandId').value,'_blank');
+        if ($('#imgSendToPhone').attr('src')!="") {
+            $('#divForShow3').toggle();
+        }
     }
     function rollback() {
         $('#floorImg').show();
         $('#frame1').attr("src", "");
         $('#frame1').hide();
         //$('#showPanel').show();   //自带浮层
-        //$('#divForShow').fadeIn(500);
+        $('#divForShow').fadeIn(500);
         $('#divForShow2').hide();
     }
     $('#divForShow').hide();
