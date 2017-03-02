@@ -693,6 +693,8 @@
     <Content Include="WebTemp2\js\data.js" />
     <Content Include="WebTemp2\js\goBack.js" />
     <Content Include="WebTemp2\js\jquery-1.8.3.min.js" />
+    <Content Include="WebTemp2\js\jquery.leoweather.min.js" />
+    <Content Include="WebTemp2\js\jquery.min.js" />
     <Content Include="WebTemp2\js\slide.js" />
     <Content Include="WebTemp2\js\slide.min.js" />
     <Content Include="WebTemp2\online.html" />

@@ -124,7 +124,7 @@
         var val = $("#floorLevel").find("option:selected").val();
         $("#hidFloorId").attr("value", val);
         reClear();
-        $('#ds').css('background-image', 'url(../projectImg/<% =projectId  %>/f' + val + '.png)');
+        $('#ds').css('background-image', 'url(../release/<% =projectId  %>/images/' + val + 'F.png)');
     }
     <% =strForShow %>
 </script>
