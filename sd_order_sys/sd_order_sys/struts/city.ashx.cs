@@ -408,7 +408,7 @@ namespace sd_order_sys.struts
                 {
                     //查找需要展示的信息 for  floor.html   0
                     sql = "select a.id,a.fvUrl,a.areaPoints,a.floorLevel,a.brandDesc,a.brandName,a.telephone,a.address,a.isShow,a.brandLogo,a.qrCode,a.localvpath,a.sphone from fv_projectbrand a " +
-                           " where a.projectid=" + id + " and a.floorLevel is not null;";
+                           " where a.projectid=" + id + " ;";  //and a.floorLevel is not null
                     //品类展示   1
                     sql += "select id,brandTypeName,brandTypeImg from fv_projectbrandtype where projectId=" + id + " and isShow =1  ;";
                     //品牌展示   2

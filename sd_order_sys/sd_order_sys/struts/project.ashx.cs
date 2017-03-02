@@ -74,7 +74,7 @@ namespace sd_order_sys.struts
                 builder.Append(" and " + where);
             }
             builder.Append(" GROUP BY a.id,a.brandName ,a.brandImg,a.brandDesc ,a.brandLogo, a.brandVideo ,a.brandOrder, a.brandTypeId ,a.brandTypeName , a.projectId, a.isShow, a.isStar ,a.isShowWay ,a.fvUrl ,a.createTime, a.lastChangeTime,a.floorLevel,a.areaPoints ");
-            builder.Append(" order by lastChangeTime desc LIMIT " + (page - 1) * size + "," + size);
+            builder.Append(" order by a.brandOrder,lastChangeTime desc LIMIT " + (page - 1) * size + "," + size);
 
             DataTable dt = SqlManage.Query(builder.ToString(), sqlparams).Tables[0];
             Dictionary<string, object> dictionary = new Dictionary<string, object>();
