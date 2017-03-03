@@ -652,8 +652,8 @@ namespace sd_order_sys.struts
                                     string fTemp = dt4.Rows[j]["brandLogo"].ToString();
                                     int fIndex = fTemp.LastIndexOf('/');
                                     string fName = fTemp.Substring(fIndex + 1);
-                                    strBrand += string.Format(@"<div style='float:left' width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></div>"
-                                          , "../images/" + fName, dt4.Rows[j]["brandTypeId"].ToString(), dt4.Rows[j]["id"].ToString());
+                                    strBrand += string.Format(@"<div style='float:left' width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDescJump({2},{3});showPanel();' width='182' height='160' class='box-shadow' /></div>"
+                                          , "../images/" + fName, dt4.Rows[j]["brandTypeId"].ToString(), dt4.Rows[j]["id"].ToString(), dt4.Rows[j]["floorLevel"].ToString());
                                 }
                                 //int rowCount = 7;  //默认一行10列
                                 //int btTemp = dt4.Rows.Count % rowCount;
@@ -750,8 +750,8 @@ namespace sd_order_sys.struts
                                     string fTemp = dt5.Rows[j]["brandLogo"].ToString();
                                     int fIndex = fTemp.LastIndexOf('/');
                                     string fName = fTemp.Substring(fIndex + 1);
-                                    strBrand += string.Format(@"<div style='float:left' width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDesc({2});showPanel();' width='182' height='160' class='box-shadow' /></div>"
-                                          , "../images/" + fName, dt5.Rows[j]["brandTypeId"].ToString(), dt5.Rows[j]["id"].ToString());
+                                    strBrand += string.Format(@"<div style='float:left' width='192' class='allType type{1}' height='192' align='center' valign='middle'><img src='{0}' onclick='loadPanelDescJump({2},{3});showPanel();' width='182' height='160' class='box-shadow' /></div>"
+                                          , "../images/" + fName, dt5.Rows[j]["brandTypeId"].ToString(), dt5.Rows[j]["id"].ToString(), dt5.Rows[j]["floorLevel"].ToString());
                                 }
 
                                 //int rowCount = 5;  //默认一行10列
