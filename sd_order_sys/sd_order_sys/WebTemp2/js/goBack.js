@@ -18,3 +18,11 @@
             }, n);
         };
     }
+    window.top.document.onmousedown = function () {
+        {
+            clearTimeout(time);
+            time = setTimeout(function () {
+                location.href = "index.html";
+            }, n);
+        };
+    }

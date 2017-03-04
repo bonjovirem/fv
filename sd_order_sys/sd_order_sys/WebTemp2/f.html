@@ -128,7 +128,7 @@
     var interVal = 0.0;
     var faqus = 0;
     function drawBall() {
-        faqus = 200 / arrPoints.length;
+        faqus = 40 / arrPoints.length;
         context.clearRect(0, 0, 1300, 824);
         drawLine();
         p1 = arrPoints[indexS];
@@ -168,7 +168,7 @@
         indexS = 0;
         lx = 0;
         ly = 0;
-        interVal = setInterval(drawBall, 20);
+        interVal = setInterval(drawBall, 100);
     }
 
     //method 1
