@@ -49,12 +49,12 @@ namespace sd_order_sys.files
 + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString()
 + DateTime.Now.Second.ToString() + DateTime.Now.Millisecond.ToString();
             string qrcode = "";
-            if (fvUrl.Value != hidurl.Value && fvUrl.Value != "")
+            if (fvUrl.Value != "")
             {
                 qrcode = BuildQrCode(fvUrl.Value, value: timeSign);//生成二维码图片存放
             }
             string phone = "";
-            if (sphoneurl.Value != hidPhone.Value && sphoneurl.Value != "")
+            if (sphoneurl.Value != "")
             {
                 phone = BuildQrCode(sphoneurl.Value, value: timeSign);
             }
@@ -83,7 +83,7 @@ namespace sd_order_sys.files
             sqlparams.Add("@fvUrl", url);
             sqlparams.Add("@telephone", tel);
             sqlparams.Add("@address", addr);
-            sqlparams.Add("@qrCode", qrcode == "" ? ImageQrcode.ImageUrl : qrcode);
+            sqlparams.Add("@qrCode", qrcode);
             sqlparams.Add("@localvpath", localpath.Value);
             sqlparams.Add("sphone", phone == "" ? hidPhone.Value : phone);
             sqlparams.Add("@sphoneurl", sphoneurl.Value);
@@ -168,6 +168,7 @@ namespace sd_order_sys.files
                 Text1.Value = table.Rows[0]["floorlevel"].ToString();
                 telephone.Value = table.Rows[0]["telephone"].ToString();
                 address.Value = table.Rows[0]["address"].ToString();
+                brandOrder.Value = table.Rows[0]["brandOrder"].ToString();
                // Image1.ImageUrl = table.Rows[0]["sphone"].ToString();
             }
         }

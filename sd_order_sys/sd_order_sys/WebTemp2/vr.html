@@ -50,14 +50,16 @@
             width: 1197px;
             height: 585px;
             z-index: 8;
-             overflow:hidden;
+            overflow: hidden;
         }
-         #apDiv3Hide {
+
+        #apDiv3Hide {
             width: 1227px;
             height: 585px;
-            overflow-y:scroll;
-            overflow-x:hidden;
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
+
         #apDiv6 {
             position: absolute;
             left: 533px;
@@ -76,11 +78,12 @@
             height: 650px;
             z-index: 9;
         }
+
         .allType {
-           padding-top:20px;
-           float:left;
-           width:230px;
-           height:180px;
+            padding-top: 20px;
+            float: left;
+            width: 230px;
+            height: 180px;
         }
     </style>
 
@@ -114,24 +117,41 @@
             box-shadow: 3px 6px 9px #000;
             border-radius: 30px 30px 30px 30px;
         }
+
         #divForShow3 {
             left: 1160px;
-            top: 540px;
-            height: 768px;
-            width: 1022px;
+            top: 750px;
+            height: 368px;
+            width: 622px;
             margin: 0px auto;
             background-color: #FFF;
-            z-index: 100;
+            z-index: 1000;
             position: fixed;
             margin-top: -384px;
             margin-left: -741px;
             box-shadow: 3px 6px 9px #000;
             border-radius: 30px 30px 30px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
         #imgX {
             position: absolute;
             left: 1390px;
             top: -20px;
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 35px 35px;
+            box-shadow: 4px 0px 12px #000;
+            cursor: pointer;
+        }
+
+        #imgX1 {
+            position: absolute;
+            left: 600px;
+            top: -18px;
             width: 70px;
             height: 70px;
             background-color: white;
@@ -145,7 +165,12 @@
 
 <body>
     <input type="hidden" id="hidBrandId" />
-    <div id="divForShow3" style="display:none;" onclick="showPhonePath();"><img id="imgSendToPhone" src="" style="margin-top:10px;margin-left:10px;" /></div>
+    <div id="divForShow3" style="display:none;" onclick="showPhonePath();">
+        <div id="imgX1" onclick="hidePanel1();">
+            <img src="images/x.png" style="margin-top:10px;margin-left:10px;" />
+        </div>
+        <img id="imgSendToPhone" src="" style="margin-top:10px;margin-left:10px; height:190px" />
+    </div>
     <div id="divForShow2" style="display:none;">
         <iframe id="frame1" src='' width="1300" height="824" allowtransparency="true" style="background-color:transparent" frameborder="0" scrolling="no"></iframe>
     </div>
@@ -195,8 +220,8 @@
         <!--<table width="100%" border="0" cellspacing="0" cellpadding="0">-->
         <div id="apDiv3Hide">
             //*brand
-            </div>
-            <!--<tr>
+        </div>
+        <!--<tr>
             <td width="192" height="192" align="center" valign="middle"><img src="images/brand/01.png" width="182" height="160" class="box-shadow" /></td>
             <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
             <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
@@ -217,9 +242,9 @@
             <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
             <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
         </tr>-->
-            <!--</table>-->
-            <!--<div id="apDiv6"><img src="images/fenye.png" width="130" height="10" /></div>-->
-        </div>
+        <!--</table>-->
+        <!--<div id="apDiv6"><img src="images/fenye.png" width="130" height="10" /></div>-->
+    </div>
     <div id="apDiv4">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             //*brandType
@@ -284,6 +309,11 @@
     function hidePanel() {
         document.getElementById('divfv').innerHTML = ""; //清除全景声音
         $('#divForShow').fadeOut(500);
+    }
+    function hidePanel1() {
+        //$("#divForShow2").hide();
+        //document.getElementById('divfv').innerHTML = ""; //清除全景声音
+        $('#divForShow2').fadeOut(500);
     }
     function showPath() {
         $('#divForShow2').show();

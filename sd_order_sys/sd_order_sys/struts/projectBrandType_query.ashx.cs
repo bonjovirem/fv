@@ -51,7 +51,7 @@ namespace sd_order_sys.struts
             if (context.Request["cul"] == null && context.Request["where"] == null)
             {
 
-                total = SqlManage.Query(@"select * from fv_projectbrandtype", sqlparams).Tables[0].Rows.Count;
+                total = SqlManage.Query(@"select * from fv_projectbrandtype where projectId=" + context.Request["projectId"].ToString(), sqlparams).Tables[0].Rows.Count;
                 //return;
             }
             else

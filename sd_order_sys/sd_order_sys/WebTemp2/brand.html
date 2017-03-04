@@ -35,21 +35,23 @@
             z-index: 7;
         }
 
-         #apDiv3 {
+        #apDiv3 {
             position: absolute;
             left: 92px;
             top: 559px;
             width: 1631px;
             height: 400px;
             z-index: 8;
-            overflow:hidden;
+            overflow: hidden;
         }
+
         #apDiv3Hide {
             width: 1661px;
             height: 400px;
-            overflow-y:scroll;
-            overflow-x:hidden;
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
+
         #apDiv4 {
             position: absolute;
             left: 92px;
@@ -79,11 +81,11 @@
             display: none;
         }
 
-       .allType {
-           padding-top:20px;
-           float:left;
-           width:230px;
-           height:180px;
+        .allType {
+            padding-top: 20px;
+            float: left;
+            width: 230px;
+            height: 180px;
         }
 
         .box-shadow {
@@ -125,24 +127,41 @@
             box-shadow: 3px 6px 9px #000;
             border-radius: 30px 30px 30px 30px;
         }
+
         #divForShow3 {
             left: 1160px;
-            top: 540px;
-            height: 768px;
-            width: 1022px;
+            top: 750px;
+            height: 368px;
+            width: 622px;
             margin: 0px auto;
             background-color: #FFF;
-            z-index: 100;
+            z-index: 1000;
             position: fixed;
             margin-top: -384px;
             margin-left: -741px;
             box-shadow: 3px 6px 9px #000;
             border-radius: 30px 30px 30px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
         #imgX {
             position: absolute;
             left: 1390px;
             top: -20px;
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 35px 35px;
+            box-shadow: 4px 0px 12px #000;
+            cursor: pointer;
+        }
+
+        #imgX1 {
+            position: absolute;
+            left: 600px;
+            top: -18px;
             width: 70px;
             height: 70px;
             background-color: white;
@@ -156,7 +175,12 @@
 
 <body>
     <input type="hidden" id="hidBrandId" />
-    <div id="divForShow3" style="display:none;" onclick="showPhonePath();"><img id="imgSendToPhone" src="" style="margin-top:10px;margin-left:10px;" /></div>
+    <div id="divForShow3" style="display:none;" onclick="showPhonePath();">
+        <div id="imgX1" onclick="hidePanel1();">
+            <img src="images/x.png" style="margin-top:10px;margin-left:10px;" />
+        </div>
+        <img id="imgSendToPhone" src="" style="margin-top:10px;margin-left:10px; height:190px" />
+    </div>
     <div id="divForShow2" style="display:none;">
         <iframe id="frame1" src='' width="1300" height="824" allowtransparency="true" style="background-color:transparent" frameborder="0" scrolling="no"></iframe>
     </div>
@@ -206,8 +230,8 @@
         <!--<table width="100%" border="0" cellspacing="0" cellpadding="0">-->
         <div id="apDiv3Hide">
             //*brand
-            </div>
-            <!--<tr>
+        </div>
+        <!--<tr>
             <td width="192" height="192" align="center" valign="middle"><img src="images/brand/01.png" width="182" height="160" class="box-shadow" /></td>
             <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
             <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
@@ -225,8 +249,8 @@
             <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
             <td width="192" height="192" align="center" valign="middle"><img src="images/brandlogo.png" width="182" height="160" /></td>
         </tr>-->
-            <!--</table>-->
-        </div>
+        <!--</table>-->
+    </div>
     <div id="apDiv334" style="overflow:scroll;display:none;">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             //*brandType
@@ -281,47 +305,46 @@
                     height: 300px;
                 }
         </style>-->
-       <!-- <div class="ck-slide">
-            <ul class="ck-slide-wrapper">-->
-                //*brandType
-                <!--<tr>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/01.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/02.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/03.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/04.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/05.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/06.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/07.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/08.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/09.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/10.png" width="100" height="45" /></td>
-                </tr>
-                <tr>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/11.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/12.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/13.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/14.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/15.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/16.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/17.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/18.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/19.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/20.png" width="100" height="45" /></td>
-                </tr>
-                <tr>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/21.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/22.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/23.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/24.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/25.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/26.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/27.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/28.png" width="100" height="45" /></td>
-                    <td width="90" height="90" align="center" valign="middle">&nbsp;</td>
-                    <td width="90" height="90" align="center" valign="middle">&nbsp;</td>
-                </tr>-->
-
-            <!--</ul>
+        <!-- <div class="ck-slide">
+             <ul class="ck-slide-wrapper">-->
+        //*brandType
+        <!--<tr>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/01.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/02.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/03.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/04.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/05.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/06.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/07.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/08.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/09.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/10.png" width="100" height="45" /></td>
+        </tr>
+        <tr>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/11.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/12.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/13.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/14.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/15.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/16.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/17.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/18.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/19.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/20.png" width="100" height="45" /></td>
+        </tr>
+        <tr>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/21.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/22.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/23.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/24.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/25.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/26.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/27.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle"><img src="images/pinlei/28.png" width="100" height="45" /></td>
+            <td width="90" height="90" align="center" valign="middle">&nbsp;</td>
+            <td width="90" height="90" align="center" valign="middle">&nbsp;</td>
+        </tr>-->
+        <!--</ul>
             <a href="javascript:" class="ctrl-slide ck-prev">上一张</a> <a href="javascript:" class="ctrl-slide ck-next">下一张</a>
             <div class="ck-slidebox">
                 <div class="slideWrap">
@@ -337,14 +360,14 @@
             </div>
         </div>
          js -->
-      <!--   <script src="js/jquery-1.8.3.min.js"></script>
-        <script src="js/slide.js"></script>
-        <script>
-            $('.ck-slide').ckSlide({
-                dir: 'x'
-            });
-        </script>
-        Demo end -->
+        <!--   <script src="js/jquery-1.8.3.min.js"></script>
+          <script src="js/slide.js"></script>
+          <script>
+              $('.ck-slide').ckSlide({
+                  dir: 'x'
+              });
+          </script>
+          Demo end -->
     </div>
     <div id="apDiv6"><img src="images/fenye.png" width="130" height="10" /></div>
 </body>
@@ -364,6 +387,11 @@
     function hidePanel() {
         document.getElementById('divfv').innerHTML = ""; //清除全景声音
         $('#divForShow').fadeOut(500);
+    }
+    function hidePanel1() {
+        //$("#divForShow2").hide();
+        //document.getElementById('divfv').innerHTML = ""; //清除全景声音
+        $('#divForShow2').fadeOut(500);
     }
     function showPath() {
         $('#divForShow2').show();
