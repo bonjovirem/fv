@@ -265,18 +265,19 @@
         //document.getElementById('divfv').innerHTML = ""; //清除全景声音
         $('#divForShow2').fadeOut(500);
     }
+    var nint;
     function showPath() {
         $('#divForShow').fadeOut(200);
         if (pageFloorLevel==thisClientFloorLevel) { //直达
             $('#frame1').attr("src", "f*floorLevel.html?brandId=" + document.getElementById('hidBrandId').value+"_1");
             $('#frame1').show();
             $('#floorImg').hide();
-            setTimeout("rollback()", 4100);
+            nint=setTimeout("rollback()", 4200);
         }else{
             $('#frame1').attr("src", "f"+thisClientFloorLevel+".html?brandId=CTOL"); //本层先到电梯
             $('#frame1').show();
             $('#floorImg').hide();
-            setTimeout("OhterFloorRun()", 4100);//再从另一层电梯到品牌店
+            nint=setTimeout("OhterFloorRun()", 4200);//再从另一层电梯到品牌店
         }
     }
     function showPhonePath() {
@@ -289,7 +290,7 @@
     function OhterFloorRun() {//再从目标层电梯到品牌店
         $('#frame1').attr("src", "f"+pageFloorLevel+".html?brandId=" + document.getElementById('hidBrandId').value+"_0");
         $('#frame1').show();
-        setTimeout("rollback()", 4100);
+        nint=setTimeout("rollback()", 4200);
     }
     function rollback() {
         $('#floorImg').show();
