@@ -412,7 +412,7 @@ namespace sd_order_sys.struts
                     //品类展示   1
                     sql += "select id,brandTypeName,brandTypeImg from fv_projectbrandtype where projectId=" + id + " and isShow =1  ;";
                     //品牌展示   2
-                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel,brandLogo,brandTypeId from fv_projectbrand where projectId=" + id + " ;";
+                    sql += "select id,brandName,fvUrl,brandDesc,floorlevel,brandLogo,brandTypeId from fv_projectbrand where projectId=" + id + " order by brandOrder ;";
                     //取全景展示的品牌   3
                     sql += "select id,brandName,fvUrl,brandDesc,floorlevel,brandLogo,brandTypeId from fv_projectbrand where fvUrl<>'' and fvUrl is not null and floorLevel is not null and projectId=" + id + ";";
                     //取到品牌的路径 for f.html  4
